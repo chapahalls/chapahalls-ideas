@@ -131,24 +131,27 @@ Regras mínimas:
 - Verificar regras Anatel antes de transmitir dados digitais; não presumir autorização por operar na mesma frequência.
 - Possível expansão: adaptador para rádios existentes ou rádio digital homologado; nós fixos em postos/transportadoras.
 
-## 7. Demonstração ideal de ponta a ponta (MVP Hackathon · 2 min)
+## 7. Demonstração ideal de ponta a ponta (Vídeo Demo da Solução + Pitch · 2 min)
 
-**Objetivo:** provar conversa fluida por voz + Agora funcional (C1/C2) + interrupção (barge-in) + roteamento inteligente entre Trabalho, Pessoal e Estrada + recuperação de falha + entrega em tempo real a outro motorista e à Central (CCO).
+**Estratégia de Apresentação:** A demonstração do pitch será baseada na gravação do **vídeo demo narrado de até 2 minutos** da solução real funcionando (atendendo ao entregável obrigatório D3 e garantindo execução sem risco de oscilação de rede no palco), cobrindo todos os gatilhos de pontuação máxima de **C1 (25%)** e **C2 (25%)** entre as **3 pontas conectadas pela Agora** (**Motorista A**, **Motorista B** e **Operador do CCO**):
 
-1. **Motorista A conectado via Agora:** conversa com o copiloto em português com baixa latência e interrompe a resposta do agente no meio da fala (**barge-in**).
-2. **RODAR Estrada (Comunidade):** A relata um risco na pista (*"RODAR, tem acidente na BR-116, km 230, sentido norte, faixa da direita bloqueada"*); o copiloto extrai o evento estruturado, pede confirmação por voz e publica o alerta.
-3. **Notificação ao vivo:** Motorista B (na mesma rodovia/sentido) recebe o aviso por voz e o evento aparece instantaneamente no painel da Central (CCO).
-4. **RODAR Trabalho + Recuperação de falha:** A reporta atraso ou ocorrência para a transportadora; se houver falha/instabilidade momentânea ou fala incompleta, o agente recupera o contexto (ou enfileira até reconectar) sem perder a ocorrência e confirma quando a Central recebe.
-5. **RODAR Pessoal + Segurança:** A grava uma nota/lembrete pessoal (mantido isolado da transportadora por padrão); ao relatar cansaço/sonolência, o copiloto orienta uma parada segura (e, em caso de emergência ou pedido de ajuda, abre canal de voz RTC direto com o operador da Central).
+1. **Companhia ativa + Barge-in via Agora (Motorista A):** O copiloto conversa com o Motorista A em português com baixa latência (`< 1,5 s`), puxando assunto para combater a solidão e a sonolência na estrada; A **interrompe a fala do agente no meio (barge-in)** para relatar um acidente e engarrafamento à frente.
+2. **Recuperação de falha + Frente 3 — Comunidade (Motorista A → Motorista B):** Se o relato inicial omitir um dado (ex.: sentido da via ou km), o agente cobra apenas o dado faltante (**recuperação de falha conversacional**), confirma por voz e dispara o alerta via Agora; o **Motorista B** (na mesma via) ouve o alerta narrado em tempo real e o evento surge no mapa do CCO.
+3. **Frente 2 — Corporativa / CCO + Recuperação de fila (Motorista A → CCO):** A explica por voz a situação real do atraso da carga causado pelo bloqueio; o sistema demonstra o status honesto de entrega (`enfileirada` → `confirmada pelo CCO`) e exibe o relato estruturado na fila do operador.
+4. **Frente 1 — Pessoal & Família (Privacidade comprovada):** A envia um recado de voz para a família avisando que está bem; o vídeo mostra lado a lado que a mensagem **Pessoal** fica estritamente bloqueada/invisível no painel do CCO.
+5. **Prevenção de Sonolência + Canal de Voz Direto Agora RTC (CCO ↔ Motorista A):** Diante de sinais de cansaço/lentidão na resposta ou pedido de apoio, o copiloto recomenda parada segura e o operador do CCO clica para abrir **voz direta via Agora RTC** na cabine do Motorista A.
 
-## 8. Priorização de escopo (Atualizada)
+## 8. Priorização de escopo e Compromissos de Entrega (Atualizada)
 
-### P0 — MVP do Hackathon (Alcançável em 24h)
-- Voz via **Agora** funcionando de verdade (baixa latência, barge-in/interrupção e invocação de ferramentas/orquestrador).
-- Orquestrador de intenções por voz roteando para as 3 frentes (**Trabalho**, **Pessoal**, **Estrada**) com confirmação vocal antes de publicar para Central ou Comunidade e isolamento de dados pessoais.
-- Fluxo “registrar alerta por voz” entregue em tempo real para outro motorista e para o painel web da Central (CCO).
-- Tratamento de falha e recuperação (fala ambígua/incompleta ou reconexão/fila local com status explícito `registrada != transmitida != confirmada`).
-- README reprodutível, declarações de simulação/preexistentes, vídeo demo de até 2 min e deck de até 10 slides.
+### P0 — Compromissos Fechados para o Protótipo do Hackathon (24h)
+- **Ciclo Agora nas 3 pontas (C1 + C2):**
+  - **Ponta 1 (Motorista A):** Agora Conversational AI Engine (baixa latência, barge-in e companhia ativa contra solidão/sonolência) + AI Noise Suppression.
+  - **Ponta 2 (Motorista B — Comunidade):** Recebimento por voz em tempo real dos alertas da mesma via (Agora Signaling / Chat + TTS).
+  - **Ponta 3 (Operador do CCO — Corporativa):** Painel web recebendo relatos reais de atraso/ocorrências + botão de entrada por voz direta (**Agora RTC**) no canal do motorista + bloqueio total de dados da frente **Pessoal**.
+- **Orquestrador das 3 Frentes:** Roteamento por voz entre **1. Pessoal** (padrão privado), **2. Corporativa (CCO)** e **3. Comunidade**, com confirmação por voz para destinos externos.
+- **Recuperação de falhas implementada:** Tratamento de dado faltante no diálogo + fila de reconexão com status explícito (`registrada != transmitida != confirmada`).
+- **Validação empírica mapeada (C5):** Bateria de testes com 6+ interações externas medindo latência, barge-in, acerto do roteador (**0% de vazamento Pessoal para o CCO**) e resposta a sinais de sonolência.
+- **Tese Comercial no Pitch e Vídeo Demo (C3 + C6):** Vídeo de até 2 min da solução real + pitch de 3 min destacando o modelo onde **o motorista adota pela companhia e conexão com a família (Frente Pessoal)**, **a transportadora/seguradora paga pela redução de sinistros por sonolência e visibilidade operacional (Frente Corporativa/CCO)** e **a estrada ganha efeito de rede (Frente Comunidade)**.
 
 ### P1 — Diferenciação adicional no Hackathon (se o P0 estiver fechado)
 - Canal de voz direto (Agora RTC) entre operador da Central (CCO) e motorista em situações críticas / pedido de ajuda.

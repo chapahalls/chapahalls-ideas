@@ -2,7 +2,7 @@
 
 - **Autor(es):** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`)
 - **Status:** avaliada
-- **Nota do judge:** 3,90 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
+- **Nota do judge:** 4,40 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
 - **Contexto completo de produto e arquitetura:** [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md)
 
 > Copiloto de IA por voz para caminhoneiros que faz companhia na estrada para combater a solidão e diminuir acidentes por sonolência, enquanto orquestra a comunicação em três frentes — **1. Pessoal** (familiares e amigos), **2. Corporativa** (relato real de atrasos e ocorrências ao CCO) e **3. Comunidade** (alertas de acidentes e engarrafamentos na mesma via) — sem que o motorista tire as mãos do volante.
@@ -19,6 +19,7 @@
   - **1. Frente Pessoal & Companhia:** o copiloto faz companhia ativa na viagem para manter o motorista alerta (ajudando a diminuir os índices de acidentes por sonolência, sugerindo paradas seguras quando identifica cansaço) e facilita trocar recados de voz com familiares e amigos com privacidade total.
   - **2. Frente Corporativa (CCO):** o motorista descreve por voz a situação real da viagem/carga (atrasos, problemas, retenções), gerando ocorrências contextualizadas para o CCO e abrindo canal de voz direto (Agora RTC) com o operador quando necessário.
   - **3. Frente Comunidade:** alertas de acidentes, engarrafamentos e riscos são reportados e recebidos por voz em tempo real pelos caminhoneiros que trafegam na mesma via e sentido.
+- **Tese comercial e de adoção (Motorista + Transportadora/Seguradora):** o motorista quer usar porque a **Frente 1 (Pessoal & Companhia)** é dele (combate a solidão, aproxima da família/amigos e é privada); a transportadora e as seguradoras pagam pela **Frente 2 (Corporativa/CCO)** porque reduz sinistros graves por sonolência e traz visibilidade real da operação; e a **Frente 3 (Comunidade)** cria efeito de rede na rodovia.
 
 ## Por que voz (C4 · 15%)
 
@@ -58,11 +59,11 @@ Agente (Agora): Recado pessoal enviado para sua esposa. Essa mensagem é privada
 
 ## Escopo para ~24h
 
-- **Demo path (o que a banca vê, 2 min):**
-  1. **Companhia + Barge-in + Alerta Comunidade:** O copiloto conversa com o Motorista A via Agora (combate à solidão/sonolência); A interrompe o agente (barge-in) para avisar sobre um acidente e engarrafamento no km 230 e confirma o envio.
-  2. **Comunidade + Corporativa (CCO) em tempo real:** Motorista B (na mesma via) recebe o alerta por voz; simultaneamente, o Motorista A descreve a situação real do atraso da carga e o operador vê o relato detalhado no painel do CCO.
-  3. **Pessoal (Família e Amigos com Privacidade):** Motorista A envia por voz um recado para a família; a demo comprova que o conteúdo pessoal não aparece no painel do CCO.
-  4. **Prevenção de Sonolência / Recuperação e Voz Direta com CCO:** Diante de sinais de sonolência/falta de resposta ou pedido de apoio, o copiloto sugere parada segura e abre um canal de voz Agora RTC direto entre o operador do CCO e o motorista.
+- **Demo path (Vídeo demo da solução real gravado para o pitch · 2 min):**
+  1. **Companhia Ativa + Barge-in + Recuperação de Dado Faltante (Motorista A):** O copiloto conversa com o Motorista A via Agora (combate à solidão/sonolência com latência `< 1,5 s`); A interrompe o agente (**barge-in**) para avisar sobre um acidente e engarrafamento, o agente cobra eventual dado faltante (km/sentido) e confirma o envio por voz.
+  2. **Ponta 2 (Comunidade) + Ponta 3 (CCO) em tempo real:** Motorista B (na mesma via) ouve o alerta narrado por voz via Agora; simultaneamente, o Motorista A descreve a situação real do atraso da carga e o operador vê o relato detalhado no painel do CCO (com transição de fila `enfileirada` → `confirmada`).
+  3. **Frente Pessoal (Família e Amigos com Privacidade Lado a Lado):** Motorista A envia por voz um recado para a família; o vídeo comprova lado a lado que o conteúdo pessoal não aparece no painel do CCO (**0% de vazamento**).
+  4. **Prevenção de Sonolência + Entrada de Voz Direta do CCO (Agora RTC):** Diante de sinais de sonolência/lentidão na conversa ou pedido de apoio, o copiloto sugere parada segura e o operador do CCO clica para entrar por voz (**Agora RTC**) direto na cabine do Motorista A.
 - **Simulado / mockado:** coordenadas GPS, rodovia/sentido e cadastro da viagem; dois clientes representando dois caminhões na mesma via e o painel web representando o CCO.
 - **Preexistente:** SDKs e documentação oficial da Agora (`agora@agora-skills` / MCP).
 - **Maior risco técnico:** latência e naturalidade do português no pipeline Agora Conversational AI (`< 2 s` com barge-in confiável) — mitigado testando o canal de voz na Fase 1 com LLM/TTS reserva configurável por variável de ambiente.
