@@ -8,9 +8,9 @@
 
 **Nome provisório:** RODAR — “Sua voz conecta todos os caminhos” / “Você nunca está sozinho na estrada”.
 
-RODAR é um copiloto de IA por voz para caminhoneiros, projetado para unir **vida profissional**, **vida pessoal** e **comunicação colaborativa na estrada**. O motorista conversa em linguagem natural e o copiloto identifica intenções, executa ações e escolhe o canal de comunicação disponível. A plataforma é **híbrida online/offline**: aproveita a Agora para voz conversacional online e mantém capacidades locais quando não existe internet. A proposta inclui uma **rede oportunista de dispositivos (mesh/DTN, store-and-forward)** para retransmitir alertas de rodovia até outros motoristas ou um nó com conectividade, que os entrega à central.
+RODAR é um copiloto de IA por voz para caminhoneiros, projetado para unir **vida profissional (Trabalho)**, **vida pessoal (Pessoal)** e **comunicação colaborativa na estrada (Estrada)**. O motorista conversa em linguagem natural e o copiloto identifica intenções, executa ações e escolhe o canal de comunicação adequado sem exigir troca manual de modo.
 
-**O diferencial que a equipe não quer perder é a comunicação mesh**, mesmo que a integração com rádio PX fique para uma fase posterior.
+**Decisão de escopo para o Hackathon (24h):** Para garantir um protótipo funcional, fluido e 100% aderente aos critérios C1 e C2 (50% da nota), o **MVP do hackathon foca na experiência online centrada na Agora** (Conversational AI + RTC/Signaling/Chat, barge-in, orquestração de intenções nas 3 frentes, painel da Central/CCO e fila/recuperação de falha de rede). A **operação com voz local offline (STT/LLM/TTS embarcado)** e a **rede oportunista de dispositivos (mesh/DTN, store-and-forward)** — bem como a integração com rádio PX 27 MHz — ficam documentadas como **visão de evolução e diferencial de roadmap pós-hackathon (Fase 2)**.
 
 ## 2. Problemas a resolver
 
@@ -102,9 +102,11 @@ Orquestrador de intenções e ações
 - Manter modelo local previamente carregado **se RAM/bateria permitirem**; avaliar custo térmico, bateria e reatividade em Android real.
 - Reconectar e reconciliar mensagens sem envio duplicado.
 
-## 6. Rede mesh/oportunista: requisito central
+## 6. Evolução Futura (Pós-Hackathon): Voz Offline, Rede Mesh/DTN e Rádio PX
 
-**Requisito de produto:** um alerta crítico originado em A pode ser transmitido a B, retido por B e encaminhado a C, mesmo sem haver conectividade simultânea ponta a ponta. Quando C recuperar internet, entrega ao backend/central. Se não houver vizinhos, o alerta permanece pendente; não existe garantia de prazo nem entrega.
+> **Nota de escopo:** Os itens desta seção (voz local offline, rede mesh/oportunista DTN entre smartphones e integração com rádio PX) foram movidos por decisão da equipe para o **roadmap futuro (P2)**, mantendo o MVP de 24h focado em execução sólida sobre a stack da Agora.
+
+**Visão de evolução (Rede mesh/oportunista):** em trechos sem cobertura celular, um alerta crítico originado em A poderá ser transmitido a B, retido por B e encaminhado a C, mesmo sem haver conectividade simultânea ponta a ponta. Quando C recuperar internet, entrega ao backend/central. Se não houver vizinhos, o alerta permanece pendente; não existe garantia de prazo nem entrega.
 
 **Modelo recomendado:** DTN / store-carry-forward com descoberta e transporte de proximidade, mais eventual upload à nuvem.
 
@@ -127,45 +129,36 @@ Regras mínimas:
 - Verificar regras Anatel antes de transmitir dados digitais; não presumir autorização por operar na mesma frequência.
 - Possível expansão: adaptador para rádios existentes ou rádio digital homologado; nós fixos em postos/transportadoras.
 
-## 7. Demonstração ideal de ponta a ponta
+## 7. Demonstração ideal de ponta a ponta (MVP Hackathon · 2 min)
 
-**Objetivo:** provar voz + Agora funcional + perda de conectividade + voz local + retransmissão de alerta + entrega à central.
+**Objetivo:** provar conversa fluida por voz + Agora funcional (C1/C2) + interrupção (barge-in) + roteamento inteligente entre Trabalho, Pessoal e Estrada + recuperação de falha + entrega em tempo real a outro motorista e à Central (CCO).
 
-1. Celular A conectado: conversa com IA via Agora e interrompe resposta (barge-in).
-2. A pede uma ação profissional ou pessoal; agente executa/agenda conforme autorização, mostrando resultado.
-3. Desligar internet de A de maneira controlada, preservando Bluetooth/Wi-Fi necessários para o transporte local.
-4. A continua com capacidade local de voz, informa mudança de modo sem perder fatos-chave da viagem.
-5. A fala: “RODAR, houve um acidente na rodovia, preciso avisar os outros motoristas.”
-6. A cria pacote de alerta estruturado e mostra `aguardando encaminhamento`.
-7. A transfere para B offline. B armazena. B encontra C e retransmite.
-8. C tem internet; entrega ao backend. Central exibe ocorrência.
-9. ACK de destino propaga quando houver conectividade oportunista; não fingir confirmação imediata em A.
+1. **Motorista A conectado via Agora:** conversa com o copiloto em português com baixa latência e interrompe a resposta do agente no meio da fala (**barge-in**).
+2. **RODAR Estrada (Comunidade):** A relata um risco na pista (*"RODAR, tem acidente na BR-116, km 230, sentido norte, faixa da direita bloqueada"*); o copiloto extrai o evento estruturado, pede confirmação por voz e publica o alerta.
+3. **Notificação ao vivo:** Motorista B (na mesma rodovia/sentido) recebe o aviso por voz e o evento aparece instantaneamente no painel da Central (CCO).
+4. **RODAR Trabalho + Recuperação de falha:** A reporta atraso ou ocorrência para a transportadora; se houver falha/instabilidade momentânea ou fala incompleta, o agente recupera o contexto (ou enfileira até reconectar) sem perder a ocorrência e confirma quando a Central recebe.
+5. **RODAR Pessoal + Segurança:** A grava uma nota/lembrete pessoal (mantido isolado da transportadora por padrão); ao relatar cansaço/sonolência, o copiloto orienta uma parada segura (e, em caso de emergência ou pedido de ajuda, abre canal de voz RTC direto com o operador da Central).
 
-**Se o tempo for curto:** garantir primeiro uma demonstração funcional da Agora e alertas A→B→C com dados reais entre celulares; simplificar LLM offline para comandos locais, se necessário. Nunca apresentar simulações como funcionalidade real.
+## 8. Priorização de escopo (Atualizada)
 
-## 8. Priorização de escopo
+### P0 — MVP do Hackathon (Alcançável em 24h)
+- Voz via **Agora** funcionando de verdade (baixa latência, barge-in/interrupção e invocação de ferramentas/orquestrador).
+- Orquestrador de intenções por voz roteando para as 3 frentes (**Trabalho**, **Pessoal**, **Estrada**) com confirmação vocal antes de publicar para Central ou Comunidade e isolamento de dados pessoais.
+- Fluxo “registrar alerta por voz” entregue em tempo real para outro motorista e para o painel web da Central (CCO).
+- Tratamento de falha e recuperação (fala ambígua/incompleta ou reconexão/fila local com status explícito `registrada != transmitida != confirmada`).
+- README reprodutível, declarações de simulação/preexistentes, vídeo demo de até 2 min e deck de até 10 slides.
 
-### P0 — Prova técnica mínima
-- Voz Agora funcionando de verdade (interrupção, resposta, interação com ferramenta se viável).
-- Fluxo “registrar alerta por voz” (inclusive com entrada offline).
-- Persistência local de evento + status explícito.
-- Comunicação local A→B, idealmente B→C, sem internet.
-- Gateway online envia à central + confirmação.
-- README reprodutível, vídeo curto e pitch.
+### P1 — Diferenciação adicional no Hackathon (se o P0 estiver fechado)
+- Canal de voz direto (Agora RTC) entre operador da Central (CCO) e motorista em situações críticas / pedido de ajuda.
+- Resumo do trecho (RDO por voz) gerado na parada e aprovado pelo motorista antes do envio à transportadora.
+- Filtro de alertas por rodovia/sentido e supressão de ruído de cabine (Agora AI Noise Suppression).
 
-### P1 — Diferenciação adicional
-- Modelo pequeno local rodando conversação offline (dependente de benchmark).
-- Continuidade de contexto online/offline.
-- Mensagem corporativa do motorista à central.
-- Filtro de alertas por trecho/sentido e replay robusto.
-
-### P2 — Evolução
-- Integrações de mensagens pessoais reais (com permissões).
-- Rotas/trânsito/clima e informações operacionais reais.
-- Autônomos e múltiplas transportadoras.
-- Integração rádio PX ou rádio digital compatível homologado.
-- Nós fixos em postos, estruturas de apoio e outras tecnologias de transporte.
-- Estudo de fadiga com métodos validados e salvaguardas.
+### P2 — Evolução Pós-Hackathon (Futuro)
+- **Operação offline por voz no Android** (`whisper.cpp` / STT nativo + LLM local quantizado `llama.cpp` + TTS local).
+- **Rede oportunista Mesh/DTN (`A → B → C` store-carry-forward)** via Google Nearby Connections / Wi-Fi Direct / BLE para trechos sem cobertura celular.
+- **Integração com rádio PX (27 MHz)** ou LoRa / rádio digital homologado pela Anatel e nós fixos em postos/transportadoras.
+- Integrações reais com mensageiros pessoais (mediante permissões) e telemetria/clima/trânsito.
+- Estudos de fadiga com métodos validados e salvaguardas.
 
 ## 9. Segurança, privacidade e experiência responsável
 

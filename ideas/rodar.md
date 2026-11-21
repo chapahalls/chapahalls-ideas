@@ -1,77 +1,77 @@
-# RODAR — Copiloto de voz híbrido (Online Agora + Mesh/DTN Offline)
+# RODAR — Copiloto de voz para caminhoneiros (Trabalho, Pessoal e Estrada)
 
-- **Autor(es):** Jeferson (`@STT4jeferson`)
+- **Autor(es):** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`)
 - **Status:** avaliada
-- **Nota do judge:** 3,65 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
+- **Nota do judge:** 3,90 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
 - **Contexto completo de produto e arquitetura:** [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md)
 
-> Copiloto de IA por voz para caminhoneiros que une vida profissional (Trabalho), pessoal (Pessoal) e alertas colaborativos na rodovia (Estrada), operando online via Agora e mantendo voz local + rede oportunista (mesh/DTN store-and-forward) quando o sinal de celular cai.
+> Copiloto de IA por voz para caminhoneiros que une vida profissional (**Trabalho/CCO**), vida pessoal (**Pessoal**) e alertas colaborativos na rodovia (**Estrada/Comunidade**) em uma única conversa natural via Agora, sem exigir que o motorista tire as mãos do volante ou escolha canais manualmente.
 
 ## Problema e público (C3 · 20%)
 
-- **Quem:** caminhoneiros vinculados a transportadoras com central de operações (CCO), utilizando smartphone Android (público principal do MVP); caminhoneiros autônomos e comunidade rodoviária como público secundário.
+- **Quem:** caminhoneiros vinculados a transportadoras com Centro de Controle Operacional (CCO) como público principal do MVP; caminhoneiros autônomos e comunidade rodoviária como público secundário.
 - **Problema concreto:**
-  1. Trechos de rodovia com ausência ou intermitência de cobertura celular, onde alertas críticos de pista (acidentes, bloqueios, riscos) ficam presos no veículo sem sinal.
-  2. Comunicação fragmentada entre motorista, central da transportadora, familiares e outros motoristas na mesma via.
-  3. Risco e dificuldade de registrar ocorrências ou interagir com telas enquanto dirige, somados ao isolamento em jornadas longas.
-- **Benefício:** o motorista fala naturalmente sem tirar as mãos do volante nem escolher canais manualmente; com sinal, conversa com baixa latência e executa ações via Agora; sem sinal, continua registrando alertas por voz que são retransmitidos entre dispositivos próximos (`A → B → C` via store-carry-forward) até que um nó com internet entregue à central, com transparência total de status (`criada != enfileirada != encaminhada != recebida != confirmada`).
+  1. Comunicação fragmentada e perigosa durante a condução: motoristas precisam interagir com rastreadores/macros para avisar a transportadora, não conseguem alertar facilmente quem vem atrás sobre acidentes/bloqueios e enfrentam isolamento em jornadas longas.
+  2. Risco de vazamento de privacidade quando ferramentas corporativas misturam rotina pessoal e fiscalização da empresa.
+  3. Instabilidade de conexão na estrada que faz ocorrências importantes se perderem ou ficarem sem confirmação clara de entrega.
+- **Benefício:** o motorista apenas fala; o **Orquestrador de Intenções** classifica a fala entre **Trabalho**, **Pessoal** (padrão seguro e isolado da empresa) e **Estrada**, exige confirmação por voz antes de publicar para a Central ou para outros motoristas e garante transparência de estado (`registrada != transmitida != recebida != confirmada`).
 
 ## Por que voz (C4 · 15%)
 
-Durante a condução, o motorista não pode ler tela, navegar menus ou digitar. A voz com **Orquestrador de Intenções** elimina a escolha manual entre Trabalho, Pessoal e Estrada: o motorista apenas fala, o copiloto identifica intenção, destinatário e autorização necessária, exige confirmação vocal antes de expor localização ou enviar mensagens pessoais/públicas e informa honestamente o estado de entrega conforme a conectividade disponível.
+Com as mãos no volante e os olhos na pista, digitar ou navegar em menus visuais é inviável e perigoso. A voz permite entrada única sem troca manual de modo, confirmação auditiva imediata antes de compartilhar informações externas, recepção de alertas da via narrados em tempo real e abertura de canal de voz direto (RTC) com o operador da Central quando o motorista pede ajuda.
 
 ## A conversa (C1 · 25%)
 
 Um diálogo de exemplo de 4-8 falas, do jeito que vai aparecer na demo:
 
 ```
-Motorista (Celular A, online via Agora): RODAR, como está minha rota e a previsão de chegada na descarga?
-Agente (Agora): Você está na BR-116, previsão de chegada às 18h40. Quer que eu avise a central sobre o trecho ou —
-Motorista (interrompe / barge-in): Corta isso — avisa a central que tive um atraso de 20 minutos na balança.
-Agente (Agora): Entendido. Confirma envio de aviso de atraso de 20 minutos na balança para a central da transportadora?
-Motorista: Confirmo.
-Agente (Agora): Aviso enviado e recebido pela central.
-[Internet do Celular A é desligada; Bluetooth/Wi-Fi local mantidos]
-Motorista (Celular A, offline): RODAR, houve um acidente grave na pista, preciso avisar os outros motoristas.
-Agente (Voz local): Modo sem internet ativo. Alerta crítico de acidente registrado e aguardando encaminhamento pela rede local. Quando encontrar outro veículo próximo, farei a retransmissão.
+Motorista (A): RODAR, como está minha previsão de chegada na descarga?
+Agente (Agora): Você está na BR-116, previsão de chegada às 18h40. Quer que eu leia os detalhes da carga ou —
+Motorista (A, interrompe / barge-in): Espera — acabou de ter um acidente aqui no km 230, sentido norte, faixa da direita bloqueada.
+Agente (Agora): Entendi: acidente na BR-116, km 230, sentido norte, faixa da direita bloqueada. Confirma avisar os motoristas do trecho e a central?
+Motorista (A): Confirmo.
+Agente (Agora): Alerta publicado para a estrada e confirmado pela central.
+Motorista (A): Anota também um lembrete pessoal para eu ligar para casa quando parar no posto.
+Agente (Agora): Guardado nos seus registros pessoais. Isso não é compartilhado com a transportadora.
 ```
 
-- **Interrupção (barge-in):** com internet ativa, o motorista interrompe a resposta do agente via Agora no meio da fala para priorizar um comando urgente; o agente cessa o playback imediatamente e processa o novo turno.
+- **Interrupção (barge-in):** o motorista corta o agente a qualquer momento no meio da fala (ex.: para reportar um perigo repentino na pista); o agente interrompe o TTS imediatamente e processa o alerta prioritário.
 - **Falha e recuperação:**
-  - *Perda de sessão/internet:* o `Voice Controller` detecta timeout da sessão Agora, garante dono único de microfone/áudio, avisa a mudança para modo offline sem perder o contexto persistido no SQLite local e continua aceitando comandos de voz essenciais localmente.
-  - *Retransmissão oportunista:* o alerta criado offline em `A` é transferido via proximidade (Google Nearby Connections) para `B` (offline), que armazena e encaminha para `C` (online), que entrega ao backend/central com deduplicação por UUID, TTL e controle de saltos (`hopCount`/`maxHops`).
-- **Latência alvo:** `< 1,5 s` a `< 2,0 s` no modo online via Agora _(sugestão baseada no benchmark de conversação fluida da rubrica)_.
+  - *Informação incompleta ou ruído:* se faltar um dado essencial do alerta (como km ou sentido), o agente pede para repetir apenas o campo faltante em vez de reiniciar o fluxo.
+  - *Oscilação de rede / falha de envio:* a ação é persistida localmente com status explícito (`enfileirada / aguardando confirmação`), o motorista é avisado honestamente que ainda não foi entregue e o evento é sincronizado sem duplicação assim que a conexão retorna.
+- **Latência alvo:** resposta `< 1,5 s` a `< 2,0 s` via Agora.
 
 ## Como a Agora entra (C2 · 25%)
 
-- **Produto Agora:** **Agora RTC + Agora Conversational AI** (camada principal de voz conversacional online, VAD/turnos, barge-in e invocação de ferramentas/ações do orquestrador).
-- **Fluxo:**
-  - *Online:* Microfone → `Voice Controller` → Agora RTC / Conversational AI → Orquestrador de intenções e ações → Contexto compartilhado (SQLite local) → Router de mensagens → Backend / Central / Destinatários → Resposta em voz via Agora.
-  - *Transição Offline:* Queda da sessão Agora detectada → Fallback ordenado para pipeline local no Android (`STT local → LLM quantizado ou regras/intent classifier → TTS local`) lendo o mesmo contexto compartilhado em SQLite → Router de mensagens envia pacote estruturado por Mesh/DTN (`A → B → C`) até nó com internet sincronizar com a central.
+- **Produto Agora:** **Agora Conversational AI Engine + Agora RTC** (conversação por voz com baixa latência, barge-in, invocação do orquestrador de ferramentas e canal de voz direto Operador CCO ↔ Motorista), combinados com **Agora Signaling / Chat** (ou entrega em tempo real dos eventos estruturados para outros motoristas e painel da Central) e **Agora AI Noise Suppression** (ruído de cabine).
+- **Fluxo:** Microfone do motorista → Agora RTC / Conversational AI (STT → LLM + Orquestrador de Intenções → TTS) → Persistência de contexto e fila idempotente → Roteador de destinos:
+  1. **Pessoal:** armazenado com isolamento de privacidade (padrão sem vazamento para o CCO).
+  2. **Trabalho (CCO):** ocorrência/atraso/resumo do trecho enviado ao painel da Central + canal de voz Agora RTC caso o operador ou motorista acione contato direto.
+  3. **Estrada (Comunidade):** alerta geolocalizado por rodovia/sentido transmitido em tempo real para motoristas próximos (narrado por voz no cliente B) e exibido no mapa do CCO.
 - **O que a demo mostra da integração:**
-  1. Conversa real em voz pelo celular `A` conectado à Agora com **barge-in** ao vivo e execução de ação profissional/pessoal refletida na interface/central.
-  2. Corte controlado da internet de `A`, transição limpa da sessão Agora para o modo de voz local sem perda de contexto da viagem e criação por voz de um pacote JSON de alerta (`aguardando encaminhamento`) que salta `A → B → C` até chegar à central web.
+  1. Conversa por voz fluida na Agora com **barge-in** ao vivo.
+  2. Extração de alerta de acidente com confirmação por voz e **chegada em tempo real por voz no Motorista B** + atualização instantânea no **painel da Central (CCO)**.
+  3. Isolamento comprovado de uma nota **Pessoal** vs. ocorrência de **Trabalho**, mais um cenário de **recuperação de falha** (dado faltante ou reconexão de fila) e entrada de voz do operador CCO via Agora RTC.
 
 ## Escopo para ~24h
 
 - **Demo path (o que a banca vê, 2 min):**
-  1. **Online via Agora + Barge-in:** Celular `A` conectado conversa com o copiloto via Agora, interrompe a fala do agente (barge-in) e solicita uma ação profissional/pessoal; o agente executa e exibe o resultado.
-  2. **Perda de conexão e continuidade local:** Internet do Celular `A` é desligada de forma controlada (mantendo Bluetooth/Wi-Fi para transporte local); `A` informa mudança de modo por voz sem perder fatos-chave da viagem.
-  3. **Alerta por voz offline:** Motorista em `A` diz: *"RODAR, houve um acidente na rodovia, preciso avisar os outros motoristas"*; o app gera o pacote estruturado com status `aguardando encaminhamento`.
-  4. **Mesh / Store-and-forward (`A → B → C`):** `A` transfere o pacote para `B` (offline) por proximidade; `B` persiste e retransmite para `C`.
-  5. **Gateway online e entrega à Central:** `C` (com internet) entrega o alerta ao backend; o painel da central exibe a ocorrência recebida e propaga o ACK quando houver conectividade oportunista.
-- **Simulado / mockado:** coordenadas/trecho de rodovia no payload de exemplo; caso 3 aparelhos Android físicos não estejam simultaneamente disponíveis para algum salto, qualquer nó simulado será explicitamente declarado (prioridade P0 é demonstrar com dados reais entre celulares); integrações externas como WhatsApp, telefonia e rádio PX 27 MHz **não** fazem parte do MVP.
-- **Preexistente:** modelos abertos candidatos (`whisper.cpp` / Android SpeechRecognizer, `llama.cpp` quantizado, Android TTS), SDKs da Agora e API Google Nearby Connections _(preencher bibliotecas/templates adicionais do time se houver)_.
-- **Maior risco técnico:** coordenar no mesmo app Android o domínio de áudio/microfone entre a sessão Agora RTC/Conversational AI e o fallback STT/TTS local, além da estabilidade de descoberta/transferência do Google Nearby Connections em modo offline entre `A → B → C` dentro dos 2 minutos de demo.
+  1. **Conversa Agora + Barge-in + Alerta Estrada:** Motorista A conversa com o copiloto via Agora, interrompe a resposta (barge-in) para relatar um acidente no km 230 e confirma por voz o envio.
+  2. **Comunidade + CCO em tempo real:** Motorista B (segundo cliente na mesma rodovia/sentido) recebe o alerta narrado por voz; o evento aparece simultaneamente na fila/mapa do painel do CCO.
+  3. **Trabalho vs. Pessoal (Privacidade):** Motorista A registra um atraso operacional (visível no CCO com status confirmado) e uma nota pessoal para a família (que permanece estritamente privada no app do motorista).
+  4. **Falha, Recuperação e Contato CCO:** Demonstração de recuperação quando um comando falha/oscila (status honesto de fila → entrega confirmada) e abertura de canal de voz Agora RTC entre o operador do CCO e o motorista.
+- **Simulado / mockado:** coordenadas GPS, rodovia/sentido e dados cadastrais da viagem/transportadora; dois clientes (notebooks/celulares) representando dois caminhões e o painel web representando o CCO.
+- **Preexistente:** SDKs e documentação oficial da Agora (`agora@agora-skills` / MCP).
+- **Maior risco técnico:** latência e naturalidade do português no pipeline Agora Conversational AI (`< 2 s` com barge-in confiável) — mitigado testando o canal de voz na Fase 1 com LLM/TTS reserva configurável por variável de ambiente.
 
 ## Validação e evolução (C5 · 10%)
 
-- **Como testamos durante o hackathon:** benchmark em aparelho Android real (latência da conversa Agora, tempo de detecção de queda de conexão, consumo de RAM/bateria do pipeline local e tempo de transferência do pacote estruturado `A → B → C` com teste de deduplicação/idempotência). _(sugestão: incluir rodada de testes de voz com participantes de outras equipes para medir taxa de acerto de intenção e barge-in)_.
+- **Como testamos durante o hackathon:** rodada de testes com integrantes de outras equipes (6+ interações) medindo latência de resposta por voz, funcionamento do barge-in, precisão do roteador entre Trabalho/Pessoal/Estrada (**zero vazamento** de falas pessoais para o CCO) e recuperação limpa após falha simulada.
 - **Limitações conhecidas:**
-  - Conversar com a IA **não** previne microssono nem substitui descanso (ao relato de sonolência, o sistema orienta parada segura).
-  - A rede mesh/oportunista não tem entrega em tempo garantido e **não** substitui canais oficiais de emergência (190/191/193/SAMU).
-  - A transição online → offline não mantém a mesma sessão Agora aberta no meio de uma frase; faz retomada ordenada a partir do último turno persistido com aviso breve.
-- **Próximos passos:**
-  - Integração com rádio PX (27 MHz) via interface de hardware/modem homologada pela Anatel e nós fixos em postos/transportadoras.
-  - Criptografia ponta a ponta do payload roteado por terceiros (deixando apenas metadados mínimos para roteamento) e filtros avançados de geofencing/sentido da via.
-  - Integrações reais com mensageiros pessoais (mediante permissão) e dados operacionais de rotas/clima/trânsito.
+  - O MVP do hackathon opera online sobre a rede da Agora (com fila local para oscilações curtas, mas sem operação conversacional totalmente offline).
+  - Conversar com a IA **não** previne microssono nem substitui descanso regulamentar (ao relato de sonolência, o copiloto orienta parada segura).
+  - Alertas colaborativos **não** substituem canais oficiais de emergência (190/191/193/SAMU).
+- **Próximos passos (Pós-Hackathon):**
+  - **Modo de voz offline no dispositivo:** STT/TTS local + modelo pequeno quantizado (`llama.cpp` / `whisper.cpp`) para manter comandos essenciais de voz em zonas sem cobertura celular.
+  - **Rede oportunista Mesh/DTN (`A → B → C` store-carry-forward):** retransmissão de pacotes compactos de alerta entre veículos próximos (via Nearby Connections / Wi-Fi Direct / BLE ou LoRa) até alcançar um nó com internet.
+  - **Integração com rádio PX (27 MHz) e hardware dedicado:** interface homologada pela Anatel / Agora ConvoAI Device Kit na cabine e nós fixos em postos e bases de transportadoras.

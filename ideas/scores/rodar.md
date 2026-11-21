@@ -1,39 +1,38 @@
-# Judge: rodar, 2026-11-21 13:22
+# Judge: rodar, 2026-11-21 13:26
 
-**Nota estimada: 3,65 / 5** · Eliminatórios: 2 RISCOS (E2, E3)
+**Nota estimada: 3,90 / 5** · Eliminatórios: OK (1 RISCO de atenção em E5/E8 no README final)
 
 ## Alertas
-- **RISCO E2 (Uso funcional da Agora demonstrado):** O diferencial central proposto (rede mesh/DTN offline `A → B → C` via Google Nearby Connections + STT/TTS local) roda **fora** da Agora. Se o time gastar a maior parte das 24h construindo multi-hop Android e o modo online com Agora ficar raso ou secundário nos 2 minutos de vídeo, a nota de C2 despenca e há risco no eliminatório E2. A Agora precisa brilhar na primeira metade da demo (voz fluida, barge-in, tool calling/roteamento e entrega na central).
-- **RISCO E3 (Prazo 22/11 12:00):** Escopo combina app Android (React Native/nativo), Agora RTC/Conversational AI, STT/LLM/TTS offline no aparelho, Google Nearby Connections multi-hop (`A → B → C`) e painel web da central. Alto risco de não fechar o vertical slice completo em ~24h se não travar o escopo no P0 imediatamente.
+- **Atenção técnica (Fase 1):** Validar imediatamente a latência (`< 2 s`) e a qualidade do português no **Agora Conversational AI Engine** com barge-in; manter LLM/TTS reserva trocável por variável de ambiente.
+- **RISCO E5 / E8 (Declaração no README):** Lembrar de declarar explicitamente no `README.md` de entrega os dados simulados (coordenadas GPS, rodovia/km, dois clientes simulando caminhões) e os SDKs/componentes preexistentes.
 
 ## Pontuação
 | # | Critério | Peso | Nota | Justificativa |
 |---|---|---|---|---|
-| C1 | Voz e interação | 25 | 4 | O diálogo e o demo path cobrem conversa fluida via Agora, interrupção (*"Corta isso — avisa a central..."*) e recuperação de falha na queda de internet com transição ordenada de microfone; falta apenas definir latência medida e fechar se o fallback offline será comando local ou LLM. |
-| C2 | Execução + Agora | 25 | 3 | Agora RTC + Conversational AI estão no caminho principal do modo online, mas metade da arquitetura (STT/TTS local + Nearby Connections `A → B → C`) não usa SDKs da Agora e ainda depende de validar compatibilidade de SDKs no Android. |
-| C3 | Relevância do problema e impacto | 20 | 4 | Público principal bem recortado (caminhoneiro vinculado a transportadora com CCO usando Android) e dor real (zonas de sombra em rodovias + risco de digitar dirigindo), com postura ética madura sobre fadiga e emergência. |
-| C4 | Inovação e diferenciação | 15 | 4 | Unificar entrada única por voz (Trabalho/Pessoal/Estrada) com degradação graciosa para voz local e store-and-forward oportunista entre caminhões (`A → B → C`) cria um diferencial forte onde apps puramente online falham. |
-| C5 | Validação e potencial de evolução | 10 | 3 | Limitações conhecidas (microssono, entrega DTN não garantida, regulação Anatel para rádio PX 27 MHz) são muito honestas e técnicas, mas falta um protocolo concreto de validação com usuários/testadores externos e métricas-alvo durante o hackathon. |
-| C6 | Clareza da apresentação | 5 | 4 | O roteiro ponta a ponta conta uma história clara e fácil de visualizar pela banca, mas condensar conversa Agora + barge-in + queda de rede + salto `A → B → C` + painel da central em 2 minutos exigirá corte cirúrgico. |
-| | **Total** | 100 | **3,65** | Σ(nota×peso)/100 = (4×25 + 3×25 + 4×20 + 4×15 + 3×10 + 4×5) / 100 = 365 / 100 |
+| C1 | Voz e interação | 25 | 4 | O diálogo e o roteiro de demo mostram conversa natural, interrupção ao vivo (*"Espera — acabou de ter um acidente..."*), confirmação auditiva antes de publicar e recuperação de falha (dado faltante + fila com status honesto). |
+| C2 | Execução + Agora | 25 | 4 | Com a decisão de mover voz offline e rede mesh para *Próximos passos*, 100% do fluxo crítico do MVP roda sobre a Agora (Conversational AI Engine + RTC para contato CCO ↔ Motorista + Signaling/Chat para alertas em tempo real e fila + AI Noise Suppression). |
+| C3 | Relevância do problema e impacto | 20 | 4 | Público e dor muito claros (caminhoneiro vinculado a transportadora com CCO que hoje digita em rastreador dirigindo e sofre com isolamento e falta de alertas na via), com postura ética exemplar sobre fadiga e privacidade. |
+| C4 | Inovação e diferenciação | 15 | 4 | Entrada única por voz sem troca manual de modo, roteamento nas 3 frentes (**Trabalho**, **Pessoal**, **Estrada**) com privacidade pessoal por padrão e confirmação por voz para destinos externos, além da ponte de voz RTC com o CCO. |
+| C5 | Validação e potencial de evolução | 10 | 3 | Plano de teste com 6+ interações de outras equipes medindo latência, barge-in e zero vazamento de dados pessoais, somado a um roadmap pós-hackathon muito bem fundamentado (voz offline, Mesh/DTN `A → B → C` e rádio PX 27 MHz). |
+| C6 | Clareza da apresentação | 5 | 4 | Demo path de 4 passos cabe com folga e impacto nos 2 minutos de vídeo, mostrando 2 motoristas + painel do CCO interagindo em tempo real por voz. |
+| | **Total** | 100 | **3,90** | Σ(nota×peso)/100 = (4×25 + 4×25 + 4×20 + 4×15 + 3×10 + 4×5) / 100 = 390 / 100 |
 
 ## Eliminatórios
 | # | Regra | Status | Nota |
 |---|---|---|---|
-| E1 | Equipe 3-5 presentes | N/A ainda | Confirmar lista final de integrantes inscritos e presentes. |
-| E2 | Uso funcional da Agora demonstrado | RISCO | Agora é usada no modo online, mas a parte offline/mesh não passa pela Agora; garantir que a Agora seja o coração visível da experiência de voz e não coadjuvante do Nearby Connections. |
-| E3 | Entrega até 22/11 12:00 BRT | RISCO | Empilhar Agora + LLM/STT offline + Nearby Connections multi-hop em 3 celulares Android + Central Web em <24h é ambicioso; seguir estritamente o corte P0 do `RODAR-CONTEXT.md`. |
-| E4 | Repositório público na entrega | OK | Repositório `chapahalls/chapahalls-ideas` já é público. |
-| E5 | Componentes preexistentes declarados | RISCO | Declarar explicitamente no `README.md` final quaisquer modelos locais (`whisper.cpp`, `llama.cpp`), SDKs e templates utilizados. |
-| E6 | Licenças e ativos autorizados | OK | Apenas SDKs oficiais e modelos abertos previstos. |
-| E7 | Sem credenciais ou dados pessoais | OK | Payload de exemplo usa dados fictícios e pseudônimos. |
-| E8 | Simulações identificadas | OK | Documento já prevê declarar coordenadas fictícias e eventual nó simulado caso não haja 3 celulares físicos na demo. |
+| E1 | Equipe 3-5 presentes | OK | Jeferson, Henry e Lucas alinhados no escopo. |
+| E2 | Uso funcional da Agora demonstrado | OK | Agora é o núcleo de ponta a ponta da demo (voz com IA, barge-in, alertas entre motoristas e canal RTC com o CCO). |
+| E3 | Entrega até 22/11 12:00 BRT | OK | Escopo enxuto e totalmente alcançável em ~24h após o corte de LLM offline e mesh/DTN do MVP. |
+| E4 | Repositório público na entrega | OK | Repositório público na org `chapahalls`. |
+| E5 | Componentes preexistentes declarados | RISCO | Garantir seção explícita no `README.md` final listando SDKs e assets preexistentes. |
+| E6 | Licenças e ativos autorizados | OK | Uso de SDKs oficiais da Agora. |
+| E7 | Sem credenciais ou dados pessoais | OK | Chaves apenas em `.env` e dados de viagem/localização fictícios. |
+| E8 | Simulações identificadas | OK | Simulações de GPS/rodovia e clientes representando caminhões já mapeadas para declaração no `README.md`. |
 
 ## Maior retorno
-1. **Amarrar a Agora também na ponta final da recuperação (`C → Central → Motorista`) e detalhar os produtos Agora no fluxo (ex.: Conversational AI Engine + Signaling/RTM ou RTC na Central):** C2 3→4 = **+0,25** (e elimina o risco de a banca achar que o projeto é sobre Bluetooth/Nearby e não sobre Agora).
-2. **Simplificar o modo voz offline no P0 para STT/TTS nativo do Android com classificador leve de intenção (sem `llama.cpp` no caminho crítico) e garantir latência Agora `< 1,5 s` com barge-in + transição online→offline testada ao vivo:** C1 4→5 = **+0,25**.
-3. **Definir protocolo de validação durante o hackathon com N testadores e métricas objetivas (latência online, tempo de handoff offline, tempo de salto `A → B → C`, taxa de acerto do orquestrador):** C5 3→4 = **+0,10**.
+1. **Provar na demo ao vivo latência `< 1,5 s`, barge-in instantâneo e recuperação de falha real (ex.: fala incompleta + reconexão de evento enfileirado com atualização ao vivo no CCO):** C1 4→5 = **+0,25**.
+2. **Demonstrar integração multi-produto Agora consistente (Conversational AI + Signaling/Chat + operador do CCO entrando por voz via Agora RTC no mesmo canal do motorista):** C2 4→5 = **+0,25**.
+3. **Executar e documentar os resultados reais com 6+ testadores externos (latência média, taxa de acerto do roteador e zero vazamento de falas pessoais):** C5 3→4 = **+0,10**.
 
 ## Observações
-- Excelente maturidade na seção de segurança e responsabilidade (não prometer prevenção de microssono por conversa com IA e não posicionar mesh oportunista como substituto de 190/193). Isso protege o time contra questionamentos duros da banca.
-- Há forte sinergia com a ideia `parceiro-de-estrada` (PR #1): ambas compartilham o domínio (caminhoneiros) e as 3 frentes (Trabalho/Corporativo, Pessoal, Estrada/Comunidade). Vale decidir em equipe se o MVP une a riqueza de produtos Agora do `parceiro-de-estrada` com o salto oportunista `A → B → C` (P0 enxuto) do `RODAR`.
+- O corte de **operação offline** e **rede mesh/DTN** para a seção de *Próximos passos (P2)* subiu a nota estimada de **3,65 para 3,90**, eliminou o risco de E2/E3 e alinhou a visão arquitetural do `RODAR` com a proposta `parceiro-de-estrada` (PR #1), permitindo ao time unificar as duas frentes e partir para o `/kickoff`.
