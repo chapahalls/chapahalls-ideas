@@ -17,15 +17,28 @@ O motorista conversa em linguagem natural e o copiloto identifica intenções, e
 
 **Decisão de escopo para o Hackathon (24h):** Para garantir um protótipo funcional, fluido e 100% aderente aos critérios C1 e C2 (50% da nota), o **MVP do hackathon foca na experiência online centrada na Agora** (Conversational AI + RTC/Signaling/Chat, barge-in, orquestração de intenções nas 3 frentes — **Pessoal**, **Corporativa/CCO** e **Comunidade** —, companhia ativa contra solidão/sonolência e painel do CCO). A **operação com voz local offline (STT/LLM/TTS embarcado)** e a **rede oportunista de dispositivos (mesh/DTN, store-and-forward)** — bem como a integração com rádio PX 27 MHz — ficam documentadas como **visão de evolução e diferencial de roadmap pós-hackathon (Fase 2)**.
 
-## 2. Problemas a resolver
+## 2. Problemas a resolver e Métricas Verificadas (Fonte: [`ideas/parceiro-de-estrada/metricas.md`](ideas/parceiro-de-estrada/metricas.md))
 
-1. **Solidão e sonolência ao volante:** o caminhoneiro passa dias longe de casa e horas seguidas sozinho na cabine; a monotonia e o isolamento contribuem diretamente para a fadiga e para altos índices de acidentes causados por sonolência.
-2. **Distância de familiares e amigos:** dificuldade de manter contato frequente e seguro com a família e amigos durante longas jornadas sem usar o celular nas mãos.
-3. **Comunicação corporativa engessada e perigosa com o CCO:** dificuldade de explicar ao CCO a real situação da viagem (motivo real de um atraso de carga, problema mecânico ou retenção), hoje limitada a macros frias digitadas no rastreador com o caminhão em movimento.
-4. **Falta de alertas em tempo real na mesma via (Comunidade):** avisos sobre acidentes, engarrafamentos, interdições e perigos na pista demoram a chegar aos outros caminhoneiros que vêm logo atrás no mesmo trecho.
-5. **Trechos com cobertura intermitente:** necessidade de fila/recuperação de mensagens (no MVP) e evolução futura para operação offline e rede mesh/DTN.
+> **Headline macro:** *"O Brasil anda de caminhão: 63% de toda a carga (>85% sem minério e combustíveis), 220 mil viagens por dia (1,4 bi de toneladas/ano, R$ 427 bi de receita). Quando eles param (greve de 2018), a produção industrial cai −11,0% em um mês."* (ILOS, CNI, ANTT 2025, IBGE/BC).
 
-**Segurança e responsabilidade:** o copiloto atua como companhia ativa para combater a solidão e monitora sinais de cansaço/lentidão na conversa para recomendar paradas seguras e acionar o CCO em caso de falta de resposta ou pedido de ajuda (atuando como camada preventiva de apoio, sem substituir o descanso obrigatório). Evitar distração visual e mensagens longas durante a condução.
+1. **Sonolência, jornada exaustiva e custo de sinistros:**
+   - Veículos de carga estão em **28% dos sinistros nas rodovias federais com menos de 5% da frota** (20.552 sinistros em 2024; custo de **R$ 5,1 bi/ano**, cerca de **4× o roubo de carga** de R$ 1,2 bi — ONTL/Infra S.A. 2026 e CNT).
+   - O custo médio de um sinistro fatal com veículo de carga é de **R$ 763,7 mil** (ONTL 2026) e acidentes representam **62% dos prejuízos de carga** (Pamcary 2024).
+   - Caminhoneiros dormem em média **6h48 por noite** (**42,5% dormem até 6h**, apesar de terem 8h36 disponíveis — CNT 2025, 800 entrevistas); **34,5% já cochilaram ao volante** (J. Bras. Pneumologia); **~28% usam estimulantes** (76% deles rebite — CNTA 2025 / MPT 2023); jornada média de **10h30/dia** (44,4% trabalham >10h e 19,5% >12h — CNT 2025).
+2. **Solidão e distância de familiares e amigos:**
+   - Apenas **22% costumam dormir em casa**; **72,8% dormem em postos de combustível** (CNT 2025).
+   - Entre autônomos, **56,5% ficam no máximo 4 dias seguidos em casa por mês** e chegam a passar **até 16 dias seguidos longe de casa** (CNT 2025 / CNTA 2025). Estudos internacionais (Monash 2023) mostram que a solidão dobra o risco de direção com fadiga severa, e motoristas já usam chamadas de voz longas para suportar o isolamento.
+3. **Espera não remunerada e comunicação corporativa perigosa com o CCO:**
+   - **41,3% passam a maior parte da jornada esperando carga ou descarga** (CNT 2025); **46,1% dos autônomos "sempre" esperam 5h ou mais**, e **84,7% deles não recebem a estadia** prevista na Lei 11.442/2007 (CNTA 2025). Desde a **ADI 5322 (STF, 2023)**, o tempo de espera conta como jornada.
+   - Hoje o motorista se comunica com o CCO digitando no **teclado de macros do rastreador**: estudos naturalísticos em caminhões provam que **digitar dirigindo aumenta em 23× o risco de evento crítico**, enquanto **falar em viva-voz não aumenta o risco (OR 0,65)** (VTTI/FMCSA).
+4. **Falta de alertas estruturados por voz na mesma via (Comunidade):**
+   - Avisos de acidentes, engarrafamentos e bloqueios hoje se perdem em grupos de WhatsApp (que exigem leitura/digitação ao volante) ou no rádio PX analógico.
+5. **Mercado, Escassez e "Por Que Agora" (2023–2027):**
+   - **Frota e Comprador:** ~4,1 milhões de caminhões (IBGE/Senatran); 769 mil autônomos (TAC) e 280 mil empresas (ETC, que detêm **66% dos veículos** — ANTT 2025); ~713 mil motoristas CLT (RAIS 2024). **88% das transportadoras têm dificuldade de contratar motoristas** (NTC) e o país perdeu ~1,2 milhão de habilitados C/E entre 2015 e 2025.
+   - **TAM / SAM / SOM:** **TAM Caminhão Brasil:** **R$ 0,5–2,0 bi/ano**; **SAM (frotas ETC com CCO):** **R$ 170–250 mi/ano** (a R$ 30–40/veículo/mês; 1.000 caminhões ≈ **R$ 420 mil/ano**, menos que o custo social de 1 sinistro fatal de R$ 763,7 mil); **SOM (5 anos):** **R$ 2,5–10 mi ARR**; **TAM Expandido** (somando ônibus rodoviário com 93 mil motoristas ANTT, frotas corporativas, ferrovia/Rumo e LatAm com ~2 mi veículos): **R$ 1,3–3,2 bi/ano** (até ~R$ 6 bi).
+   - **Gatilhos do "Por Que Agora":** (1) STF ADI 5322 (2023, espera é jornada) + NR-1 psicossocial (maio/2026); (2) custo de voz com IA caiu ~90% (`US$ 0,30/min` em 2024 → `US$ 0,007–0,091/min` em 2026); (3) cobertura 4G nas rodovias federais subindo de **36,6% para 58,9%** com o roaming obrigatório de 2027 (Anatel) + Starlink crescendo 80× no Brasil (**11,6 mil → 936,8 mil acessos**); (4) uso de smartphone entre caminhoneiros subiu de **32% para 82%**.
+
+**Ciência e responsabilidade (Modo Atenção):** em simulador (*Leeds, Applied Ergonomics 2025*), **responder perguntas em conversa ativa reduziu a sonolência (escala KSS) de 7,98 para 5,28**; alertas em cabine reduzem eventos de fadiga em **−66%**, e com aviso ao gestor/CCO chegam a **−94%** (Seeing Machines). Como >75% dos motoristas sonolentos ignoram ordens secas de parar (AAA 2023) e o benchmark de detecção de fadiga só pelo timbre da voz é de ~70% em laboratório (Interspeech 2011), o RODAR aciona o **Modo Atenção** por **tempo contínuo ao volante, janela de madrugada e quebra/lentidão de resposta na conversa**, acolhendo o motorista e sugerindo postos com o que ele realmente valoriza (**79% chuveiro, 67,8% restaurante, 55,8% estacionamento vigiado** — CNT 2025), escalando para voz direta (**Agora RTC**) com o CCO no nível 3.
 
 ## 3. Público e as 3 Frentes de Atuação
 
