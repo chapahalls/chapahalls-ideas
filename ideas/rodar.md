@@ -5,7 +5,7 @@
 - **Nota do judge:** 4,75 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
 - **Contexto e métricas completas:** [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md) · [`ideas/parceiro-de-estrada/metricas.md`](parceiro-de-estrada/metricas.md) · [`ideas/parceiro-de-estrada/mercado-e-evidencias.md`](parceiro-de-estrada/mercado-e-evidencias.md) · [`ideas/parceiro-de-estrada/expansao-e-por-que-agora.md`](parceiro-de-estrada/expansao-e-por-que-agora.md)
 
-> Copiloto de IA por voz para caminhoneiros que faz companhia ativa na estrada para combater a solidão e diminuir acidentes por sonolência, enquanto orquestra a comunicação em três frentes — **1. Pessoal** (familiares, amigos e Modo Atenção), **2. Corporativa** (relato real de atrasos/ocorrências ao CCO e diário de bordo não editável de espera) e **3. Comunidade** (alertas de acidentes e engarrafamentos na mesma via) — sem que o motorista tire as mãos do volante.
+> **Foco central:** **Soluciona os gargalos de comunicação manual no setor de transporte rodoviário e logística de cargas.** Copiloto de IA por voz que elimina a digitação manual em macros de rastreador (risco 23× maior), o uso manual de WhatsApp ao volante e os apontamentos manuais de doca, orquestrando a comunicação sem tirar as mãos do volante em três frentes — **1. Pessoal** (familiares, amigos e Modo Atenção contra solidão e sonolência), **2. Corporativa** (relato real de atrasos/ocorrências ao CCO e diário de espera não editável) e **3. Comunidade** (alertas de fim de fila e acidentes na mesma via).
 
 ## Problema e público (C3 · 20%)
 
