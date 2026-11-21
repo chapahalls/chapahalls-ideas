@@ -37,9 +37,10 @@ Pesquisa de 21/11/2026 para responder três perguntas: os caminhoneiros falam de
 
 ## 3. Segurança e acidentes
 
-- 🟡 Segundo o Anuário PRF 2025, sinistros com caminhões deixaram **mais de 2.800 mortos, 46% das mortes nas rodovias federais** ([Mecânica Online](https://mecanicaonline.com.br/2026/09/quase-metade-das-mortes-em-rodovias-federais-envolve-caminhoes-tecnologia-pode-reduzir-riscos/)). O número precisa ser conferido no anuário original antes de ir para slide.
+- 🟢 Veículos de carga estão em **28% dos sinistros nas rodovias federais** com menos de 5% da frota; sinistro fatal custa em média **R$ 763,7 mil** (ONTL/Infra S.A. 2026, dados PRF 2024). Detalhes em [mercado-e-evidencias.md](mercado-e-evidencias.md).
+- 🔴 "46% das mortes nas rodovias federais envolvem caminhões" (Anuário PRF 2025 via [Mecânica Online](https://mecanicaonline.com.br/2026/09/quase-metade-das-mortes-em-rodovias-federais-envolve-caminhoes-tecnologia-pode-reduzir-riscos/)): **não usar** até conferir no anuário original.
 - 🟡 De janeiro a julho de 2026 foram 1.681 mortes em sinistros com caminhões, alta de 4,5% sobre 2025 ([Portal do Trânsito](https://www.portaldotransito.com.br/noticias/mortes-em-sinistros-envolvendo-caminhoes-aumentam-nas-rodovias-federais-em-2026/)). A própria PRF diz que esses dados não permitem atribuir causa.
-- ⚠️ A PRF **não tem dado próprio** de sono ou fadiga como causa de acidente com caminhão. Não dizer na banca que "X% dos acidentes são por sono" no Brasil.
+- ⚠️ A PRF registra a causa "condutor dormindo" (4.524 menções em sinistros com veículos de carga nas rodovias concedidas), mas o período não é claro e um sinistro tem várias causas. Não dizer na banca que "X% dos acidentes são por sono" no Brasil. *(Corrigido: a versão anterior dizia que a PRF não tinha esse dado.)*
 
 ## 4. Comunicação
 
@@ -76,7 +77,7 @@ Usar só estes, todos 🟢 ou 🟡 confirmados:
 2. **~28% usam estimulantes para aguentar a jornada.** (CNTA 2025 e MPT 2023, números parecidos)
 3. **Só 22% dormem em casa; 72,8% dormem em postos.** (CNT 2025)
 4. **41% passam a maior parte do dia esperando carga ou descarga.** (CNT 2025)
-5. **Caminhões em ~46% das mortes nas rodovias federais.** (PRF 2025, conferir no anuário)
+5. **Veículos de carga em 28% dos sinistros nas federais, com menos de 5% da frota.** (ONTL/Infra S.A. 2026)
 
 ## 8. Lacunas e como validar hoje (C5 da banca)
 
