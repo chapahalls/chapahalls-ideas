@@ -1,8 +1,8 @@
 # Parceiro de Estrada
 
 - **Autor(es):** _(preencher)_
-- **Status:** rascunho
-- **Nota do judge:** _(preenchida por `/judge`)_
+- **Status:** avaliada
+- **Nota do judge:** 3,30 / 5 ([relatório](../scores/parceiro-de-estrada.md))
 
 > Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento e vai para um de três destinos — **Pessoal**, **Corporativo** (CCO da transportadora) ou **Comunidade** (outros caminhoneiros na mesma rodovia).
 
