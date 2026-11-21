@@ -71,7 +71,7 @@ Agente (Agora): Recado pessoal enviado para sua esposa. Essa mensagem é privada
 
 ## Validação e evolução (C5 · 10%)
 
-- **Como testamos durante o hackathon:** rodada de testes com integrantes de outras equipes (6+ interações) medindo latência de resposta por voz, funcionamento do barge-in, precisão do roteador entre **1. Pessoal**, **2. Corporativa (CCO)** e **3. Comunidade** (**zero vazamento** de conversas pessoais para o CCO) e detecção de lentidão/cansaço na conversa.
+- **Como testamos durante o hackathon:** bateria estruturada com **3 testadores × 5 cenários padronizados (15 interações medidas no total)** — (1) recado Pessoal, (2) atraso/espera para o CCO, (3) alerta de acidente na Comunidade, (4) interrupção/barge-in e (5) relato com dado faltante + Modo Atenção —, registrando em `docs/validacao.md` a latência média (`ms`), taxa de sucesso do barge-in, precisão do roteador (**0% de vazamento de conversas pessoais para o CCO**), limitação honesta da amostra (`n = 3`) e **aprendizados concretos** que geraram ajustes no protótipo antes da gravação do vídeo final.
 - **Limitações conhecidas:**
   - O MVP do hackathon opera online sobre a rede da Agora (com fila local para oscilações curtas, mas sem operação conversacional totalmente offline).
   - O acompanhamento conversacional contra solidão e sonolência atua como camada preventiva de engajamento e recomendação de parada segura, não substituindo o descanso regulamentar obrigatório.
