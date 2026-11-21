@@ -12,6 +12,10 @@ Arquivos desta pasta:
 |---|---|
 | `README.md` | A ideia no formato do `TEMPLATE.md` (para o `/judge`) |
 | [`planejamento.md`](planejamento.md) | Plano completo: frentes, arquitetura, CCO, stack Agora, escopo, cronograma, demo, riscos |
+| [`metricas.md`](metricas.md) | Resumo de todas as métricas pesquisadas, numa página |
+| [`mercado-e-evidencias.md`](mercado-e-evidencias.md) | Mercado (TAM/SAM/SOM), custo do problema, concorrentes, ciência, riscos, números para slide e Q&A da banca |
+| [`expansao-e-por-que-agora.md`](expansao-e-por-que-agora.md) | Resposta aos especialistas: TAM expandido e roadmap (ônibus, ferrovia/Rumo, LatAm), crescimento histórico, por que agora (Starlink, roaming, voz barata), resiliência logística, comparáveis (Legora) |
+| [`embasamento.md`](embasamento.md) | Dados sobre solidão, sono, jornada, comunicação e acidentes, com fontes, para o pitch e a banca |
 | [`historico-decisoes.md`](historico-decisoes.md) | Como a ideia evoluiu, o que foi descartado e por quê, pesquisa dos produtos Agora |
 
 ## Problema e público (C3 · 20%)
