@@ -8,7 +8,9 @@
 
 **Problema que resolvemos:** o gargalo da comunicação manual entre a cabine e a central. Hoje tudo o que o motorista informa passa pela mão de um operador, que ouve, interpreta e redigita em vários sistemas.
 
-Origem: retorno da mentoria (Terron / newhack, 21/11) — "escolham uma tarefa operacional repetitiva e demonstrem com segurança" — e o modelo da HappyRobot (agente de voz que termina a tarefa dentro do sistema). É um recorte da ideia [`parceiro-de-estrada`](parceiro-de-estrada/README.md), focado só no fluxo motorista ↔ central.
+Origem: retorno da mentoria (Terron / newhack, 21/11) — "escolham uma tarefa operacional repetitiva e demonstrem com segurança". É um recorte da ideia [`parceiro-de-estrada`](parceiro-de-estrada/README.md), focado só no fluxo motorista ↔ central.
+
+**Para quem:** a transportadora média brasileira, inclusive a que não tem TMS. Integração por conectores prontos para o que é padrão (EDI Proceda, TMS mais comuns); engenheiro em campo só nos primeiros clientes (ver *Integração e implantação*).
 
 ## Problema e público (C3 · 20%)
 
@@ -35,7 +37,7 @@ Origem: retorno da mentoria (Terron / newhack, 21/11) — "escolham uma tarefa o
   - Texto livre em vez de código fechado de ocorrência, com responsável e prazo.
   - Regras de eventos fiscais diferentes por estado ([ANTT](https://www.gov.br/antt/pt-br/assuntos/cargas/transporte-multimodal-de-cargas/trabalhos-publicados-pela-antt/webinar-antt-impactos-da-reforma-tributaria-multimodal-marcelo-czaya.pdf/@@download/file)).
   - Consulta manual a normas e procedimentos da empresa (avaria, recusa, parada não autorizada). Sem dado público de tempo gasto — perguntar nas entrevistas.
-- **Referência de mercado:** nos EUA, agentes de voz tiram 70–75% das ligações de rotina sem toque humano (U.S. Xpress) e liberam ~80 h/semana de conversa ([HappyRobot](https://www.happyrobot.ai/customer-story/u-s-xpress)); 28 motoristas por despachante ([MIT CTL 2021](https://dspace.mit.edu/bitstream/handle/1721.1/130951/Procter_Sousa_Jr_project_Goldilocks_and_the_Three_Dispatchers.pdf)). Números de "% do dia do despachante ao telefone" circulam sem estudo por trás ([levantamento 2026](https://ainora.lt/blog/transport-logistics-dispatch-call-statistics-2026)) — não usar.
+- **Referência de mercado:** 28 motoristas por despachante numa transportadora dos EUA ([MIT CTL 2021](https://dspace.mit.edu/bitstream/handle/1721.1/130951/Procter_Sousa_Jr_project_Goldilocks_and_the_Three_Dispatchers.pdf)); hora de caminhão em operação a US$ 90,89 em 2024 (ATRI, via [levantamento 2026](https://ainora.lt/blog/transport-logistics-dispatch-call-statistics-2026)). Números de "% do dia do despachante ao telefone" circulam sem estudo por trás (mesmo levantamento) — não usar.
 - **Falta medir no Brasil:** tempo do relato até a orientação e interações por ocorrência.
 - **Benefício:**
   - Motorista: relata uma vez e sai do impasse mais rápido.
@@ -99,7 +101,7 @@ Motorista: Recebi.
 | Ocorrência: impedimento, avaria, mecânica | Sim | **Sim** |
 | Consulta a normas e procedimentos (com fonte) | Sim | Sim, uma consulta |
 | Documentos: status de CT-e/MDF-e (só consulta) | Sim | Não (slide) |
-| Agendamento com destinatário (agente liga ao cliente) | Não | Não (slide; é o território da HappyRobot) |
+| Agendamento com destinatário (agente liga ao cliente) | Não | Não (slide) |
 | Frete de retorno com autônomos | Não | Não (slide) |
 
 ## Decisões aceitas (mentoria e banca)
@@ -110,16 +112,54 @@ Motorista: Recebi.
 - **Cenário estacionário:** a demo é com o motorista parado (CTB art. 252; voz não elimina distração).
 - **Sem inferência de fadiga pela voz.**
 
-## Concorrência e diferencial
+## 5 Porquês
 
-- **HappyRobot** já está no Brasil (escritório em São Paulo), mirando grandes empresas, com gasto mínimo de ~US$ 250 mil/ano, integrada a TMS e telefonia; fala principalmente empresa ↔ empresa por ligação ([Bloomberg Línea](https://www.bloomberglinea.com.br/startups/unicornio-de-agentes-de-ia-avaliado-em-us-12-bi-happyrobot-desembarca-no-brasil/), [Forkast](https://forkast.news/happyrobot-wants-1-2-billion-to-run-your-freight-by-voice/)).
-- **SimpliRoute** (agente liga para o motorista) e **Platform Science Virtual Tower** (áudio na cabine a partir de evento de risco) também operam no Brasil ([Mundo Logística](https://mundologistica.com.br/entrevistas/brasil-aposta-simpliroute-escalar-ia-logistica), [Mundo Logística](https://mundologistica.com.br/noticias/platform-science-lanca-virtual-tower-agente-de-ia-que-trata-riscos-da-frota-em-minutos)).
-- **Diferencial proposto:**
-  - Ponta motorista → central, iniciada pelo motorista, dentro da cabine.
-  - Transportadora média brasileira, inclusive sem TMS (painel próprio do CCO).
-  - Saída nos formatos que a operação já exige (OCOREN, status, eventos de risco).
-  - Norma da empresa consultada com fonte.
-- **Ponto fraco:** nada disso é barreira técnica; a defesa é foco no segmento médio e no fluxo motorista → central.
+**Problema observado:** o motorista fica parado esperando orientação, e o operador do CCO redigita cada ocorrência em vários sistemas.
+
+| # | Por quê? | Resposta | Evidência | O que no fluxo ataca |
+|---|---|---|---|---|
+| 1 | Por que o motorista fica esperando e o operador redigita? | Porque o relato chega solto (ligação, áudio, texto) e o operador precisa interpretar antes de agir | Central real: operador analisa e liga para o motorista ([Movecta](https://mundologistica.com.br/noticias/movecta-implanta-central-controle-reduz-custos-operacoes-rodoviarias)) | Evento estruturado; fila do CCO só com exceções |
+| 2 | Por que o relato chega solto? | Porque os canais não capturam o contexto (viagem, km, motivo): a macro é rígida e o WhatsApp é livre demais | Macros com sequência fixa ([Michelin KMS](https://connectedfleet.michelin.com/hubfs/MANUAL_KMS-v-4.2.0.pdf)) | Agente pergunta na hora o dado que faltou |
+| 3 | Por que o motorista não manda completo? | Porque ele não pode preencher formulário (está dirigindo ou fora da cabine com a nota na mão), e cada sistema pede um formato | Cada embarcador com sua tabela de códigos ([TranspNet](https://www.transp.net/blog/posts/ocorrencias-de-entrega-como-padronizar-tratar/)) | Voz no app; motorista só confirma |
+| 4 | Por que cada formato vira trabalho do operador? | Porque TMS, EDI do embarcador e gerenciadora não se falam, e não há camada que traduza um relato para todos | Dados em planilhas, ERPs, WhatsApp e sistemas desconectados ([TranspNet](https://www.transp.net/blog/posts/torre-de-controle-logistico/)) | Backend valida e distribui para TMS, OCOREN e gerenciadora |
+| 5 | Por que não existe essa camada? | Porque a integração cabine ↔ sistemas foi feita para dados de máquina (GPS, macros), não para a linguagem do motorista; e integrar cada TMS sob medida é caro para a transportadora média | Hipótese — validar nas entrevistas com despachante e TI | Agente de voz + conectores prontos (EDI Proceda, TMS comuns) |
+
+**Causa raiz:** falta uma camada que transforme a fala do motorista em evento validado, no formato que cada sistema exige, a um custo que a transportadora média pague.
+
+**A validar nas entrevistas:** os porquês 3 e 5 (o motorista realmente não manda completo por falta de condição? a TI confirma que integrar é o custo que trava?).
+
+## Integração e implantação
+
+**Arquitetura:** `App (voz Agora) → Backend → [TMS | EDI OCOREN | Gerenciadora | Painel do CCO]`
+
+**O que o backend valida antes de distribuir o evento:**
+1. Quem fala: motorista autenticado e vinculado àquela viagem.
+2. A viagem existe: número, parada e cliente batem com o TMS.
+3. A ação é permitida: registrar ocorrência sim; mudar destino ou executar evento fiscal não.
+4. O evento está completo: tipo, km, sentido e código válido para aquele embarcador.
+5. Não é duplicado: mesmo identificador de operação não entra duas vezes.
+6. O motorista confirmou: sem confirmação, nada sai.
+
+**Conectores prontos (produto):**
+
+| Sistema | Conector |
+|---|---|
+| Embarcador | EDI OCOREN no padrão Proceda, o mais usado no Brasil ([Bsoft](https://bsoft.com.br/produtos/software-controle-transportadoras/edi-proceda)), com a tabela de códigos de cada cliente configurável |
+| TMS mais comuns (Senior, TOTVS, Bsoft) | API quando existir; senão, arquivo |
+| Gerenciadora de risco | Pela integração que o TMS já tem com ela |
+| Transportadora sem TMS | Painel próprio do CCO, sem integração |
+
+**Engenheiro em campo (FDE) só nos primeiros clientes:** o objetivo é aprender e transformar o que se repete em conector padrão.
+
+| Semana | O que o engenheiro faz | Entrega |
+|---|---|---|
+| 1. Mapear | Acompanha o CCO; lista as ocorrências mais frequentes, códigos de cada embarcador e procedimentos | Mapa do fluxo atual + linha de base (tempo, interações) |
+| 2. Conectar | Liga TMS, EDI e gerenciadora (conector pronto ou ajuste); carrega as normas | Integração em ambiente de teste |
+| 3. Testar | Simulação com motorista parado e operadores reais; ajusta códigos e permissões | Teste aprovado pelo CCO |
+| 4. Piloto | 10–20 caminhões em uma rota | % de ocorrências sem ligação; tempo até a orientação |
+| Depois | O que foi sob medida vira conector; próximos clientes entram sem engenheiro dedicado | Contrato por caminhão ativo |
+
+**Concorrência no Brasil:** SimpliRoute (agente liga para o motorista) e Platform Science Virtual Tower (áudio na cabine a partir de evento de risco) ([Mundo Logística](https://mundologistica.com.br/entrevistas/brasil-aposta-simpliroute-escalar-ia-logistica), [Mundo Logística](https://mundologistica.com.br/noticias/platform-science-lanca-virtual-tower-agente-de-ia-que-trata-riscos-da-frota-em-minutos)). Diferencial: a ponta motorista → central, iniciada pelo motorista; a transportadora média, inclusive sem TMS; saída nos formatos que a operação já exige; norma da empresa com fonte. Ponto fraco: nada disso é barreira técnica — a defesa é foco no segmento médio e nos conectores prontos.
 
 ## Como a Agora entra (C2 · 25%)
 
