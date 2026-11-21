@@ -41,7 +41,10 @@ Agente (Agora): Recado pessoal enviado para sua esposa. Essa mensagem é privada
 ```
 
 - **Interrupção (barge-in):** o motorista corta o agente a qualquer momento no meio da fala (ex.: durante uma conversa de companhia quando surge um acidente ou fim de fila à frente); o agente interrompe o áudio imediatamente e prioriza a ocorrência.
-- **Dois modos (swap por voz) e Lembrete na Parada:** Pessoal e Corporativo separados como o perfil pessoal e o de trabalho do Android; no modo Corporativo, pedir para enviar recado pessoal é bloqueado e vira lembrete automático para a próxima parada real (> 5 min fora da pista ou motor desligado), onde a família ouve/responde por link Agora. Tom coloquial de companheiro de estrada (não amigo nem terapeuta).
+- **Modelo de Conta estilo GitHub + Swap por voz (`Pessoal` ⇄ `Corporativo`) com `Comunidade` aberta nos dois modos:**
+  - O motorista cria sua **conta pessoal na plataforma** (gratuita e dele, mesmo se mudar de empresa) e pode vincular-se à **Organização Corporativa (CCO)** da transportadora para a qual trabalha.
+  - Alterna de forma fluida por voz entre **Modo Pessoal** e **Modo Corporativo** (como o perfil pessoal e o de trabalho do Android): no modo Corporativo, envio pessoal é bloqueado e vira lembrete automático para a próxima parada real (> 5 min fora da pista ou motor desligado).
+  - Já a frente **Comunidade / Sociedade** fica **aberta e ativa nos dois modos**: tanto no modo Pessoal quanto no Corporativo, o motorista pode emitir, confirmar e receber alertas de pista por voz.
 - **Ciclo de vida do alerta na Comunidade (estilo Waze por voz):** foco em **fim de fila / pista parada** e acidentes (sem blitz); validade por tipo; quem passa depois no mesmo trecho/sentido confirma (`"sim"` renova) ou nega com **confirmação dupla do `"não"`** e remoção por peso/reputação (silêncio mantém o alerta).
 - **Falha e recuperação:**
   - *Informação incompleta ou ruído:* se faltar um dado essencial do alerta ou do reporte ao CCO (como km, sentido ou motivo do atraso), o agente pergunta apenas o dado que faltou.

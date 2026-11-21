@@ -6,12 +6,14 @@
 
 ## 1. Resumo executivo
 
-**Nome provisório:** RODAR — “Sua voz conecta todos os caminhos” / “Você nunca está sozinho na estrada”.
+**Nome provisório de trabalho:** RODAR / Parceiro de Estrada _(nome comercial definitivo do app será definido pelo time posteriormente)_.
 
-RODAR é um copiloto de IA por voz para caminhoneiros que atua em **três frentes integradas**:
+O projeto é um copiloto de IA por voz para caminhoneiros que atua em **três frentes integradas**, estruturadas sob um **modelo de conta e negócio inspirado no GitHub**:
+- **Modelo de Conta & Negócio estilo GitHub:** o caminhoneiro cria e é dono da sua **conta pessoal na plataforma** (gratuita e vitalícia: acompanha o motorista mesmo que ele troque de transportadora ou atue como autônomo, preservando seus contatos pessoais e sua reputação na Comunidade). Quando opera para uma transportadora (ETC), sua conta é vinculada à **Organização Corporativa (CCO)** daquela empresa, que paga a assinatura B2B.
+- **Swap fluido por voz + Comunidade aberta nos dois modos:** o motorista alterna com fluidez entre o **Modo Pessoal** e o **Modo Corporativo** pela própria voz (`"modo pessoal"` ⇄ `"modo corporativo"`), mantendo isolamento total entre vida privada e empresa, enquanto o **Modo Comunidade / Sociedade** (alertas da rodovia) **permanece aberto e ativo em ambos os modos**:
 1. **Pessoal & Companhia:** facilita a comunicação por voz com **familiares e amigos** (já que o motorista passa muito tempo longe de casa) e atua como um **copiloto companheiro de viagem** para combater a solidão na cabine, manter o motorista ativo e engajado e **reduzir os índices de acidentes causados por sonolência** (sugerindo paradas seguras e acionando apoio quando necessário).
 2. **Corporativa (CCO):** otimiza a comunicação direta com o **Centro de Controle Operacional (CCO)** da transportadora, permitindo que o caminhoneiro descreva por voz a **real situação que está passando** (se a carga vai atrasar, fila na descarga/balança, problema mecânico ou imprevisto na rota) sem precisar digitar em rastreadores enquanto dirige.
-3. **Comunidade:** conecta caminhoneiros que estão passando pela **mesma via**, permitindo reportar e receber em tempo real avisos e alertas por voz sobre **acidentes, engarrafamentos, bloqueios e riscos na pista**.
+3. **Comunidade / Sociedade (Transversal aos dois modos):** conecta caminhoneiros que estão passando pela **mesma via**, permitindo reportar e receber em tempo real avisos e alertas por voz sobre **fim de fila, acidentes, engarrafamentos, bloqueios e riscos na pista**, estando o motorista no modo Pessoal ou no modo Corporativo.
 
 O motorista conversa em linguagem natural e o copiloto identifica intenções, executa ações e escolhe o canal de comunicação adequado sem exigir troca manual de modo.
 
