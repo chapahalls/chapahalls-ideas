@@ -9,3 +9,4 @@ O agente `judge` pontua cada uma com a rubrica de [`HACKATHON.md`](../HACKATHON.
 
 | Ideia | Nota (1-5) | C1 Voz | C2 Agora | C3 Problema | C4 Inovação | C5 Validação | C6 Clareza | Eliminatórios | Status |
 |---|---|---|---|---|---|---|---|---|---|
+| [`rodar`](rodar.md) | **3,65** | 4 | 3 | 4 | 4 | 3 | 4 | 2 RISCOS (E2, E3) | avaliada |
