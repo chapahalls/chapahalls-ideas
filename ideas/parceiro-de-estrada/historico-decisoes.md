@@ -70,8 +70,14 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **TAC:** o limite de 5h30 (CTB 67-C) vale para empregado e autônomo; o uso da ferramenta pelo TAC depende do contrato de cada transportadora, então fica fora do escopo.
 - Fontes: [Lei 13.103](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13103.htm), [CTB art. 67 comentado](https://ctbdigital.com.br/artigo/art67/), [ANTT nota técnica estadia](https://www.gov.br/antt/pt-br/assuntos/cargas/arquivos/arquivos-pagamento-do-tempo-adicional-de-carga-e-descarga/sei_31291793_nota_tecnica___antt_3335.pdf/@@download/file), [pesquisa CNTA 2025](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes), [TJMT](https://www.legjur.com/jurisprudencia/eme/908.2495.7726.5333).
 
+## 7. Unificação de contextos (Jeferson, Henry e Lucas — RODAR / Parceiro de Estrada)
+
+- **Convergência:** os levantamentos de arquitetura do `RODAR-CONTEXT.md` (Jeferson) e o planejamento/pesquisa de mercado de `ideas/parceiro-de-estrada/` (Henry e Lucas) foram unificados sob o nome **RODAR / Parceiro de Estrada** nas **3 frentes**: **1. Pessoal & Companhia (Modo Atenção + Família/Amigos)**, **2. Corporativa (CCO + Diário de espera não editável)** e **3. Comunidade (Alertas na mesma via)**.
+- **Offline e Mesh/DTN no Roadmap Futuro:** decisão conjunta de manter o MVP de 24h 100% focado na stack online da **Agora** (Conversational AI + RTC + Signaling/Chat + AI Noise Suppression), movendo a operação de voz offline no Android (`whisper.cpp`/`llama.cpp`) e a rede oportunista **Mesh/DTN (`A → B → C` store-carry-forward)** para *Próximos passos (P2)* junto com LoRa e Rádio PX 27 MHz.
+- **Validação e Vídeo Demo:** protocolo ajustado para a realidade do time no hackathon (**3 testadores × 5 cenários = 15 interações medidas** + registro de aprendizados concretos em `docs/validacao.md`), com gravação do **vídeo demo de 2 minutos** assim que o produto estiver solidificado.
+
 ## Pendências
 
-- Nome do time e integrantes
-- Testar português no Conversational AI Engine
-- Escolher o LLM reserva
+- **Time definido:** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`) e Lucas (`@LucasLCO`)
+- Testar português no Conversational AI Engine (Fase 1)
+- Escolher o LLM reserva (Fase 1)
