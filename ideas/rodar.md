@@ -2,7 +2,7 @@
 
 - **Autor(es):** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`)
 - **Status:** avaliada
-- **Nota do judge:** 4,60 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
+- **Nota do judge:** 4,75 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
 - **Contexto e métricas completas:** [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md) · [`ideas/parceiro-de-estrada/metricas.md`](parceiro-de-estrada/metricas.md) · [`ideas/parceiro-de-estrada/mercado-e-evidencias.md`](parceiro-de-estrada/mercado-e-evidencias.md) · [`ideas/parceiro-de-estrada/expansao-e-por-que-agora.md`](parceiro-de-estrada/expansao-e-por-que-agora.md)
 
 > Copiloto de IA por voz para caminhoneiros que faz companhia ativa na estrada para combater a solidão e diminuir acidentes por sonolência, enquanto orquestra a comunicação em três frentes — **1. Pessoal** (familiares, amigos e Modo Atenção), **2. Corporativa** (relato real de atrasos/ocorrências ao CCO e diário de bordo não editável de espera) e **3. Comunidade** (alertas de acidentes e engarrafamentos na mesma via) — sem que o motorista tire as mãos do volante.

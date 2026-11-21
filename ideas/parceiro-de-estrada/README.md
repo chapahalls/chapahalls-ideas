@@ -2,7 +2,7 @@
 
 - **Autor(es):** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`)
 - **Status:** avaliada
-- **Nota do judge:** 4,60 / 5 ([`ideas/scores/rodar.md`](../scores/rodar.md) · [`ideas/scores/parceiro-de-estrada.md`](../scores/parceiro-de-estrada.md))
+- **Nota do judge:** 4,75 / 5 ([`ideas/scores/rodar.md`](../scores/rodar.md) · [`ideas/scores/parceiro-de-estrada.md`](../scores/parceiro-de-estrada.md))
 
 > Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento e vai para um de três destinos — **1. Pessoal** (família, amigos e companhia ativa / Modo Atenção contra solidão e sonolência), **2. Corporativo** (relato real de atrasos/ocorrências ao CCO + diário de espera não editável) ou **3. Comunidade** (alertas de acidentes e engarrafamentos para caminhoneiros na mesma rodovia).
 
