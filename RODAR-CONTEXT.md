@@ -8,42 +8,44 @@
 
 **Nome provisório:** RODAR — “Sua voz conecta todos os caminhos” / “Você nunca está sozinho na estrada”.
 
-RODAR é um copiloto de IA por voz para caminhoneiros, projetado para unir **vida profissional (Trabalho)**, **vida pessoal (Pessoal)** e **comunicação colaborativa na estrada (Estrada)**. O motorista conversa em linguagem natural e o copiloto identifica intenções, executa ações e escolhe o canal de comunicação adequado sem exigir troca manual de modo.
+RODAR é um copiloto de IA por voz para caminhoneiros que atua em **três frentes integradas**:
+1. **Pessoal & Companhia:** facilita a comunicação por voz com **familiares e amigos** (já que o motorista passa muito tempo longe de casa) e atua como um **copiloto companheiro de viagem** para combater a solidão na cabine, manter o motorista ativo e engajado e **reduzir os índices de acidentes causados por sonolência** (sugerindo paradas seguras e acionando apoio quando necessário).
+2. **Corporativa (CCO):** otimiza a comunicação direta com o **Centro de Controle Operacional (CCO)** da transportadora, permitindo que o caminhoneiro descreva por voz a **real situação que está passando** (se a carga vai atrasar, fila na descarga/balança, problema mecânico ou imprevisto na rota) sem precisar digitar em rastreadores enquanto dirige.
+3. **Comunidade:** conecta caminhoneiros que estão passando pela **mesma via**, permitindo reportar e receber em tempo real avisos e alertas por voz sobre **acidentes, engarrafamentos, bloqueios e riscos na pista**.
 
-**Decisão de escopo para o Hackathon (24h):** Para garantir um protótipo funcional, fluido e 100% aderente aos critérios C1 e C2 (50% da nota), o **MVP do hackathon foca na experiência online centrada na Agora** (Conversational AI + RTC/Signaling/Chat, barge-in, orquestração de intenções nas 3 frentes, painel da Central/CCO e fila/recuperação de falha de rede). A **operação com voz local offline (STT/LLM/TTS embarcado)** e a **rede oportunista de dispositivos (mesh/DTN, store-and-forward)** — bem como a integração com rádio PX 27 MHz — ficam documentadas como **visão de evolução e diferencial de roadmap pós-hackathon (Fase 2)**.
+O motorista conversa em linguagem natural e o copiloto identifica intenções, executa ações e escolhe o canal de comunicação adequado sem exigir troca manual de modo.
+
+**Decisão de escopo para o Hackathon (24h):** Para garantir um protótipo funcional, fluido e 100% aderente aos critérios C1 e C2 (50% da nota), o **MVP do hackathon foca na experiência online centrada na Agora** (Conversational AI + RTC/Signaling/Chat, barge-in, orquestração de intenções nas 3 frentes — **Pessoal**, **Corporativa/CCO** e **Comunidade** —, companhia ativa contra solidão/sonolência e painel do CCO). A **operação com voz local offline (STT/LLM/TTS embarcado)** e a **rede oportunista de dispositivos (mesh/DTN, store-and-forward)** — bem como a integração com rádio PX 27 MHz — ficam documentadas como **visão de evolução e diferencial de roadmap pós-hackathon (Fase 2)**.
 
 ## 2. Problemas a resolver
 
-1. Trechos de rodovia com ausência/intermitência de cobertura celular.
-2. Comunicação fragmentada entre motoristas, transportadoras, familiares e outros usuários da rodovia.
-3. Dificuldade de registrar/encaminhar ocorrências de maneira simples quando a pessoa está dirigindo.
-4. Isolamento social em jornadas longas; necessidade de companhia e apoio, sem confundir conversação com prevenção comprovada de fadiga.
-5. Alertas rodoviários que deveriam chegar a pessoas potencialmente afetadas, inclusive em redes sem conexão contínua.
+1. **Solidão e sonolência ao volante:** o caminhoneiro passa dias longe de casa e horas seguidas sozinho na cabine; a monotonia e o isolamento contribuem diretamente para a fadiga e para altos índices de acidentes causados por sonolência.
+2. **Distância de familiares e amigos:** dificuldade de manter contato frequente e seguro com a família e amigos durante longas jornadas sem usar o celular nas mãos.
+3. **Comunicação corporativa engessada e perigosa com o CCO:** dificuldade de explicar ao CCO a real situação da viagem (motivo real de um atraso de carga, problema mecânico ou retenção), hoje limitada a macros frias digitadas no rastreador com o caminhão em movimento.
+4. **Falta de alertas em tempo real na mesma via (Comunidade):** avisos sobre acidentes, engarrafamentos, interdições e perigos na pista demoram a chegar aos outros caminhoneiros que vêm logo atrás no mesmo trecho.
+5. **Trechos com cobertura intermitente:** necessidade de fila/recuperação de mensagens (no MVP) e evolução futura para operação offline e rede mesh/DTN.
 
-**Segurança:** não alegar que conversar com IA previne microssono ou acidentes por fadiga. Ao identificar relato de sonolência, orientar o motorista a fazer uma parada segura e descansar. Evitar distração e mensagens longas durante a condução. Alertas mesh não são substitutos de sistemas oficiais de emergência, nem têm entrega garantida.
+**Segurança e responsabilidade:** o copiloto atua como companhia ativa para combater a solidão e monitora sinais de cansaço/lentidão na conversa para recomendar paradas seguras e acionar o CCO em caso de falta de resposta ou pedido de ajuda (atuando como camada preventiva de apoio, sem substituir o descanso obrigatório). Evitar distração visual e mensagens longas durante a condução.
 
-## 3. Público e experiências
+## 3. Público e as 3 Frentes de Atuação
 
-**Público principal (hipótese para MVP):** caminhoneiro vinculado a uma transportadora com central de operações, usando smartphone Android. **Secundário:** autônomos e comunidade rodoviária.
+**Público principal (hipótese para MVP):** caminhoneiro vinculado a uma transportadora com Centro de Controle Operacional (CCO), usando smartphone Android. **Secundário:** caminhoneiros autônomos e comunidade rodoviária.
 
-### 3.1 RODAR Trabalho
-- Consultar dados de viagem/carga disponíveis.
-- Avisar atraso, bloqueio ou defeito mecânico à central usando a voz.
-- Registrar ocorrência com status (criada, enfileirada, encaminhada, recebida, confirmada).
-- Receber resposta da central por voz, quando possível.
-- Separar dados corporativos dos pessoais com controles de permissão.
+### 3.1 Frente 1 — Pessoal & Companhia (Família, Amigos e Combate à Solidão/Sonolência)
+- **Companhia ativa na estrada:** o copiloto conversa naturalmente com o motorista ao longo da viagem para quebrar a solidão e a monotonia da cabine, mantendo-o desperto e alerta para **diminuir os índices de acidentes causados por sonolência**.
+- **Prevenção de sonolência e sugestão de parada:** ao notar respostas mais lentas, silêncio prolongado ou relato de cansaço, o copiloto puxa conversa ativa, recomenda o próximo ponto de parada segura e, se o motorista não responder ou pedir socorro, escala para contato de voz com o CCO.
+- **Comunicação com familiares e amigos:** facilita enviar e ouvir recados e mensagens de voz para a família e amigos sem tirar as mãos do volante, aproximando quem está longe de casa.
+- **Privacidade garantida:** tudo o que pertence à esfera Pessoal (conversas, desabafos, mensagens para família/amigos) é estritamente isolado da transportadora por padrão.
 
-### 3.2 RODAR Pessoal
-- Conversar com o copiloto e pedir informações/lembranças.
-- Enviar/ler mensagens de amigos e familiares **somente mediante autorização** e por integração suportada.
-- Caso sem internet, enfileirar a ação e informar explicitamente que a mensagem **não foi entregue**.
-- Não prometer integração com WhatsApp ou chamadas telefônicas sem integração real e permissões.
+### 3.2 Frente 2 — Corporativa (Comunicação rica e contextual com o CCO)
+- **Relato real da situação ao CCO:** o caminhoneiro explica por voz o que realmente está acontecendo (ex.: *"vou atrasar a entrega em 40 minutos porque a pista parou após a balança"* ou *"tive um problema no freio e precisei encostar no posto"*), substituindo macros limitadas por um evento estruturado e claro para o operador do CCO.
+- **Acompanhamento de viagem e RDO por voz:** consultar dados da carga/rota, registrar ocorrências com status transparente (`criada`, `enfileirada`, `encaminhada`, `recebida`, `confirmada`) e consolidar o relato do trecho nas paradas.
+- **Canal de voz direto (Agora RTC) com o CCO:** quando há problema crítico, risco ou necessidade de alinhamento imediato, o operador do CCO e o motorista conversam por voz no mesmo canal.
 
-### 3.3 RODAR Estrada
-- Registrar por voz alertas: acidentes, bloqueios, riscos e pedidos de ajuda.
-- Distribuir para motoristas relevantes conforme localização, rodovia, sentido de tráfego, distância e validade.
-- Usar internet quando houver; sem internet, contatos entre dispositivos para replicação oportunista.
-- Classificar prioridade e evitar propagação indiscriminada de informações falsas ou desatualizadas.
+### 3.3 Frente 3 — Comunidade (Alertas colaborativos na mesma via)
+- **Avisos de pista por voz:** reportar instantaneamente acidentes, engarrafamentos, obras, bloqueios, perigos na via e pedidos de ajuda.
+- **Distribuição para quem está na mesma rodovia:** entregar o alerta por voz para os caminhoneiros que trafegam na mesma via e sentido (com confirmação vocal antes da publicação para evitar disparos acidentais).
+- **Visibilidade para o CCO:** refletir os alertas da via no mapa operacional para apoiar decisões de rota e segurança.
 
 ## 4. Como deve ser a interação por voz
 
