@@ -12,6 +12,7 @@ Arquivos desta pasta:
 |---|---|
 | `README.md` | A ideia no formato do `TEMPLATE.md` (para o `/judge`) |
 | [`planejamento.md`](planejamento.md) | Plano completo: frentes, arquitetura, CCO, stack Agora, escopo, cronograma, demo, riscos |
+| [`embasamento.md`](embasamento.md) | Dados sobre solidão, sono, jornada, comunicação e acidentes, com fontes, para o pitch e a banca |
 | [`historico-decisoes.md`](historico-decisoes.md) | Como a ideia evoluiu, o que foi descartado e por quê, pesquisa dos produtos Agora |
 
 ## Problema e público (C3 · 20%)
