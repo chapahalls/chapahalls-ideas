@@ -80,6 +80,17 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **Riscos:** CTB art. 252 (uso do celular; mitigação: toque zero) e efeito de rede (começar pela frota da transportadora).
 - Fontes: [PRF via Portal do Trânsito](https://www.portaldotransito.com.br/noticias/mobilidade-e-tecnologia/transporte-de-carga/acidentes-com-caminhoes-e-onibus-causaram-tres-vezes-mais-mortes-que-veiculos-pequenos-em-2024-nas-rodovias-federais/), [Waze: duração dos alertas no Brasil](https://www.waze.com/discuss/t/duracao-dos-alertas/375087), [Waze: sugestão de confirmação por voz](https://waze.uservoice.com/forums/59223-waze-suggestion-box/suggestions/51348319-voice-confirm-or-expiry-of-reports), [PL 5.596/2013](https://tecnoblog.net/arquivo/projeto-lei-proibir-waze-cctci/), [CTB art. 252 e viva-voz](https://www.portaldotransito.com.br/?p=18067).
 
+## 8. Pessoal: modo separado (swap), lembretes e tom de companheiro
+
+- **Núcleo:** Pessoal + Corporativo; Comunidade vira complemento no produto, mas fica na demo (é onde a Agora mais aparece, C2).
+- **Separação:** modelo do perfil de trabalho do Android — a empresa só vê o perfil de trabalho; o pessoal não fica visível nem acessível. Troca de modo por voz; segurança (nível 3, "preciso de ajuda") atravessa os dois modos.
+- **Decisão do time:** no modo Corporativo, envio pessoal é bloqueado e vira lembrete ("mandar mensagem para esposa"), disparado na próxima parada real (> 5 min fora da pista ou motor desligado).
+- **Recado recebido:** comum espera a parada; urgente avisa já e sugere parada, **sem mencionar que é urgente** (decisão do time) e sem ler o conteúdo dirigindo; após 2 recusas, segura.
+- **Tom (decisão do time):** coloquial, companheiro e não amigo, receptivo o bastante para adoção; sem persona afetiva; CVV (188) em sinal de crise.
+- **WhatsApp/Telegram:** a Cloud API exige número comercial e, fora da janela de 24h, só modelos aprovados; bot do Telegram não pode escrever primeiro; o WhatsApp no Android Auto já faz voz. Ficam como próximo passo; na demo, família por link Agora.
+- **Privacidade:** conversa livre não é gravada por padrão; desabafo pode ser dado de saúde (LGPD art. 11); Pessoal não pode servir à avaliação de riscos psicossociais da NR-1.
+- Fontes: [Android work profile](https://support.google.com/work/android/answer/7502354), [WhatsApp Business Policy](https://whatsappbusiness.com/es/policy/), [Telegram bot não inicia conversa](https://www.unipile.com/telegram-api-send-message-a-comprehensive-guide/), [WhatsApp no Android Auto](https://9to5google.com/?p=723266), [Nottingham 2018](https://eprints.nottingham.ac.uk/50351), [Agência Brasil 2025](https://agenciabrasil.ebc.com.br/saude/noticia/2025-09/jornada-exaustiva-e-solidao-afetam-saude-mental-de-caminhoneiros), [LGPD art. 11](https://www.aurum.com.br/blog/lgpd-comentada/art-11-a-13-lgpd/).
+
 ## Pendências
 
 - Nome do time e integrantes
