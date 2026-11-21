@@ -9,6 +9,7 @@ Repositório do time para **juntar e escolher ideias** para o hackathon UNMUTE b
 | Nova ideia | `/idea <descrição>` no Claude Code, ou copie `ideas/TEMPLATE.md` |
 | Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge projeto` (pré-entrega) |
 | Checagem mecânica das regras | `sh scripts/check-rules.sh` |
+| Skill + docs MCP da Agora | já configurado em `.claude/settings.json`: ao abrir o Claude Code no repo, aceite instalar o plugin `agora`. Manual: `/plugin marketplace add AgoraIO/skills` e `/plugin install agora@agora-skills` |
 
 Fluxo: cada um registra ideias → `/judge` monta o ranking → o time marca uma como `escolhida` → `/kickoff` transforma essa ideia no `PLAN.md`.
 

@@ -14,6 +14,7 @@
 - **Score first.** C1 voice/interaction (25%) and C2 execution + Agora (25%) are half the score and the first tie-breakers. When choosing what to build next, pick what moves C1/C2 in the demo.
 - **Agora must be functional and visible** in the demo and video (E2). A feature that works without Agora in the path doesn't count for C2.
 - **Declare** pre-existing components and anything simulated/mocked in `README.md` (E5, E8).
+- **Agora plugin** (`agora@agora-skills`, from [AgoraIO/skills](https://github.com/AgoraIO/skills)) is enabled in `.claude/settings.json`: it gives the `agora` skill and the Agora docs MCP (`mcp.agora.io`). Use it for anything touching Agora (RTC, RTM, Conversational AI, tokens) instead of guessing APIs from memory.
 - Before submitting, and when asked "are we within the rules?": `/judge projeto` (runs `scripts/check-rules.sh` + the `judge` agent).
 
 # How we work

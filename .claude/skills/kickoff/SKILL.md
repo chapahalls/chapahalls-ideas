@@ -15,6 +15,7 @@ Read `HACKATHON.md` (rubric, disqualifiers, deliverables) and `ideas/README.md`.
 
 - The **demo path** must show, through Agora: a real voice conversation, one interruption (barge-in) and one failure with recovery (C1 and C2 are 50% of the score). It has to fit the 2-minute video.
 - The **last phase** is "Submission" and ends before **2026-11-22 12:00 (UTC-3)**. Its acceptance criteria: `sh scripts/check-rules.sh` exits 0; public repo with a delivery tag (e.g. `v1.0-entrega`); narrated video ≤ 2 min; deck ≤ 10 slides; OS description covering problem, audience, solution and Agora usage.
+- For the stack (ADR 0001), use the `agora` skill / Agora docs MCP to pick the Agora product (Conversational AI Engine, RTC, RTM...) and its quickstart, instead of guessing APIs.
 - The README you write must have the sections that `scripts/check-rules.sh` looks for: how to run, dependencies/requirements, delivered version, pre-existing components and simulations.
 
 ## 1. Gather what's missing

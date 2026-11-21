@@ -17,5 +17,16 @@
       "Read(./.env)",
       "Read(./.env.*)"
     ]
+  },
+  "extraKnownMarketplaces": {
+    "agora-skills": {
+      "source": {
+        "source": "github",
+        "repo": "AgoraIO/skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "agora@agora-skills": true
   }
 }
