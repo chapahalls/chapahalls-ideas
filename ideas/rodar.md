@@ -40,10 +40,12 @@ Motorista (A): Aproveita e manda um recado pessoal para minha esposa dizendo que
 Agente (Agora): Recado pessoal enviado para sua esposa. Essa mensagem é privada e não vai para a transportadora.
 ```
 
-- **Interrupção (barge-in):** o motorista corta o agente a qualquer momento no meio da fala (ex.: durante uma conversa de companhia quando surge um acidente ou engarrafamento à frente); o agente interrompe o áudio imediatamente e prioriza a ocorrência.
+- **Interrupção (barge-in):** o motorista corta o agente a qualquer momento no meio da fala (ex.: durante uma conversa de companhia quando surge um acidente ou fim de fila à frente); o agente interrompe o áudio imediatamente e prioriza a ocorrência.
+- **Dois modos (swap por voz) e Lembrete na Parada:** Pessoal e Corporativo separados como o perfil pessoal e o de trabalho do Android; no modo Corporativo, pedir para enviar recado pessoal é bloqueado e vira lembrete automático para a próxima parada real (> 5 min fora da pista ou motor desligado), onde a família ouve/responde por link Agora. Tom coloquial de companheiro de estrada (não amigo nem terapeuta).
+- **Ciclo de vida do alerta na Comunidade (estilo Waze por voz):** foco em **fim de fila / pista parada** e acidentes (sem blitz); validade por tipo; quem passa depois no mesmo trecho/sentido confirma (`"sim"` renova) ou nega com **confirmação dupla do `"não"`** e remoção por peso/reputação (silêncio mantém o alerta).
 - **Falha e recuperação:**
   - *Informação incompleta ou ruído:* se faltar um dado essencial do alerta ou do reporte ao CCO (como km, sentido ou motivo do atraso), o agente pergunta apenas o dado que faltou.
-  - *Oscilação de rede / falha de envio:* a ocorrência fica registrada na fila local com status explícito (`enfileirada / aguardando confirmação`), avisando o motorista honestamente e sincronizando assim que a conexão estabiliza; em caso de silêncio/sonolência crítica ou pedido de ajuda, abre canal de voz direto (Agora RTC) com o operador do CCO.
+  - *Oscilação de rede / falha de envio:* a ocorrência fica registrada na fila local do app com status explícito (`enfileirada / aguardando confirmação`) e é entregue via Agora Chat assim que a conexão estabiliza; em caso de quebra de conversa/sonolência crítica (nível 3) ou pedido de ajuda, abre canal de voz direto (**Agora RTC**) com o operador do CCO.
 - **Latência alvo:** resposta `< 1,5 s` a `< 2,0 s` via Agora.
 
 ## Como a Agora entra (C2 · 25%)

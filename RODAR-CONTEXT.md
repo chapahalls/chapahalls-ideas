@@ -44,21 +44,20 @@ O motorista conversa em linguagem natural e o copiloto identifica intenções, e
 
 **Público principal (hipótese para MVP):** caminhoneiro vinculado a uma transportadora com Centro de Controle Operacional (CCO), usando smartphone Android. **Secundário:** caminhoneiros autônomos e comunidade rodoviária.
 
-### 3.1 Frente 1 — Pessoal & Companhia (Família, Amigos e Combate à Solidão/Sonolência)
-- **Companhia ativa na estrada:** o copiloto conversa naturalmente com o motorista ao longo da viagem para quebrar a solidão e a monotonia da cabine, mantendo-o desperto e alerta para **diminuir os índices de acidentes causados por sonolência**.
-- **Prevenção de sonolência e sugestão de parada:** ao notar respostas mais lentas, silêncio prolongado ou relato de cansaço, o copiloto puxa conversa ativa, recomenda o próximo ponto de parada segura e, se o motorista não responder ou pedir socorro, escala para contato de voz com o CCO.
-- **Comunicação com familiares e amigos:** facilita enviar e ouvir recados e mensagens de voz para a família e amigos sem tirar as mãos do volante, aproximando quem está longe de casa.
-- **Privacidade garantida:** tudo o que pertence à esfera Pessoal (conversas, desabafos, mensagens para família/amigos) é estritamente isolado da transportadora por padrão.
+### 3.1 Frente 1 — Pessoal & Companhia (Modo Separado, Lembretes na Parada e Modo Atenção)
+- **Separação estilo Perfil de Trabalho do Android (Swap por voz):** os modos **Pessoal** e **Corporativo** são estritamente separados; no modo Corporativo, o envio de mensagens pessoais é bloqueado para evitar distração e vira automaticamente um **lembrete** (*"Te lembro de mandar mensagem pra sua esposa na próxima parada, beleza?"*), que só dispara em **parada real** (> 5 min fora da pista ou motor desligado; fila na pista não conta).
+- **Recados recebidos da família:** recados comuns aguardam a próxima parada real; recados marcados como urgentes avisam o motorista **sem dizer a palavra "urgente"** e sem ler o conteúdo dirigindo, sugerindo o próximo posto seguro (após 2 recusas no trecho, aguarda a parada). Na demo, a família ouve/interage por link navegador via **Agora RTC/Chat**.
+- **Tom de companheiro de estrada (não amigo nem terapeuta):** fala coloquial, curta e respeitosa (*"Fechou"*, *"Beleza"*, *"Parou, hein"*), sem persona afetiva artificial; em sinal de crise emocional, sugere parar e indica o CVV (188). Conversa livre não é gravada por padrão e jamais é usada pela empresa para avaliação psicossocial (NR-1 / LGPD art. 11).
+- **Modo Atenção e prevenção de sonolência:** disparado por tempo contínuo ao volante (>4h30), janela de madrugada e lentidão/quebra de resposta na conversa, puxando interação ativa (que reduz o KSS de 7,98 para 5,28 — *Leeds 2025*), sugerindo postos com chuveiro (79%), restaurante (67,8%) e pátio vigiado (55,8%) (nível 2) e escalando para voz direta (**Agora RTC**) com o CCO no nível 3 (única exceção de segurança que atravessa os dois modos).
 
-### 3.2 Frente 2 — Corporativa (Comunicação rica e contextual com o CCO)
-- **Relato real da situação ao CCO:** o caminhoneiro explica por voz o que realmente está acontecendo (ex.: *"vou atrasar a entrega em 40 minutos porque a pista parou após a balança"* ou *"tive um problema no freio e precisei encostar no posto"*), substituindo macros limitadas por um evento estruturado e claro para o operador do CCO.
-- **Acompanhamento de viagem e RDO por voz:** consultar dados da carga/rota, registrar ocorrências com status transparente (`criada`, `enfileirada`, `encaminhada`, `recebida`, `confirmada`) e consolidar o relato do trecho nas paradas.
-- **Canal de voz direto (Agora RTC) com o CCO:** quando há problema crítico, risco ou necessidade de alinhamento imediato, o operador do CCO e o motorista conversam por voz no mesmo canal.
+### 3.2 Frente 2 — Corporativa (CCO + Diário de Bordo Não Editável)
+- **Relato real da situação ao CCO:** o caminhoneiro explica por voz o que realmente está acontecendo (ex.: *"fila de 12 caminhões aqui, ninguém dá previsão"* ou atraso por bloqueio na via), substituindo macros limitadas (cujo uso digitando tem **risco 23× maior**) por um anexo confirmado e estruturado para o CCO.
+- **Registro do trecho não editável (prova complementar de espera e ocorrências):** chegada, saída e paradas são carimbadas automaticamente por **geofence + relógio do servidor** em um log **append-only com hash encadeado** (correções entram apenas como novo evento de adendo). Prova o tempo de espera e o excedente acima de 5h para cobrança de estadia (Lei 11.442/2007 e STF ADI 5322). Se o motorista estiver sem sinal, o evento é enfileirado localmente com hora do GPS (`registrado offline`) e entregue via Agora Chat quando a conexão retorna.
+- **Canal de voz direto (Agora RTC) com o CCO:** quando há risco real (nível 3, sem resposta ao agente ou pedido *"preciso de ajuda"*), o operador do CCO entra por voz no canal do motorista.
 
-### 3.3 Frente 3 — Comunidade (Alertas colaborativos na mesma via)
-- **Avisos de pista por voz:** reportar instantaneamente acidentes, engarrafamentos, obras, bloqueios, perigos na via e pedidos de ajuda.
-- **Distribuição para quem está na mesma rodovia:** entregar o alerta por voz para os caminhoneiros que trafegam na mesma via e sentido (com confirmação vocal antes da publicação para evitar disparos acidentais).
-- **Visibilidade para o CCO:** refletir os alertas da via no mapa operacional para apoiar decisões de rota e segurança.
+### 3.3 Frente 3 — Comunidade (Alertas colaborativos na mesma via · Ciclo de vida estilo Waze por voz)
+- **Foco em Fim de Fila / Pista Parada e riscos reais (sem blitz):** reportar por voz fim de fila, acidentes, interdições, óleo/carga na pista, animais, buracos e neblina (1 morte a cada 6 sinistros com caminhões/ônibus nas federais — PRF 2024). Alertas de blitz ficam fora (PL 5.596/2013 e coerência com segurança).
+- **Ciclo de vida e confirmação dupla do "não":** cada alerta tem validade por tipo (fim de fila 15 min, acidente 30 min, interdição/clima 1 h, buraco 24 h) e é entregue a quem vem atrás na mesma rodovia e sentido. Ao passar pelo local, o agente pergunta *"ainda tá lá?"*: `"sim"` renova o prazo; `"não"` exige **confirmação dupla** repetindo o conteúdo (*"Hum, então o acidente do km 230 já liberou, é isso? Me confirma aí."*) e soma o peso/reputação de quem respondeu antes de derrubar o alerta (na dúvida ou silêncio, o alerta é mantido).
 
 ## 4. Como deve ser a interação por voz
 
