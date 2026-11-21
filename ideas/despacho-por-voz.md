@@ -128,6 +128,71 @@ Motorista: Recebi.
 
 **A validar nas entrevistas:** os porquês 3 e 5 (o motorista realmente não manda completo por falta de condição? a TI confirma que integrar é o custo que trava?).
 
+## Aderência de mercado
+
+**Frase da dor que dá para sustentar hoje (sem número inventado):**
+
+> Toda ocorrência do motorista passa pela mão de um operador do CCO, que liga, interpreta e redigita em vários sistemas, muitas vezes a partir de um grupo de WhatsApp. E o motorista, para avisar, digita no rastreador dirigindo, com 23× mais risco ([`metricas.md`](parceiro-de-estrada/metricas.md), VTTI/FMCSA).
+
+Depois das entrevistas, acrescentar: "X interações e Y minutos por ocorrência".
+
+**Evidência de que a falta existe:**
+
+| Achado | Fonte | Força |
+|---|---|---|
+| 23% das transportadoras não usam nenhum TMS; mais de 40% usam planilha para contratar autônomos | [TruckPad/Estradão/Ipsos](https://mundologistica.com.br/noticias/investimento-das-transportadoras-em-industria-40-ainda-e-pequeno-revela-estudo) | Setorial, **de 2018** — buscar número recente |
+| Índice de produtividade tecnológica do setor logístico: 0,38 de 1; pouco uso de dispositivos móveis na operação | [TOTVS 2021](https://itforum.com.br/brandspaces/pesquisa-da-totvs-evidencia-oportunidades-de-ampliar-produtividade-tecnologica-do-setor-logistico-brasileiro/) | Fornecedor |
+| Entrada de dados é o caso de IA mais citado (41%); só 5% das empresas com desempenho abaixo da média têm processos totalmente automatizados, contra 51% das melhores | [Descartes, 600+ empresas](https://mundologistica.com.br/noticias/gestao-transporte-diferencial-embarcadores-e-lsps) | Global |
+| Monitoramento de uma transportadora feito por grupo de WhatsApp | [Fatec Bebedouro 2025](https://ric.cps.sp.gov.br/bitstream/123456789/39040/1/Logistica_2025-1_IgorSalvador_Relatoriodetranportesrodoviarios.pdf) | Caso real, uma empresa |
+| Operador analisa o alerta e liga para o motorista; sem resposta, aciona a gerenciadora | [Movecta](https://mundologistica.com.br/noticias/movecta-implanta-central-controle-reduz-custos-operacoes-rodoviarias) | Caso real |
+
+**Contra:** um estudo que propôs atualizar ocorrências de entrega em tempo real encontrou resistência cultural de transportadores e entregadores ([Fatec 2017](https://ric.cps.sp.gov.br/bitstream/123456789/26726/1/UPEP_Umsistemadegestaoaplicadaalogisticadedistribuicao_ValmirAdelinodeMoura_2017.pdf)). É o maior risco de adoção.
+
+**Não usar:** tamanho do mercado global de TMS — as estimativas para o mesmo ano vão de US$ 9,71 bi a US$ 213 bi. Referência brasileira de tamanho: a Drivin Brasil (torre de controle e entregas) faturou R$ 7,3 mi em 2025, +61,5% ([Mundo Logística](https://mundologistica.com.br/noticias/drivin-brasil-cresce-projeta-expansao-sul)).
+
+**Não achamos** produto brasileiro fazendo exatamente "fala do motorista → evento validado no formato do TMS/OCOREN" para a transportadora média. Isso não prova que não existe.
+
+## Custo e preço
+
+| Item Agora | Preço |
+|---|---|
+| Conversational AI Engine, tudo incluído (STT, LLM, TTS) | US$ 0,10/min; primeiros 300 min grátis ([Agora](https://docs.agora.io/en/ai/reference/pricing)) |
+| Configuração base + reconhecimento de voz ARES | US$ 0,0099 + US$ 0,0166 = US$ 0,0265/min ([Agora](https://docs.agora.io/en/conversational-ai/overview/pricing)) |
+
+**Custo por caminhão (conta nossa):** 4 interações/dia × 1,5 min × 25 dias = 150 min/mês; dólar a R$ 5,50.
+
+| Configuração | Custo/caminhão/mês |
+|---|---|
+| Tudo incluído (US$ 0,10/min) | ≈ R$ 82 |
+| Base + ARES (US$ 0,0265/min) | ≈ R$ 22 |
+
+**Consequência:** o preço de R$ 30–40/caminhão do `metricas.md` só fecha na configuração base. A faixa de US$ 0,007–0,091/min do `metricas.md` é de vários fornecedores, não da Agora. Caminhos:
+1. Preço de R$ 60–100/caminhão (faixa de rastreamento), justificado pelo retorno medido no piloto.
+2. Poucos minutos por caminhão: os gatilhos por evento (não por relógio) também controlam custo.
+
+## Reconciliação com as métricas do repositório
+
+O repositório prova bem "o motorista fica sem sinal" (36,6% das federais com 4G da operadora do motorista) e "digitar dirigindo é perigoso" (23×). A dor central desta ideia — o gargalo manual no CCO — **ainda não tem medição**.
+
+| Lacuna | Situação |
+|---|---|
+| Volume de mensagens e tempo do operador no CCO | Sem número; só indícios (acima). **Resolver com entrevistas** |
+| Integração com ERPs/TMS | Há porta: EDI Proceda é o padrão mais usado ([Bsoft](https://bsoft.com.br/produtos/software-controle-transportadoras/edi-proceda)); Senior tem OCOREN configurável ([Senior](https://suporte.senior.com.br/hc/pt-br/articles/6398301294484-TMS-EDI-OCOREN-Configur%C3%A1vel-Carregar-Ocorr%C3%AAncias-de-Entregas-do-CTe-para-o-arquivo-OCOREN-Configur%C3%A1vel)) e cita a WebAPI da SSW para ocorrências de parceiros ([Senior](https://documentacao.senior.com.br/gestaodetransportestms/3.33/manual-por-rotinas/edi/edi-webservice.htm)). Existe porta; não está provado que é fácil |
+| Canhoto / faturamento | **Fora do escopo:** já há apps em que o motorista registra ocorrências e anexa canhotos ([Bsoft TNS](https://bsoft.com.br/tns-gestao-de-entrega)) |
+| Starlink | **Fora do núcleo:** custa R$ 339–619/caminhão/mês e a Agora precisa de internet. Próximo passo: frota que já tem Starlink (Autotrac/Hughes) recebe o RODAR como software por cima |
+| "A IA resolve 90% dos check-ins", "50% de zonas mortas" | Não usar (sem fonte). Usar "36,6% das federais com 4G da operadora do motorista" |
+
+## Roteiro de entrevista com operadores de CCO (10 min)
+
+Fazer hoje com 2–3 operadores (caminho mais rápido: integrante da Rumo). Registrar em `docs/validacao.md`.
+
+1. Quantos motoristas você acompanha por turno?
+2. Por onde chegam as informações — macro, WhatsApp, ligação? Em que proporção?
+3. Pense na última ocorrência (impedimento, avaria, recusa). Quantas interações até resolver? Quanto tempo o motorista ficou esperando orientação?
+4. O que você precisou redigitar depois, e em quais sistemas (TMS, EDI, gerenciadora)?
+5. Precisou consultar algum procedimento? Onde ele fica?
+6. Se a ocorrência chegasse pronta — viagem, km, motivo e código certo — o que mudaria no seu turno?
+
 ## Integração e implantação
 
 **Arquitetura:** `App (voz Agora) → Backend → [TMS | EDI OCOREN | Gerenciadora | Painel do CCO]`
@@ -194,4 +259,4 @@ Motorista: Recebi.
   - Em simulação estacionária, comparar voz com mensagem/formulário: identificação de viagem, status, correções e duração.
   - Verificar se o "despachante" consegue agir sem redigitar.
 - **Limitações conhecidas:** integração real com TMS/telemática não existe (sandbox); não executa eventos fiscais; não gera rota nem previsão; não infere fadiga pela voz; voz não elimina distração.
-- **Próximos passos:** _(sugestão)_ integração com um TMS brasileiro e com o EDI do embarcador; voz como SDK no app que o motorista já usa; métricas de "% de ocorrências resolvidas sem ligação humana" e "horas de conversa liberadas no CCO"; registro de espera para estadia (vem do mesmo evento).
+- **Próximos passos:** _(sugestão)_ frota com Starlink (Autotrac/Hughes) recebendo o RODAR como software por cima; integração com um TMS brasileiro e com o EDI do embarcador; voz como SDK no app que o motorista já usa; métricas de "% de ocorrências resolvidas sem ligação humana" e "horas de conversa liberadas no CCO"; registro de espera para estadia (vem do mesmo evento).
