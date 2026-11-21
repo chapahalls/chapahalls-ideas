@@ -9,5 +9,5 @@ O agente `judge` pontua cada uma com a rubrica de [`HACKATHON.md`](../HACKATHON.
 
 | Ideia | Nota (1-5) | C1 Voz | C2 Agora | C3 Problema | C4 Inovação | C5 Validação | C6 Clareza | Eliminatórios | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| [`despacho-por-voz`](despacho-por-voz.md) | 3,50 | 4 | 3 | 4 | 3 | 3 | 4 | E1, E2, E5 em risco | avaliada |
 | [`rodar`](rodar.md) / [`Parceiro de Estrada`](parceiro-de-estrada/README.md) *(Unificada)* | **4,75** | 5 | 5 | 5 | 5 | 3 | 4 | OK | avaliada |
+| [`despacho-por-voz`](despacho-por-voz.md) | 3,50 | 4 | 3 | 4 | 3 | 3 | 4 | E1, E2, E5 em risco | avaliada |
