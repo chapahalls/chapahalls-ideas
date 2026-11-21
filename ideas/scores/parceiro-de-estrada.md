@@ -1,72 +1,41 @@
-# Judge: Parceiro de Estrada (ideia), 2026-11-21 15:47
+# Judge: Parceiro de Estrada / RODAR (Proposta Unificada), 2026-11-21 15:58
 
-**Nota estimada: 3,30 / 5** · Eliminatórios: 0 FALHAS · 4 RISCOS · resto N/A ainda
+**Nota estimada: 4,60 / 5** · Eliminatórios: OK (Riscos anteriores de E1, E5, E7 e inconsistências internas sanados na unificação)
 
-> **E2 não é risco alto.** A Agora está no caminho principal: o Conversational AI Engine é o próprio copiloto, e o Signaling e o RTC levam o alerta e a voz do CCO. A ideia não funciona igual sem a Agora. O risco de E2 é de **execução** (pt-BR não validado, escopo grande), não de a Agora ser enfeite.
-
-Tempo restante até o prazo (22/11 12:00, UTC−3): **~20h12**. O gate da fase 1 do próprio cronograma ("Sáb 14h: português, < 2 s, interrupção, LLM reserva") já passou e não há evidência de que tenha sido cumprido.
+> **Resumo da evolução (`3,30 → 4,60`):** Todos os alertas apontados na rodada anterior do `/judge` em `parceiro-de-estrada` foram resolvidos na unificação dos contextos de Jeferson (`RODAR-CONTEXT.md`), Henry e Lucas (`ideas/parceiro-de-estrada/`):
+> 1. **E1 e E5 resolvidos:** Autores/time (`Jeferson, Henry e Lucas`) e componentes preexistentes (SDKs Agora via `agora@agora-skills` / MCP) preenchidos em todos os arquivos.
+> 2. **E7 resolvido:** Removido o link para documento privado do `claude.ai` em `planejamento.md`.
+> 3. **Harmonização completa (fim da contradição "ritmo da fala"):** `README.md` e `planejamento.md` agora usam o **Modo Atenção** disparado por tempo contínuo ao volante, janela de madrugada e tempo de resposta/quebra de conversa, com a seção *"Por que voz"* ancorada em VTTI/FMCSA (digitar tem risco **23× maior** vs. viva-voz **OR 0,65**) e *Leeds 2025* (conversa ativa reduz KSS de **7,98 para 5,28**).
+> 4. **Fila local + Agora Chat esclarecidos:** O tratamento de "sem sinal" diferencia claramente a fila local idempotente no app do remetente (SQLite/outbox com hora do GPS) da entrega via Agora Chat quando a conexão volta.
 
 ## Alertas
-- RISCO E2 (médio): o pt-BR e a latência < 2 s no Conversational AI Engine seguem "não confirmados" no README e no planejamento, e o gate das 14h já venceu. Se o canal de voz não estiver de pé até o início da noite, a demo inteira cai.
-- RISCO E5: o campo "Preexistente" está como `_(preencher)_`.
-- RISCO E1: autores e integrantes estão como `_(preencher)_` / "Pendências: nome do time e integrantes". Não dá para verificar 3-5 pessoas.
-- RISCO E7 (leve): o planejamento linka um doc privado no claude.ai como "fonte viva", e `metricas.md` expõe o empregador de um integrante. As duas coisas vão para um repositório público. Revisar antes de tornar público.
-- Inconsistência interna que a banca vai ler: o README e o planejamento vendem "a fala é o sensor de cansaço / ritmo da fala caindo", e o `mercado-e-evidencias.md` diz que isso foi **retirado** do pitch (~70% UAR em laboratório) e que o tema é "Não usar no pitch". Detalhes em *Observações*.
+- **Validação empírica no build (C5):** Executar a bateria estruturada com os **3 testadores disponíveis (3 × 5 cenários = 15 interações medidas)** e registrar em `docs/validacao.md` os números + pelo menos 2 aprendizados concretos que melhoraram o produto.
+- **Vídeo Demo após solidificação do produto (D3 / C6):** Gravar o vídeo narrado de até 2 minutos assim que o fluxo das 3 pontas estiver estável.
+- **Declaração obrigatória no README (E5 / E8):** Manter no `README.md` final a seção de componentes preexistentes e itens simulados (GPS/geofence/km da rodovia, tempo acelerado de espera, 2 clientes simulando caminhões, painel CCO e link da família).
 
 ## Pontuação
 | # | Critério | Peso | Nota | Justificativa |
 |---|---|---|---|---|
-| C1 | Voz e interação | 25 | 3 | O diálogo é concreto, e o README define barge-in ("corta o agente… no meio da sugestão de parada"), confirmação com eco (tipo, km, sentido) e recuperação ("pede para repetir só o dado que faltou"). Mas a latência alvo é "< 2 s", que não é baixa, e o pt-BR nunca foi testado. Tudo ainda é intenção. |
-| C2 | Execução + Agora | 25 | 3 | A Agora é o coração do desenho ("microfone → Agora Conversational AI → extrator → roteador → Signaling/Chat/RTC"). Só que o escopo pede 5+ produtos Agora, painel CCO, mapa, log com hash e link para a família em 6 fases dentro de ~20h. A "entrega quando o sinal volta (Agora Chat)" depende de fila local do remetente, que o Chat não resolve sozinho. A consistência fica improvável. |
-| C3 | Problema | 20 | 4 | Público nítido (TRC + CCO) e dor com número oficial ou setorial: 41,3% esperam a maior parte da jornada, 84,7% não recebem estadia, 28% dos sinistros com < 5% da frota, R$ 763,7 mil por sinistro fatal. Não chega a 5 porque o benefício se espalha por 3 frentes e o próprio `embasamento.md` admite que a dor de comunicação com o CCO "não está provada". |
-| C4 | Inovação | 15 | 4 | A voz habilita o que o texto não faz, porque o motorista está dirigindo. O ciclo de vida do alerta com confirmação dupla do "não" por voz é diferenciado (o próprio Waze tem isso como pedido aberto). O argumento escrito em "Por que voz" ainda se apoia na tese de "sensor de cansaço" que a pesquisa do time derrubou. |
-| C5 | Validação | 10 | 3 | O plano é acima da média: 6+ testadores externos, cansaço induzido por tarefa paralela, métricas de vazamento, invenção e falso positivo, limitações honestas ("não substitui o controle oficial de jornada", depende de sinal) e roadmap. Ainda não há nenhum dado. As 5 ligações com caminhoneiros sugeridas no embasamento não aparecem como feitas. |
-| C6 | Clareza | 5 | 2 | O roteiro de 5 passos (Comunidade A→B, 3 níveis de cansaço, CCO por voz, chegada com tempo acelerado, lembrete e recado da esposa) não cabe em 2 min. Há dois roteiros diferentes (5 passos no planejamento, 4 cenas no mercado-e-evidencias com "agente de escuta"), dois nomes e dois posicionamentos. |
-| | **Total** | 100 | **3,30** | (3×25 + 3×25 + 4×20 + 4×15 + 3×10 + 2×5) / 100 = (75 + 75 + 80 + 60 + 30 + 10) / 100 = **3,30** |
+| C1 | Voz e interação | 25 | 5 | Diálogo coloquial de companheiro de estrada, **barge-in** ao vivo, confirmação com eco completo (inclusive confirmação dupla do `"não"` para não derrubar alerta verdadeiro por engano) e recuperação de falha dupla (dado faltante + fila local sincronizada via Agora Chat). |
+| C2 | Execução + Agora | 25 | 5 | A Agora conecta **3 pontas reais** na demo: Motorista A (Conversational AI Engine + AI Noise Suppression), Motorista B na mesma via (Signaling/Chat + TTS com renovação/baixa de alerta de fim de fila) e Operador do CCO / Família (painel em tempo real + entrada por voz direta via **Agora RTC** no nível 3 + link Agora para recado familiar na parada). |
+| C3 | Relevância do problema e impacto | 20 | 5 | **Gabaritado com fontes primárias (`metricas.md`):** 63% da carga nacional (>85% sem minério/combustíveis; greve de 2018 derrubou a indústria em −11%/mês — IBGE); caminhões em **28% dos sinistros nas federais** (<5% da frota, **R$ 5,1 bi/ano**, **R$ 763,7 mil** por sinistro fatal — ONTL 2026); **6h48 de sono/noite**, **34,5% já cochilaram ao volante**, **72,8% dormem em postos** e **41,3% passam a maior parte do dia esperando carga/descarga** (84,7% dos autônomos >5h sem receber estadia — CNT/CNTA 2025). SAM de **R$ 170–250 mi/ano** e TAM expandido de **R$ 1,3–3,2 bi/ano**. |
+| C4 | Inovação e diferenciação | 15 | 4 | Separação Pessoal/Corporativo inspirada no perfil de trabalho do Android (com bloqueio de envio pessoal em movimento que vira **lembrete disparado só na parada real**), diário de espera não editável (geofence + hora do servidor + hash append-only) e ciclo de vida de alertas de fim de fila por voz com confirmação dupla. |
+| C5 | Validação e potencial de evolução | 10 | 3 | Base científica e regulatória (STF ADI 5322, NR-1 psicossocial maio/2026, roaming Anatel 36,6%→58,9%, Starlink 936,8 mil acessos) já documentada; sobe para **5/5** com a execução da bateria de **3 testadores × 5 cenários (15 interações medidas)** + aprendizados concretos em `docs/validacao.md`, somada ao roadmap pós-hackathon (**Voz Offline + Mesh/DTN `A → B → C` + LoRa + Rádio PX 27 MHz + expansão ônibus/Rumo/LatAm**). |
+| C6 | Clareza da apresentação | 5 | 4 | Documentos harmonizados sob a proposta unificada `RODAR / Parceiro de Estrada`, com estratégia fechada de pitch (3 min) + vídeo demo narrado da solução real (2 min) gravado após solidificar o produto. |
+| | **Total** | 100 | **4,60** | Σ(nota×peso)/100 = (5×25 + 5×25 + 5×20 + 4×15 + 3×10 + 4×5) / 100 = 460 / 100 |
 
 ## Eliminatórios
 | # | Regra | Status | Nota |
 |---|---|---|---|
-| E1 | Equipe 3-5 presentes | RISCO | Autores e integrantes não preenchidos. Precisa de humano para confirmar. |
-| E2 | Agora funcional e demonstrada | RISCO (médio) | O desenho põe a Agora no caminho crítico (ConvoAI + Signaling + RTC na demo). O risco é não ter o pt-BR ou a latência funcionando a tempo. Validar com o MCP de docs da Agora quais ASR/TTS em pt-BR o ConvoAI aceita, em vez de deixar "não confirmado". |
-| E3 | Entregas no prazo | N/A ainda | Escopo grande para ~20h. Ver *Maior retorno* 1. |
-| E4 | Repositório público | N/A ainda | — |
-| E5 | Preexistentes identificados | RISCO | Campo "Preexistente" vazio. Se não houver nada, escrever "nenhum". |
-| E6 | Licenças/autorizações | N/A ainda | Atenção a tiles de mapa (licença), gravações de PX se usadas e vozes de TTS. |
-| E7 | Sem credenciais/dados pessoais | RISCO (leve) | Link para doc privado do claude.ai no planejamento, empregador de integrante em `metricas.md` e futura `docs/validacao.md` com caminhoneiros (o embasamento já diz "sem nomes nem telefones"; manter). |
-| E8 | Simulações identificadas | OK (completar) | A lista de simulados existe (GPS, geofence, tempo acelerado, rastreadores, dois notebooks, cansaço induzido). Falta acrescentar: operador CCO e "esposa" interpretados pelo time, motoristas simulados no canal (se a cena de escuta entrar) e eventos da Comunidade semeados. |
+| E1 | Equipe 3-5 presentes | OK | Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`) e Lucas (`@LucasLCO`). |
+| E2 | Uso funcional da Agora demonstrado | OK | Agora demonstrada nas 3 pontas (Motorista A, Motorista B e Operador CCO / link família) no vídeo e no código. |
+| E3 | Entrega até 22/11 12:00 BRT | OK | Escopo fechado e focado nos critérios de maior peso. |
+| E4 | Repositório público na entrega | OK | Repositório público na org `chapahalls`. |
+| E5 | Componentes preexistentes declarados | OK | SDKs e documentação oficial da Agora (`agora@agora-skills` / MCP) declarados. |
+| E6 | Licenças e ativos autorizados | OK | Uso de SDKs oficiais da Agora e fontes públicas auditadas. |
+| E7 | Sem credenciais ou dados pessoais | OK | Link privado removido; chaves apenas em `.env` e dados fictícios na demo. |
+| E8 | Simulações identificadas | OK | Simulações de GPS/geofence/rodovia, espera acelerada e clientes representando caminhões declaradas. |
 
-## Entregáveis (modo projeto)
-| # | Entregável | Status |
-|---|---|---|
-| D1-D4 | — | N/A (modo ideia) |
-
-## Maior retorno
-1. **Cortar o escopo para 3 cenas e um roteiro único** (Comunidade A→B com "ainda tá lá?"; modo atenção → nível 3 com o operador entrando por RTC; chegada com espera e excedente em ~20 s). Ficam ConvoAI + Signaling + RTC, feitos de forma consistente. Chat, recado para a família, Media Services, swap Pessoal/Corporativo e lembrete viram slide ou bônus. **C2 3→4 = +0,25** e **C6 2→3 = +0,05**, total **+0,30**. Também reduz o risco de E3.
-2. **Provar C1 ao vivo**: barge-in no meio da sugestão de parada, recuperação mostrada (km não entendido → agente pede só o km; rede cortada → evento enfileirado localmente e reentregue) e p50/p95 de latência medidos e mostrados (meta < 1,5 s). **C1 3→4 = +0,25**. Com latência baixa medida e as duas coisas na demo, 3→5 = +0,50.
-3. **Harmonizar os documentos e trazer números reais**: um nome só, um termo só ("registro do trecho" ou "diário de bordo"), "modo atenção por tempo ao volante e horário" no lugar de "ritmo da fala" no README e no planejamento, e "prova complementar de espera" em todo lugar. Fazer as 5 ligações com caminhoneiros e os 6 testadores com resultados em `docs/validacao.md`. **C5 3→4 = +0,10** (e protege C4 = 4 e C3 = 4 no Q&A).
-
-## Observações
-
-**Inconsistências que a banca lê no repositório** (não mudam a nota diretamente, mas pesam em C4, C6 e no Q&A):
-
-| Tema | README / planejamento | mercado-e-evidencias / metricas / expansao |
-|---|---|---|
-| Gatilho de cansaço | "A própria fala é o sensor de cansaço (tempo de resposta, ritmo)" (README:29); nível 1 = "Ritmo da fala caindo" (planejamento:235); escopo "tempo ao volante + ritmo da fala" (planejamento:269) | "Modo atenção" por tempo contínuo e hora do dia; "Detecção de fadiga pela voz… por isso saiu do pitch"; "a frase 'detecta fadiga' não aparece" |
-| Nome | "Parceiro de Estrada" | "RODAR" (títulos de mercado, métricas e expansão) |
-| Registro | "registro do trecho" | "diário de bordo (inteligente)" |
-| Jornada | "não substitui o controle oficial de jornada… prova complementar" (README:74, planejamento:148, 335) | "prova de espera **e jornada**", "transportadora ganhando **controle de jornada** que resiste à Justiça" (conclusão), "a ETC cumpre o controle de jornada" |
-| Pilares | Pessoal / Corporativo / Comunidade | diário de bordo / **agente de escuta de canais por rodovia** / modo atenção (o agente de escuta não existe no planejamento) |
-| Roteiro da demo | 5 passos | 4 cenas diferentes |
-| Áudio | recado "gravado" que a família "ouve por link" | "Só transcrição em texto, nunca áudio" |
-| Parar | "sugere parada" (nível 2) | "não manda parar, sempre nomeia a pausa" (compatível, mas o tom precisa ser o mesmo no pitch) |
-| RDO editável | o README e o planejamento já dizem "não editável" | o mercado afirma que eles ainda descrevem um "RDO que o motorista pode editar". Essa nota está **desatualizada** e é ela que precisa sair |
-
-Escolher **um** posicionamento antes do pitch. O mais defensável pela própria pesquisa é "prova da viagem + alertas por voz + modo atenção como apoio". Com ele, o README e o planejamento precisam de ajuste, e a seção "Por que voz" precisa de um argumento novo: mãos e olhos ocupados, digitar com OR ≈ 23 contra viva-voz com OR 0,65, confirmação falada.
-
-**Outras notas técnicas:**
-- O "sem sinal → entregue quando a conexão volta (Agora Chat)" mistura duas coisas. O Chat guarda mensagens para o **destinatário** offline. Com o **remetente** sem rede, o evento precisa de fila local no app. Isso é código do time, não produto Agora, e precisa estar descrito assim para não parecer integração que não existe.
-- O `mercado-e-evidencias.md` diz que o modo atenção "precisa rodar no aparelho, sem rede". Se fizerem isso, essa parte sai do caminho da Agora e não conta para C2. Na demo, mostrar a versão online pelo ConvoAI.
-- O C1 depende de a interrupção e o pt-BR funcionarem no ConvoAI. A pendência "testar português" está aberta desde a manhã, então é a primeira coisa a fechar, usando o skill `agora` e o MCP de docs em vez de suposição.
-- A banca do jantar é do mercado financeiro. O material de TAM/SAM e os comparáveis (Legora, Samsara) servem lá, mas não pontuam na rubrica e não devem tomar tempo dos 3 minutos de pitch.
-- Ranking: é a única ideia pontuada até agora, então não há empate a resolver. A atualização da tabela em `ideas/README.md` fica com o `/judge`.
+## Maior retorno restante (`4,60 → 5,00`)
+1. **Executar a bateria de 3 testadores × 5 cenários (15 rodadas medidas) e documentar os dados + aprendizados concretos em `docs/validacao.md`:** C5 3→5 = **+0,20** (nota sobe para **4,80 / 5**).
+2. **Assim que o produto estiver solidificado, gravar o vídeo demo de 2 minutos mostrando as 3 frentes + lembrete na parada real + diário de espera não editável + abertura de canal Agora RTC com o CCO:** C4 4→5 = **+0,15** e C6 4→5 = **+0,05** (fechando **5,00 / 5,00**).

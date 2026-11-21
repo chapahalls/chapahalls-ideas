@@ -1,6 +1,6 @@
 # Parceiro de Estrada — Planejamento
 
-Versão de 21/11/2026. Fonte viva: [doc no Claude](https://claude.ai/artifact/7Gz8rWwKweRo3EWrUfP9Wa) (este arquivo é uma cópia para o time).
+Versão de 21/11/2026 — Documento unificado do time (`RODAR / Parceiro de Estrada`).
 
 ## Visão
 
@@ -232,9 +232,9 @@ O CCO só entra quando há risco real ou quando o motorista pede; cansaço comum
 
 | Nível | Gatilho | Ação | Quem sabe |
 |---|---|---|---|
-| 1 | Ritmo da fala caindo ou 4h30 ao volante | Agente puxa conversa | Só o motorista |
-| 2 | Sinal persiste ou passa de 5h30 | Agente sugere a próxima parada segura | Só o motorista |
-| 3 | Sem resposta ao agente, ou "preciso de ajuda" | Abre canal de voz com o operador | CCO |
+| 1 | Tempo contínuo ao volante (ex.: >4h30), janela de madrugada ou lentidão de resposta na conversa (**Modo Atenção**) | Agente puxa conversa engajadora (reduz KSS de 7,98 para 5,28 — *Leeds 2025*) | Só o motorista |
+| 2 | Sinal persiste ou aproxima-se do limite de 5h30 (CTB art. 67-C) | Agente acolhe e sugere a próxima parada segura destacando chuveiro (79%), restaurante (67,8%) e pátio vigiado (55,8%) | Só o motorista |
+| 3 | Quebra de conversa / sem resposta ao agente, ou "preciso de ajuda" | Abre canal de voz direto (**Agora RTC**) com o operador | CCO |
 
 - **O CCO recebe:** ocorrências estruturadas com resumo de uma linha, registro do trecho (carimbos automáticos + relatos confirmados), tempo de espera e excedente de estadia, status de jornada, escalonamentos de nível 3, eventos da Comunidade anonimizados.
 - **O CCO não recebe:** nada da frente Pessoal, áudio bruto, curva de fala, sinais de nível 1 e 2.
@@ -266,7 +266,7 @@ O MVP é 100% online via Agora; tudo que depende de operação offline ou de har
 - Copiloto de voz em português com interrupção
 - Extrator de eventos e roteador para as 3 frentes, com confirmação por voz
 - Comunidade: alerta entre dois clientes na mesma rodovia e sentido, com validade por tipo, confirmação dupla do "não" e remoção por peso
-- Cansaço: tempo ao volante + ritmo da fala, escalonamento em 3 níveis
+- Modo Atenção (cansaço): tempo contínuo ao volante, janela de madrugada e tempo de resposta/quebra de conversa, com escalonamento em 3 níveis
 - Painel CCO: fila, mapa, botão "falar", registros
 - Registro do trecho não editável: carimbos automáticos (GPS simulado), relatos por voz como anexo, correção só por adendo, cálculo de espera e excedente de 5h
 - Pessoal: swap por voz entre modos, envio pessoal bloqueado no Corporativo, lembrete disparado na parada real, recado/ligação para a família por link (Agora), recado recebido segurado até a parada
@@ -293,8 +293,8 @@ Cada fase só começa quando o gate da anterior passa; se a fase 1 não passar a
 | Sáb 19h | 2. Comunidade | Extrator sem invenção, roteador com confirmação, alerta entre 2 clientes, "ainda está lá?" com confirmação dupla do "não" |
 | Sáb 23h | 3. Cansaço e CCO | 3 níveis funcionando, sem falso positivo na sessão desperta, painel CCO |
 | Dom 7h | 4. Corporativo e Pessoal | Registro imutável (tentativa de editar falha; correção vira adendo), espera calculada, Pessoal isolado dos outros destinos, envio pessoal bloqueado no Corporativo, lembrete dispara só em parada real |
-| Dom 9h | 5. Validação | 6 ou mais testadores externos, números em `docs/validacao.md` |
-| Dom 11h | 6. Entrega | Repo com tag, vídeo de 2 min, 10 slides, demo ensaiada (prazo final 12h) |
+| Dom 9h | 5. Validação | 3 testadores × 5 cenários (15 interações medidas) + aprendizados concretos em `docs/validacao.md` |
+| Dom 11h | 6. Entrega | Produto solidificado, repo com tag, gravação do vídeo demo de 2 min, 10 slides, demo ensaiada (prazo final 12h) |
 
 A ordem segue o valor na demo: Comunidade impressiona mais e vem antes; o Pessoal reaproveita o canal de voz e o detector de parada, por isso fica por último.
 
@@ -310,16 +310,16 @@ A ordem segue o valor na demo: Comunidade impressiona mais e vem antes; o Pessoa
 
 **Validação**
 
-- 6 ou mais testadores externos, sem saber o que dispara o alerta.
+- **3 testadores × 5 cenários padronizados (15 interações medidas no total)**, cobrindo Pessoal, Corporativo/CCO, Comunidade, barge-in e dado faltante/Modo Atenção.
 - Cansaço induzido por tarefa paralela (conta de cabeça enquanto conversam), comparado com sessão sem tarefa.
-- Medir: latência de resposta do agente, acerto do roteamento (zero vazamento do Pessoal), eventos extraídos sem invenção, falsos positivos de cansaço.
-- Números em `docs/validacao.md`; dados reais fora do repositório.
+- Medir: latência de resposta do agente, acerto do roteamento (zero vazamento do Pessoal), eventos extraídos sem invenção, falsos positivos de cansaço e registrar pelo menos **2 aprendizados concretos** aplicados ao produto.
+- Números em `docs/validacao.md` (declarando honestamente a amostra `n = 3`); dados reais fora do repositório.
 
 **Entrega**
 
 - [ ] Repositório público com tag e README (planos B declarados)
-- [ ] Vídeo de 2 minutos
-- [ ] 10 slides, incluindo "próximos passos" (LoRa, Device Kit, rastreadores)
+- [ ] Vídeo de 2 minutos (gravado assim que o produto estiver solidificado)
+- [ ] 10 slides, incluindo "próximos passos" (Voz Offline, Rede Mesh/DTN `A → B → C`, LoRa, Device Kit, rastreadores, Rádio PX)
 - [ ] Demo ensaiada
 
 ## Riscos e mitigação
@@ -349,4 +349,4 @@ O maior risco técnico é a latência em português; o maior risco de produto é
 | Agente vira "amigo" e cria dependência | Risco emocional; banca questiona | Tom de companheiro, sem persona afetiva; puxa o contato real com a família; CVV em sinal de crise |
 | Recado pela API do WhatsApp/Telegram | Fora da Agora (não conta no C2); limites das APIs | Demo por link Agora; WhatsApp/Telegram como próximo passo |
 
-Pendências: nome do time e integrantes.
+**Time:** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`) e Lucas (`@LucasLCO`). Contexto unificado com [`../../RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md) e [`../rodar.md`](../rodar.md).

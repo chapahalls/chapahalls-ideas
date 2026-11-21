@@ -91,8 +91,14 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **Privacidade:** conversa livre não é gravada por padrão; desabafo pode ser dado de saúde (LGPD art. 11); Pessoal não pode servir à avaliação de riscos psicossociais da NR-1.
 - Fontes: [Android work profile](https://support.google.com/work/android/answer/7502354), [WhatsApp Business Policy](https://whatsappbusiness.com/es/policy/), [Telegram bot não inicia conversa](https://www.unipile.com/telegram-api-send-message-a-comprehensive-guide/), [WhatsApp no Android Auto](https://9to5google.com/?p=723266), [Nottingham 2018](https://eprints.nottingham.ac.uk/50351), [Agência Brasil 2025](https://agenciabrasil.ebc.com.br/saude/noticia/2025-09/jornada-exaustiva-e-solidao-afetam-saude-mental-de-caminhoneiros), [LGPD art. 11](https://www.aurum.com.br/blog/lgpd-comentada/art-11-a-13-lgpd/).
 
+## 9. Unificação de contextos (Jeferson, Henry e Lucas — RODAR / Parceiro de Estrada)
+
+- **Convergência:** os levantamentos de arquitetura do `RODAR-CONTEXT.md` (Jeferson) e o planejamento/pesquisa de mercado de `ideas/parceiro-de-estrada/` (Henry e Lucas) foram unificados sob o nome **RODAR / Parceiro de Estrada** nas **3 frentes**: **1. Pessoal & Companhia (Modo Atenção + Família/Amigos via swap e lembrete na parada)**, **2. Corporativa (CCO + Diário de espera não editável)** e **3. Comunidade (Alertas de fim de fila/acidente na mesma via com confirmação dupla)**.
+- **Offline e Mesh/DTN no Roadmap Futuro:** decisão conjunta de manter o MVP de 24h 100% focado na stack online da **Agora** (Conversational AI + RTC + Signaling/Chat + AI Noise Suppression, com fila local no remetente para oscilações curtas), movendo a operação de voz offline no Android (`whisper.cpp`/`llama.cpp`) e a rede oportunista **Mesh/DTN (`A → B → C` store-carry-forward)** para *Próximos passos (P2)* junto com LoRa e Rádio PX 27 MHz.
+- **Validação e Vídeo Demo:** protocolo ajustado para a realidade do time no hackathon (**3 testadores × 5 cenários = 15 interações medidas** + registro de aprendizados concretos em `docs/validacao.md`), com gravação do **vídeo demo de 2 minutos** assim que o produto estiver solidificado.
+
 ## Pendências
 
-- Nome do time e integrantes
-- Testar português no Conversational AI Engine
-- Escolher o LLM reserva
+- **Time definido:** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`) e Lucas (`@LucasLCO`)
+- Testar português no Conversational AI Engine (Fase 1)
+- Escolher o LLM reserva (Fase 1)
