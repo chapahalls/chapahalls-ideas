@@ -31,7 +31,7 @@ O registro do trecho não é editável e não depende do condutor: a fala do mot
 
 **Base legal**
 
-- CTB art. 67-C: no máximo 5h30 de direção ininterrupta.
+- CTB art. 67-C: no máximo 5h30 de direção ininterrupta. Vale para todo motorista profissional, empregado (CLT) ou autônomo (TAC); jornada de 8h e horas extras (CLT art. 235-C) valem só para o empregado.
 - CTB art. 67-E e Lei 13.103: jornada registrada "de maneira fidedigna"; o equipamento eletrônico deve "funcionar de forma independente de qualquer interferência do condutor, quanto aos dados registrados".
 - STF, ADI 5322 (2023): tempo de espera na carga e descarga conta como jornada.
 - Lei 11.442, art. 11, §5º: carga e descarga em até 5h a partir da chegada; depois disso é devida estadia por tonelada/hora. Hoje o motorista raramente consegue provar o horário de chegada (CNTA 2025: 84,7% dos que esperam mais de 5h não recebem estadia).
@@ -47,6 +47,8 @@ O registro do trecho não é editável e não depende do condutor: a fala do mot
 | Sem sinal | Evento gerado no aparelho com hora do GPS, marcado "registrado offline", entregue pelo Chat quando a conexão volta |
 
 **O que não é:** não substitui o controle oficial de jornada (rastreador/tacógrafo da transportadora). É prova complementar de espera e ocorrências.
+
+**Quem usa:** motoristas da transportadora que contrata a ferramenta. O uso por autônomos (TAC) depende do contrato de cada empresa com eles; fora do nosso escopo.
 
 **Exemplo**
 
@@ -188,4 +190,4 @@ O maior risco técnico é a latência em português; o maior risco de produto é
 | LGPD (voz e jornada são dados do motorista) | Jurídico | Consentimento por destino; tela "o que a empresa vê" |
 | Sem sinal na rodovia | Alerta não chega | Entrega adiada via Chat; LoRa como próximo passo |
 
-Pendências: nome do time e integrantes; caso do motorista autônomo (TAC) no Corporativo.
+Pendências: nome do time e integrantes.

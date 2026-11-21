@@ -67,12 +67,11 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **Decisão:** o Corporativo vira registro do trecho **não editável**: chegada, saída e paradas por geofence e hora do servidor; log só de inclusão com hash encadeado; correção só por adendo; a voz só anexa relato confirmado.
 - **Posicionamento:** prova complementar de espera e ocorrências, não controle de jornada (que segue no rastreador/tacógrafo).
 - **Descartado:** "Como foi o trecho?" no fim da viagem como fonte principal: era relato de memória, editável, sem carimbo.
-- **Em aberto:** motorista autônomo (TAC), dono da própria estadia.
+- **TAC:** o limite de 5h30 (CTB 67-C) vale para empregado e autônomo; o uso da ferramenta pelo TAC depende do contrato de cada transportadora, então fica fora do escopo.
 - Fontes: [Lei 13.103](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13103.htm), [CTB art. 67 comentado](https://ctbdigital.com.br/artigo/art67/), [ANTT nota técnica estadia](https://www.gov.br/antt/pt-br/assuntos/cargas/arquivos/arquivos-pagamento-do-tempo-adicional-de-carga-e-descarga/sei_31291793_nota_tecnica___antt_3335.pdf/@@download/file), [pesquisa CNTA 2025](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes), [TJMT](https://www.legjur.com/jurisprudencia/eme/908.2495.7726.5333).
 
 ## Pendências
 
 - Nome do time e integrantes
-- Caso do motorista autônomo (TAC) no Corporativo
 - Testar português no Conversational AI Engine
 - Escolher o LLM reserva
