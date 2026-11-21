@@ -1,0 +1,165 @@
+# Segurança nacional, infraestrutura crítica e soberania logística: argumento para o RODAR / Parceiro de Estrada
+
+Data da pesquisa: 21/11/2026. Todo número traz o ano. As fontes fracas estão marcadas com [FRACA]: agregadores, blogs, conteúdo de fornecedor ou páginas com datas inconsistentes. Pesquisa feita só com busca na web, com cerca de 15 consultas. Quase tudo vem de resumos de busca e não da leitura completa dos documentos primários. Antes de pôr qualquer número num pitch, confira na fonte primária indicada.
+
+## 1. Dependência: o Brasil roda sobre caminhões
+
+### Takeaway
+Cerca de 62-63% da carga brasileira em TKU vai por rodovia (2023-2024). Sem minério e combustíveis, a fatia passa de 85%. A greve de maio de 2018 mostrou o tamanho da vulnerabilidade: em cerca de 10-11 dias derrubou a produção industrial em 10,9-11,0% no mês, esvaziou mais de 90% dos postos em alguns estados e levou a um decreto de GLO nacional. Depois disso, as ameaças de greve (2021, 2022, dez/2025, mar/2026) foram articuladas em grupos de WhatsApp e tiveram adesão baixa ou fragmentada.
+
+### Cited Findings
+**Matriz de transporte**
+- Rodoviário com 62,2% da carga (TKU) e ferroviário com 26,9%, pelo PILT/Fundação Dom Cabral, divulgado em abr/2024. Citado em: [Portal da Indústria/CNI](https://noticias.portaldaindustria.com.br/noticias/infraestrutura/brasil-e-a-dependencia-das-rodovias-desafios-e-caminhos-para-investimentos/)
+- O ILOS (2024) dá 63% rodoviário, 19% ferroviário, 15% aquaviário e 4% dutoviário para o ano de 2023 — [Revista BNB](https://www.bnb.gov.br/revista/cse/article/download/3245/2257/11345)
+- As rodovias levam 62% das cargas do país. Sem minérios e combustíveis, a fatia sobe para 85% — [Portal da Indústria/CNI](https://noticias.portaldaindustria.com.br/noticias/infraestrutura/brasil-e-a-dependencia-das-rodovias-desafios-e-caminhos-para-investimentos/)
+- Divergência metodológica: a CNT (2019) dava 61,1%. Não encontrei o número oficial da CNT de 2024 — [TCC FURG citando CNT](https://comercioexterior.furg.br/images/Documentos/TCC_Ana_Julia_verso_final_1.pdf) [FRACA: fonte secundária]
+
+**Greve dos caminhoneiros de 2018**
+- Começou em 21/05/2018 por causa da alta do diesel. No auge atingiu 24 estados e o DF. O pacote de concessões saiu em 27/05, e a desmobilização total veio por volta do 10º/11º dia — [Itatiaia](https://www.itatiaia.com.br/economia/greve-dos-caminhoneiros-em-2018-paralisou-o-pais-por-10-dias-relembre/); [O Povo](https://www.opovo.com.br/noticias/politica/2022/03/12/amp/relembre-como-foi-a-greve-dos-caminhoneiros-de-2018.html)
+- No 7º dia (27/05/2018), o desabastecimento passava de 90% dos postos em alguns estados, e as prateleiras de não perecíveis estavam vazias — [Itatiaia](https://www.itatiaia.com.br/brasil/cinco-anos-da-greve-dos-caminhoneiros-relembre-impactos-da-maior-paralisacao-da-categoria/)
+- Em 25/05/2018, o Decreto 9.382 instituiu GLO em todo o território, com Forças Armadas autorizadas até 04/06. Saiu também decreto permitindo requisitar caminhões — [Money Times](https://www.moneytimes.com.br/temer-decreta-garantia-da-lei-e-da-ordem-em-todo-pais-ate-4-de-junho/); [Money Times](https://www.moneytimes.com.br/governo-edita-decreto-que-permite-requisicao-de-caminhoes/)
+- IBGE: a produção industrial caiu 10,9% de abril para maio de 2018 (revisado depois para -11,0%), a maior queda desde dez/2008. O IBGE atribuiu a queda à greve, que "paralisou o abastecimento por via rodoviária em todo o país por 11 dias". Em junho/2018 a produção subiu 13,1%, a maior alta da série — [IBGE Agência de Notícias](https://agenciadenoticias.ibge.gov.br/agencia-noticias/21622-greve-dos-caminhoneiros-leva-industria-a-ter-a-maior-queda-desde-2008.html); [IBGE junho](https://agenciadenoticias.ibge.gov.br/pt/agencia-sala-de-imprensa/21976-producao-industrial-cresce-13-1-em-junho.html?lang=pt-BR)
+- Banco Central: o IBC-Br caiu 3,34% em maio/2018 sobre abril. O Relatório de Inflação de set/2018 tem um box sobre o efeito "imediato e expressivo" da greve, concentrado entre 20 e 30/05 — [BC, Relatório de Inflação set/2018, box](https://www.bcb.gov.br/htms/relinf/port/2018/09/ri201809b1p.pdf); [Forbes](https://forbes.com.br/last/2018/07/economia-brasileira-encolhe-334-em-maio/)
+- Ministério da Fazenda (2018): custo estimado de R$ 15 bilhões, cerca de 0,2% do PIB — [Monitor Mercantil](https://monitormercantil.com.br/greve-dos-caminhoneiros-custou-r-15-bilh-es-ao-pa-s/) [FRACA: metodologia não divulgada]
+- Focus (jun/2018): a mediana do PIB de 2018 caiu de 2,37% para 2,18%. Em julho já estava em cerca de 1,5% — [Monitor Mercantil](https://monitormercantil.com.br/greve-reduziu-expectativa-de-crescimento-do-pib-mostra-focus/). O PIB oficial do 2º tri/2018 (IBGE) ficou em +0,2%, porque a recuperação de junho compensou parte da queda — [Carta Capital](https://www.cartacapital.com.br/?p=3220)
+
+**Ameaças posteriores e coordenação por WhatsApp**
+- Set/2021: a PRF registrou bloqueios em pelo menos 14-15 estados. Bolsonaro mandou áudio por WhatsApp aos grupos pedindo o fim dos bloqueios. Já em mai/2021, as lideranças se articulavam em grupos de WhatsApp, e um caminhoneiro disse ter 45 grupos ativos no celular — [Congresso em Foco](https://www.congressoemfoco.com.br/governo/em-audio-enviado-por-whatsapp-bolsonaro-pede-a-caminhoneiros-o-fim-dos-bloqueios/); [Congresso em Foco – 15 estados](https://www.congressoemfoco.com.br/artigo/13673/ao-menos-15-estados-registram-bloqueios-de-caminhoneiros-indica-prf); [Correio Braziliense](https://blogs.correiobraziliense.com.br/vicente/caminhoneiros-desdenham-de-propostas-do-governo-e-ja-falam-em-greve/)
+- A mobilização de 2018 também correu em mais de 40 grupos de WhatsApp — [Congresso em Foco](https://www.congressoemfoco.com.br/noticia/12148/mobilizacao-de-caminhoneiros-passa-por-mais-de-40-grupos-de-whatsapp)
+- Out-nov/2022, depois do 2º turno: houve bloqueios golpistas, com mais de 300 bloqueios simultâneos, e a PRF desfez mais de mil desde 30/10. A reportagem descreve como os planos de bloqueio "saíram de grupos de mensagem para as ruas" — [Correio Braziliense](https://www.correiobraziliense.com.br/politica/2022/11/5048745-como-planos-de-bloqueio-sairam-de-grupos-de-mensagem-para-as-ruas.html)
+- Dez/2025: a UBC (Chicão Caminhoneiro) convocou greve para 04/12 e estimava 20% de adesão. A CNTA não viu adesão no seu monitoramento, e nos grupos predominava a prudência — [Gazeta do Povo](https://www.gazetadopovo.com.br/economia/greve-caminhoneiros-4-dezembro-baixa-adesao/); [SBT News](https://sbtnews.sbt.com.br/noticia/brasil/caminhoneiros-convocam-greve-em-todo-o-brasil-para-esta-quinta-4)
+- Mar/2026: o diesel subiu cerca de 18,9% desde o fim de fevereiro, efeito da guerra no Oriente Médio. Houve nova ameaça e as entidades se dividiram. Saiu um ato de 24h na Bahia (ANTB), as associações recuaram e o governo anunciou medidas — [CNN Brasil](https://www.cnnbrasil.com.br/economia/macroeconomia/caminhoneiros-negam-greve-nacional-por-causa-de-alta-do-diesel-antb-convoca-movimento-na-bahia/); [Exame](https://exame.com/brasil/vai-ter-greve-nacional-dos-caminhoneiros-o-que-se-sabe-ate-agora/)
+
+### Inferences
+- Para o pitch, o argumento mais forte de "segurança" é o econômico e de abastecimento: 2018 é um precedente documentado pelo IBGE e pelo BC, não é hipótese.
+- O canal real de coordenação da categoria é o WhatsApp, uma plataforma estrangeira e criptografada. Na crise, o Estado só conseguiu falar com a categoria mandando áudio pelos grupos (2021). Isso dá base a dois argumentos: a "falta de um canal oficial e confiável com o motorista" e o "risco informacional", com boatos e vídeos antigos circulando como se fossem atuais ([Aos Fatos](https://www.aosfatos.org/noticias/cena-que-registra-bloqueio-de-estrada-por-caminhoneiros-e-de-2022-nao-atual/)).
+- Desde 2021 as ameaças vêm com adesão baixa. A categoria é fragmentada (UBC, CNTA, ANTB, Abrava…) e não tem um interlocutor único. Isso é ao mesmo tempo um problema de governança e uma oportunidade para um canal neutro.
+
+### Gaps
+- Faltou fonte primária sobre falta de medicamentos e insumos hospitalares em 2018. Nenhum resultado tratou disso diretamente.
+- Não achei estimativa formal da FGV/IBRE do impacto da greve de 2018 no PIB.
+- Não achei o número oficial da CNT para a matriz de 2024/2025.
+- Não verifiquei se houve greve ou ameaça relevante entre abr e nov/2026.
+
+## 2. Política de infraestruturas críticas e planos de transporte/segurança viária
+
+### Takeaway
+O Brasil tem uma moldura formal para infraestruturas críticas, coordenada pelo GSI: a PNSIC (Decreto 9.573/2018), a Estratégia Nacional (Decreto 10.569/2020) e o Plano Nacional (Decreto 11.200/2022). Transportes aparece entre as áreas estratégicas, e desde jan/2026 o GSI prepara um projeto de lei. A política, porém, olha para ativos e serviços como rodovias, portos e sistemas. O motorista não aparece como elemento de infraestrutura crítica. A ligação mais direta do produto com políticas existentes vem da segurança viária (PNATRANS), não da segurança nacional.
+
+### Cited Findings
+- O Decreto 9.573, de 22/11/2018, aprova a PNSIC. Seus instrumentos são a Estratégia Nacional, o Plano Nacional e o Sistema Integrado de Dados de Segurança de Infraestruturas Críticas — [Planalto](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9573.htm)
+- A Estratégia Nacional (Ensic) foi aprovada pelo Decreto 10.569, de 09/12/2020. Cita comunicações, energia, transportes, finanças e águas entre as infraestruturas de dimensão estratégica — [Câmara, anexo Decreto 10.569](https://www2.camara.leg.br/legin/fed/decret/2020/decreto-10569-9-dezembro-2020-790892-anexo-pe.pdf); comentário em [Teletime 2020](https://teletime.com.br/11/12/2020/estrategia-para-infraestruturas-criticas-intervencionismo-no-5g/)
+- O Plano Nacional de Segurança de Infraestruturas Críticas foi aprovado pelo Decreto 11.200, de 15/09/2022 — [Planalto](https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/decreto/d11200.htm)
+- GSI: a identificação e análise de riscos das infraestruturas críticas começou pelas áreas de comunicações, energia e transportes — [GSI](https://www.gov.br/gsi/pt-br)
+- 16/01/2026: a Resolução CNSIC nº 15/2026 criou um GT, coordenado pelo GSI, para redigir um projeto de lei (marco legal da PNSIC). O prazo é de 1 ano, prorrogável por 3 meses. Ministério dos Transportes e Ministério de Portos e Aeroportos estão entre os membros — [Teletime 2026](https://teletime.com.br/16/01/2026/gsi-cria-grupo-para-elaborar-projeto-de-lei-sobre-infraestruturas-criticas/)
+- PNATRANS (Lei 13.614/2018): a meta original era cortar pela metade o índice de mortes no trânsito até 2028. A Lei 14.599/2023 mudou o prazo para 2030, com base em 2020 — [TCU](https://portal.tcu.gov.br/imprensa/noticias/tribunal-avalia-plano-nacional-para-reduzir-mortes-e-lesoes-no-transito); [Anexo PNATRANS 2023 (Contran)](https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-contran/resolucoes/Resolucao10042023_Anexo.pdf); [Balanço PNATRANS 2024](https://www.gov.br/transportes/pt-br/assuntos/transito/pnatrans/balancopnatrans_2024.pdf)
+- 2024: os acidentes em rodovias federais mataram 6,16 mil pessoas — [O Povo/PRF](https://www.opovo.com.br/noticias/brasil/2025/04/17/acidentes-em-rodovias-federais-matam-616-mil-pessoas-em-2024.html)
+- Jan-jul/2026: sinistros com caminhões em rodovias federais somaram 10.822 ocorrências, 11.243 feridos e 1.681 mortes, com alta nos três indicadores sobre o mesmo período de 2025 — [Portal do Trânsito](https://www.portaldotransito.com.br/noticias/mobilidade-e-tecnologia/seguranca/brasil-tem-ate-2030-para-reduzir-mortes-no-transito-pela-metade-numeros-mostram-o-tamanho-do-desafio/) [FRACA: portal especializado com datas inconsistentes; conferir no painel de dados abertos da PRF]
+- Fadiga: 28% dos caminhoneiros admitem usar estimulantes, e 35% desses usam anfetaminas ("rebite") (levantamento de 2024) — [Portal do Trânsito](https://www.portaldotransito.com.br/noticias/quase-3-em-cada-10-caminhoneiros-admitem-usar-estimulantes-para-ficar-acordados-nas-viagens/amp/) [FRACA]. A CNTA ("Realidade do Caminhoneiro Autônomo 2025") registra jornada média de cerca de 14h, 27,8% de uso de psicoativos e o rebite citado por 76,4% desses — [Mundo Logística](https://mundologistica.com.br/noticias/realidade-dos-caminhoneiros-autonomos-brasil-2025) [FRACA: agregador]. O sono médio é de 6h48/dia e 69% dirigem 9h ou mais (estudo de 2025 sobre dados CNT/SEST SENAT/ITL) — [Skymark](https://skymark.com.br/wp-content/uploads/2025/11/estudo-skymark-condicoes-trabalho-descanco-motoristas-profissionais.pdf) [FRACA: material de fornecedor]
+- Na GLO de 2018, Forças Armadas e PRF desobstruíram as rodovias. Uma liminar do STF autorizou o uso das FA — [Itatiaia](https://www.itatiaia.com.br/economia/greve-dos-caminhoneiros-em-2018-paralisou-o-pais-por-10-dias-relembre/). A AGU entende que a PRF pode atuar em protestos de caminhoneiros sem pedir autorização — [Bem Paraná](https://www.bemparana.com.br/noticias/politica/prf-pode-atuar-em-protesto-de-caminhoneiros-sem-demandar-autorizacao-diz-agu/)
+
+### Inferences
+- O enquadramento defensável é que o RODAR é uma camada de resiliência humana e informacional da infraestrutura crítica de transportes. Não é "infraestrutura crítica" em si. A PNSIC protege ativos e serviços, e o produto alimenta a consciência situacional sobre eles (bloqueios, sinistros, crimes) e reduz a perda do fator humano (fadiga).
+- O PL da PNSIC em elaboração (2026-2027) cria uma janela de agenda pública, mas é para infraestrutura. Não há indício de que vá tratar de aplicativos de motoristas.
+- A conexão mais concreta com metas públicas é o PNATRANS (−50% de mortes até 2030) somado à fadiga documentada. O "modo atenção" se justifica como segurança viária e saúde do trabalhador. Chamar isso de "segurança nacional" é forçar a barra.
+
+### Gaps
+- Não consegui confirmar a lista oficial de setores do Plano Nacional (Decreto 11.200/2022), nem se "transporte rodoviário de cargas" aparece como subsetor.
+- Não avaliei o Plano Nacional de Logística (PNL 2035/2050). As buscas não trouxeram o documento.
+- Faltou o número oficial PRF/ONSV sobre a parcela de sinistros atribuídos a sono/fadiga. Nenhuma busca trouxe esse dado.
+- Faltou detalhar o papel da Força Nacional em rodovias.
+
+## 3. Crime organizado, roubo de cargas, combustíveis e tráfico por caminhão
+
+### Takeaway
+O crime organizado está presente na logística rodoviária de forma documentada. O roubo de cargas ficou entre 8,5 e 10,5 mil ocorrências por ano em 2024-2025, com prejuízo próximo de R$ 1 bilhão por ano, e as forças de segurança atribuem parte dele a PCC e CV. A Operação Carbono Oculto (2025-2026) mostrou o PCC dono de distribuidoras, transportadoras e postos. Em 2024 a PRF apreendeu mais de 800 toneladas de drogas em rodovias federais, muitas vezes em carretas. O motorista é vítima, sensor e às vezes aliciado, e é isso que torna o tema delicado para o produto.
+
+### Cited Findings
+- 2024: mais de 10 mil roubos de carga, 10.478 pela NTC (27/dia). Outra fonte dá 10.193. O prejuízo passou de R$ 1,2 bilhão, alta de 21% sobre 2023. O Sudeste concentrou 83,2% dos prejuízos — [Monitor Mercantil](https://monitormercantil.com.br/mais-de-10-mil-roubos-de-carga-foram-registrados-no-pais-em-2024/); [Brasil 61](https://brasil61.com/n/brasil-registra-mais-de-10-mil-roubos-de-carga-em-2024-e-prejuizo-passa-de-r-1-2-bilhao-bras2514550); [Notícias Agrícolas](https://www.noticiasagricolas.com.br/noticias/logistica/395390-sudeste-registra-83-dos-prejuizos-de-roubo-de-carga-em-2024-sao-paulo-45-8-e-rio-de-janeiro-25-apresentam-maior-incidencia-de-sinistros.amp.html)
+- 2025: 8.570 ocorrências pela NTC, queda de 16,7% (outras matérias dizem 8.750). O prejuízo direto ficou em cerca de R$ 900 milhões e passa de R$ 1 bilhão com os efeitos indiretos. O Sudeste caiu para 68,1%, e o RJ lidera em prejuízo mensal — [CNN Brasil](https://www.cnnbrasil.com.br/infra/roubo-de-cargas-cai-quase-17-em-2025-mas-prejuizo-segue-bilionario/); [Monitor Mercantil](https://monitormercantil.com.br/apesar-de-queda-em-roubo-de-cargas-no-sudeste-em-2025-rio-segue-liderando/). Contraponto: a Nstech viu as perdas do 1º semestre de 2025 subirem 24,8% — [Monitor Mercantil](https://monitormercantil.com.br/roubo-de-cargas-teve-queda-em-2025-mas-impacto-ainda-permanece-elevado/). As metodologias divergem (NTC × Sinesp × Nstech).
+- As forças de segurança dizem que a inteligência identificou participação do CV (RJ) e do PCC (SP) em roubos nas rodovias. O PCC aliciaria motoristas em centros de distribuição e usaria informação interna — [Itatiaia](https://www.itatiaia.com.br/brasil/faccoes-como-pcc-e-cv-estao-por-tras-de-roubo-de-cargas-dizem-forcas-de-seguranca/)
+- A PF apresentou o tema na Comissão de Viação e Transportes da Câmara em jun/2025 — [Câmara](https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cvt/apresentacoes-em-eventos/eventos-2025/arquivos-de-eventos-2025/sem-25-06-11-otavio-flores-pf) (conteúdo não lido)
+- Operação Carbono Oculto, de 28/08/2025: cerca de 1.400 agentes em 8 estados e mais de 350 alvos. O PCC "absorveu" distribuidoras, transportadoras e postos. O prejuízo estimado pelo MPSP é de R$ 7,67 bilhões. Entre os investigados há 4 transportadoras de carga. A 2ª fase veio em mai/2026 — [MPSP](https://www.mpsp.mp.br/w/megaoperacao-com-1-400-agentes-mira-setor-de-combustiveis); [InfoMoney](https://www.infomoney.com.br/brasil/operacao-carbono-oculto-entenda-o-esquema-bilionario-do-pcc-no-setor-de-combustiveis/); [Diário de Pernambuco](https://www.diariodepernambuco.com.br/brasil/2026/05/11715178-gaeco-deflagra-2-fase-da-carbono-oculto-contra-pcc-no-setor-de-combustiveis.html)
+- Em pesquisa com caminhoneiros, roubo, combustível e frete aparecem como os maiores entraves — [Monitor Mercantil](https://monitormercantil.com.br/caminhoneiro-roubo-combust-vel-e-frete-s-o-os-maiores-entraves/) [FRACA: pesquisa não identificada]
+- 2024: a PRF apreendeu mais de 850 t de drogas em rodovias federais (maconha 808 t, +23% sobre 2023; cocaína 41,4 t). Só no PR foram 284 t, incluindo 20 t numa única carreta bitrem em Iguaraçu — [Bem Paraná](https://www.bemparana.com.br/noticias/parana/apreensao-de-drogas-nas-estradas-do-parana-atinge-284-toneladas-em-2024-novo-recorde/); [carro.blog.br](https://carro.blog.br/noticia/prf-registra-recorde-historico-de-apreensao-de-drogas-em-rodovias-federais.html?tipo=amp) [FRACA; conferir no balanço da PRF]
+
+### Inferences
+- Alertas comunitários georreferenciados (ponto de risco, abordagem suspeita, falso bloqueio) e escalonamento para a central são uma resposta direta ao roubo de cargas. Esse é o "caso de segurança" mais vendável para transportadoras e seguradoras, que pagam pelo risco.
+- A integração com a PRF (canal 191, dados abertos) é plausível como encaminhamento: o motorista reporta e a central filtra e repassa. Não consegui verificar se existe API pública da PRF para receber incidentes. Trate como hipótese.
+- Ponto delicado: se o motorista pode ser aliciado e o app tem localização, canais de voz e dados de rota, o próprio app vira alvo de facção (inteligência sobre cargas valiosas). O desenho precisa de minimização de dados e de canais que não exponham carga ou rota em tempo real para terceiros.
+
+### Gaps
+- Faltou dado sobre roubo de combustível em caminhões-tanque e dutos como modalidade separada.
+- Faltou estatística de fronteira (MS/PR com Paraguai e Bolívia) específica para cargas lícitas.
+- Não achei evidência pública de que alertas de motoristas tenham ajudado a PRF a prender alguém (estudo de caso).
+
+## 4. Emergências e desastres: enchentes do RS em 2024 e motoristas como sensores
+
+### Takeaway
+Nas enchentes de mai/2024 no RS houve até 170 pontos de bloqueio em 79 rodovias estaduais, além das BRs 116 e 386. A informação sobre rotas ficou espalhada entre Defesa Civil, governo do estado, sindicatos (Setcergs) e sites ad hoc. Caminhoneiros e transportadoras foram a espinha logística da ajuda humanitária. É o melhor caso de uso dual civil: o motorista como sensor e como receptor de rota segura.
+
+### Cited Findings
+- No pior momento, 170 pontos de bloqueio em 79 rodovias estaduais, afetando 97 municípios (mai/2024) — [Jornal do Comércio](https://www.jornaldocomercio.com/geral/2024/05/1154321-rs-tem-170-pontos-de-bloqueio-em-79-rodovias-estaduais.html). A Defesa Civil apontou 110 trechos com bloqueio total ou parcial, inclusive nas BRs 116 e 386, e outro boletim fala em 102 trechos — [Canal Rural](https://www.canalrural.com.br/previsao-do-tempo/chuvas-no-rs-102-trechos-de-rodovias-tem-bloqueio-total-ou-parcial/). Os números variam conforme a data.
+- Mais de 2 milhões de afetados e 90% dos municípios atingidos — [Folha PE](https://www.folhape.com.br/noticias/mais-de-2-milhoes-de-pessoas-foram-afetadas-pelas-enchentes-no-rs-que/335995/). A FIERGS estimou 94% da atividade econômica do estado afetada — [Mundo Logística](https://mundologistica.com.br/noticias/logistica-qual-impacto-das-enchentes-no-rio-grande-do-sul) [FRACA]
+- A ferrovia (Rumo) parou parcialmente, ameaçando embarques de grãos e combustível — [Brasil de Fato](https://www.brasildefato.com.br/2024/05/03/rio-grande-do-sul-tem-estradas-bloqueadas-e-trens-parados-como-consequencia-das-enchentes-no-estado). Isso mostra que o modal ferroviário tem o mesmo problema, o que importa para a extensão do produto ao trem.
+- O governo federal abriu "caminhos assistenciais" com aterro de pedras para a ajuda passar. Mapas de rotas alternativas foram publicados no site SOS Enchentes — [Agência Gov](https://agenciagov.ebc.com.br/noticias/202405/caminhos-assistenciais-do-governo-federal-liberam-rodovias-para-garantir-abastecimento-do-rio-grande-do-sul); [Gov. RS](https://www.estado.rs.gov.br/transito-livre-nos-postos-fiscais-do-rs-acelera-chegada-de-doacoes)
+- O Setcergs publicou mapas de bloqueios e rotas para os transportadores. Fetransul: impacto em toda a cadeia de suprimentos — [Jornal do Comércio](https://www.jornaldocomercio.com/cadernos/jc-logistica/2024/05/1155207-empresas-de-transporte-e-logistica-mantem-ritmo-intenso-de-operacoes-para-garantir-abastecimento-em-meio-a-crise-das-cheias.html); [Agrolink](https://www.agrolink.com.br/noticias/cenario-logistico-do-rs-e-critico_490888.html)
+- O governo do RS usou o WhatsApp como canal oficial de números e informações ("numzap") — [Gov. RS, PDF numzap](https://estado.rs.gov.br/upload/arquivos/202405/numzap-enchentes-17-maio-24.pdf)
+- Boatos de multas a caminhões com doações, que o governo gaúcho chamou de falsos, fizeram a ANTT publicar portaria flexibilizando a fiscalização (com base no Decreto Legislativo 236/2024) — [Gazeta do Povo](https://www.gazetadopovo.com.br/brasil/apos-acusacoes-de-multas-a-caminhoes-com-doacoes-antt-lanca-portaria-facilitando-transporte-ao-rs/)
+- Comboios de caminhoneiros com doações, por exemplo mais de 250 t saindo de Osasco — [Click Petróleo e Gás](https://clickpetroleoegas.com.br/apos-ver-parentes-e-amigos-atingidos-pelas-enchentes-no-rs-caminhoneiro-gaucho-assume-a-primeira-carreta-de-um-comboio-com-mais-de-250-toneladas-de-doacoes-sai-de-sao-paulo-ctl01/) [FRACA]
+- O Ministério de Portos e Aeroportos publicou relatórios diários da situação logística no RS — [MPOR, 10/05/2024](https://www.gov.br/portos-e-aeroportos/pt-br/assuntos/10052024_RelatrioDirio_18h.pdf)
+
+### Inferences
+- O RS 2024 mostra informação de rota fragmentada, desinformação (as "multas") e um canal oficial que dependia de WhatsApp. Um canal de voz por rodovia, com alertas validados pela central ou pela Defesa Civil, tem aqui um argumento concreto e não militarizado: resiliência e defesa civil. É o enquadramento mais seguro para uma banca de hackathon.
+- O motorista como "sensor" (via interditada, ponte, água na pista) tem valor para a Defesa Civil, mas precisa de validação para não amplificar boatos.
+- Em desastres, a conectividade celular cai. Um app de voz depende de rede. Isso pede modo offline ou store-and-forward, e talvez SMS ou satélite, o que reabre a questão Starlink (seção 5).
+
+### Gaps
+- Não achei relato quantificado de caminhoneiros ilhados nem de falha de comunicação com eles.
+- Não verifiquei se a Defesa Civil RS ou a nacional tem protocolo de integração com dados de motoristas ou de apps (Waze for Cities tem parcerias com órgãos públicos, mas não confirmei no RS).
+
+## 5. Soberania digital: dados de fluxos logísticos nacionais em plataformas estrangeiras
+
+### Takeaway
+O episódio Starlink/X de 2024 e a política de "nuvem soberana" (Serpro/Dataprev, 2025-2026) dão base pública a um argumento de que "os dados de fluxo logístico e o canal de crise com motoristas não deveriam depender só de plataformas estrangeiras". Mas não encontrei norma que obrigue a localizar dados privados de logística, e a LGPD não exige localização. O argumento é estratégico e reputacional, não regulatório.
+
+### Cited Findings
+- Em ago/2024, Alexandre de Moraes (STF) bloqueou contas da Starlink para garantir multas do X, por entender que formam um "grupo econômico de fato". Na época a Starlink tinha cerca de 215 mil clientes no Brasil, entre eles Forças Armadas e contratos públicos — [Teletime](https://teletime.com.br/29/08/2024/stf-bloqueia-contas-da-starlink-no-brasil-apos-intimacao-ao-x-e-musk/); [Correio Braziliense](https://www.correiobraziliense.com.br/mundo/2024/08/6931217-o-que-e-a-starlink-de-elon-musk-que-teve-contas-bloqueadas-por-alexandre-de-moraes.html). Primeiro a Starlink resistiu, depois disse que cumpriria o bloqueio do X — [Conjur](https://www.conjur.com.br/?p=813322). Leitura crítica pela "soberania": [Intercept Brasil](https://intercept.com.br/2024/08/30/elon-musk-desafia-soberania-nacional/) [opinião]
+- Fev/2025: acordo entre Serpro, Dataprev e a SGD para armazenar e processar dados federais no território nacional, alinhado à LGPD (Nuvem de Governo) — [Serpro](https://www.serpro.gov.br/menu/noticias/noticias-2025/soberania-e-seguranca-nas-nuvens); [DCD](https://www.datacenterdynamics.com/br/not%C3%ADcias/governo-pretende-migrar-dados-estrat%C3%A9gicos-para-infraestrutura-soberana-brasileira/)
+- 2026: o Serpro trata dados estratégicos e classificados como "política de Estado", com migração para ambiente de jurisdição nacional — [Serpro 2026](https://www.serpro.gov.br/menu/noticias/noticias-2026/dados-estrategicos-impulsionam-soberania-digital-como-politica-de-estado) [FRACA: fonte institucional interessada]
+- Crítica: o governo fala em emancipação digital e ao mesmo tempo contrata big techs — [Outras Palavras](https://outraspalavras.net/?p=3114984) [opinião]. A FGV (set/2025) discute soberania em IA como soberania sobre dados, em camadas — [FGV CTS](https://cyberbrics.info/wp-content/uploads/2025/09/ApD-CTS-FGV-003-25.pdf)
+- A comunicação da categoria nas crises de 2018, 2021 e 2022 passou por grupos de WhatsApp (seção 1). O governo do RS usou WhatsApp como canal oficial em 2024 (seção 4).
+
+### Inferences
+- O que o RODAR pode dizer com honestidade: "fazemos uma camada brasileira, em português, com dados hospedados no Brasil e governança LGPD, para um canal que hoje depende de WhatsApp e de apps de navegação estrangeiros". Isso é verificável. "Protegemos a soberania nacional" já é exagero.
+- Paradoxo a reconhecer: o produto de voz quase certamente vai usar modelos de IA (STT/LLM/TTS) de provedores estrangeiros. Se o pitch é soberania, a banca pode perguntar onde rodam os modelos. Tenha a resposta pronta: hospedagem nacional, modelo aberto self-hosted ou roadmap para isso.
+- Dados agregados de fluxo (onde estão os caminhões, que carga, que rota) são sensíveis para defesa e para crime ao mesmo tempo. Soberania não basta: precisa de segurança da informação e minimização.
+
+### Gaps
+- Não pesquisei posições da ANPD sobre geolocalização de trabalhadores ou dados de motoristas.
+- Não verifiquei se existe regra setorial (ANTT, RNTRC, MDF-e, Canal Verde Brasil) que já centralize dados de fluxo de cargas no Estado. Os documentos fiscais eletrônicos (MDF-e/CT-e) indicam que o governo já tem boa parte desses dados, o que enfraquece o argumento de que "os dados estão todos com estrangeiros".
+- O peso do WhatsApp/Meta e do Waze/Google entre caminhoneiros não foi quantificado.
+
+## 6. Riscos e limites do enquadramento "segurança nacional"
+
+### Takeaway
+O enquadramento pode sair pela culatra de quatro jeitos. O motorista pode ver o app como vigilância (diário de bordo não editável, mais "central"). Há o risco político: a categoria ligada a bloqueios de 2018 e 2022 e polarizada. Há a dependência de governo, com ciclo de venda longo. E há o desencaixe de tom numa banca de hackathon. A recomendação é usar "resiliência logística, segurança viária e defesa civil" como frente e deixar "infraestrutura crítica" como argumento de apoio.
+
+### Cited Findings (base factual dos riscos)
+- Politização: os bloqueios de 2022 foram atos pós-eleitorais de apoiadores de Bolsonaro, com supostos apoios de empresários do agro. Em 2021 houve áudio do presidente nos grupos — [Correio Braziliense](https://www.correiobraziliense.com.br/politica/2022/11/5048745-como-planos-de-bloqueio-sairam-de-grupos-de-mensagem-para-as-ruas.html); [Congresso em Foco](https://www.congressoemfoco.com.br/governo/em-audio-enviado-por-whatsapp-bolsonaro-pede-a-caminhoneiros-o-fim-dos-bloqueios/); [CUT](https://www.cut.org.br/noticias/paralisacao-de-caminhoneiros-em-apoio-a-bolsonaro-tem-assinatura-do-agronegocio-ec57) [parcial: central sindical]
+- Militarização: a resposta do Estado em 2018 foi GLO com Forças Armadas desobstruindo rodovias, e a análise do IHU fala em "protagonismo inédito" dos militares desde a redemocratização — [IHU Unisinos](https://ihu.unisinos.br/78-noticias/579626-como-militares-ganharam-protagonismo-inedito-no-brasil-desde-a-redemocratizacao). Se o app se apresentar como "segurança nacional", pode ser lido pela categoria como ferramenta para monitorar e reprimir mobilizações.
+- Base trabalhista: jornadas de cerca de 12-14h e uso de estimulantes (seção 2) indicam que um diário de bordo "não editável" vai expor violações à Lei 13.103/2015 (Lei do Motorista). O motorista autônomo pode temer fiscalização e multa — [Mundo Logística/CNTA](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes) [FRACA]
+- A categoria é fragmentada e desconfiada de entidades. As convocações de 2025-2026 tiveram adesão contestada entre UBC, CNTA e ANTB — [Diário do Pará](https://diariodopara.com.br/noticias/brasil/convocacao-para-greve-de-caminhoneiros-gera-discordancia-na-categoria/)
+- Ciclo de governo: a política de infraestruturas críticas ainda está virando lei (GT de 2026, 1 ano + 3 meses) — [Teletime](https://teletime.com.br/16/01/2026/gsi-cria-grupo-para-elaborar-projeto-de-lei-sobre-infraestruturas-criticas/). Não existe linha orçamentária conhecida para apps de motoristas.
+
+### Inferences
+- Percepção de vigilância: o diário não editável mais escalonamento para uma central, embalados como "segurança nacional", soam como "o governo e a empresa vão me rastrear". Mitigações: o motorista é dono dos dados, com compartilhamento opt-in por evento; o diário serve para proteger o motorista (provar jornada, provar que foi vítima de roubo, contestar multa); dizer em público que o app não serve para monitorar mobilizações.
+- Politização: qualquer canal de voz por rodovia com milhares de caminhoneiros é, na prática, uma infraestrutura de mobilização. O governo pode ver isso como risco (o app poderia coordenar bloqueios) e a categoria como controle (o app poderia ser censurado). Precisa de política de moderação clara e neutra, e o pitch deve evitar "prevenir greves", que é tóxico para o usuário.
+- Dependência de governo: vender para GSI, PRF ou Defesa Civil exige licitação e acordo de cooperação, um ciclo de anos. Para um hackathon e um MVP, o comprador realista é a transportadora ou a seguradora (roubo de cargas, sinistro, fadiga). O governo entra como parceiro de dados, não como cliente.
+- Desencaixe de narrativa: numa banca de hackathon, "segurança nacional" pode soar grandioso ou militarista e desviar do usuário, que é o motorista cansado às 3h da manhã. Melhor tratar como "camada 3" do pitch: (1) a vida do motorista (fadiga, solidão, PNATRANS); (2) o negócio (roubo, sinistro, conformidade); (3) o país (resiliência logística, 2018, RS 2024, canal de crise brasileiro).
+- Alternativa à expressão "segurança nacional": "resiliência logística", "continuidade do abastecimento" ou "infraestrutura crítica de transportes (PNSIC)". São termos com amparo legal e menos carga ideológica.
+
+### Gaps
+- Não achei pesquisa de opinião de caminhoneiros sobre telemetria ou monitoramento (aceitação de rastreamento). Valeria uma entrevista qualitativa.
+- Não achei precedente de app brasileiro de motoristas enquadrado como segurança nacional (sucesso ou fracasso).
+- Ferrovia: não pesquisei o enquadramento específico de segurança ferroviária (ANTT, concessionárias) além da paralisação da Rumo no RS em 2024.
