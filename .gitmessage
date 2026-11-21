@@ -1,0 +1,15 @@
+
+
+# ── Subject: type(scope): what changed  (≤ 72 chars)
+#    types: feat fix refactor docs test chore perf style
+#
+# ── Body (optional): WHY, in 1-3 lines.
+#
+# ── Roadmap trailers: ONLY for product-level changes, as the LAST paragraph,
+#    one per line, no blank lines between them. Skip them for small fixes.
+#
+# Product: what a user/judge can now do or see
+# Decision: what we chose and why (ADR-0003 if it has one)
+# Pivot: what changed direction and why
+# Dropped: what we cut and why
+# Next: what comes right after this

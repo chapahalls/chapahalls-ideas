@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/roadmap.mjs:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git tag -l:*)",
+      "Bash(git fetch:*)",
+      "Bash(sh scripts/check-rules.sh:*)",
+      "Bash(TZ=America/Sao_Paulo date:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}

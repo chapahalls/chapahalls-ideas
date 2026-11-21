@@ -1,0 +1,50 @@
+name: Roadmap
+
+# Rebuilds the roadmap from git (phase/* tags + commit trailers) on every push
+# to main: always in the job summary, and on GitHub Pages when the repo
+# variable ROADMAP_PAGES is "true" (Settings → Pages → Source: GitHub Actions).
+# /phase pushes branch and tag atomically, so the branch push already sees the tag.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: roadmap
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history and tags: the roadmap is the history
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Roadmap → job summary
+        run: node scripts/roadmap.mjs --format md >> "$GITHUB_STEP_SUMMARY"
+      - name: Roadmap → site
+        run: mkdir -p _site && node scripts/roadmap.mjs --format html > _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        if: vars.ROADMAP_PAGES == 'true'
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: vars.ROADMAP_PAGES == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+node_modules/
+_site/
+roadmap.html
+.DS_Store
+.claude/settings.local.json

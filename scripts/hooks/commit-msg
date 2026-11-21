@@ -1,0 +1,24 @@
+#!/bin/sh
+# Hint-only commit-msg hook: never blocks a commit.
+# Reminds about roadmap trailers and catches trailers git would not recognize
+# (they must be the LAST paragraph, one "Key: value" per line, no blank lines).
+
+msg=$(grep -v '^#' "$1")
+subject=$(printf '%s\n' "$msg" | head -n1)
+
+case "$subject" in
+  Merge*|fixup!*|squash!*|chore\(roadmap\)*) exit 0 ;;
+esac
+
+keys='^(Product|Decision|Pivot|Dropped|Next):'
+written=$(printf '%s\n' "$msg" | grep -Eci "$keys")
+parsed=$(printf '%s\n' "$msg" | git interpret-trailers --parse | grep -Eci "$keys")
+
+if [ "$written" -gt 0 ] && [ "$parsed" -lt "$written" ]; then
+  echo "roadmap: some Product/Decision/Pivot/Dropped/Next lines are not in the final" >&2
+  echo "         paragraph, so git won't read them as trailers. Amend with:" >&2
+  echo "         git commit --amend   (put them together at the very end)" >&2
+elif [ "$written" -eq 0 ]; then
+  echo "roadmap: product-level change? add Product:/Decision:/Pivot:/Dropped:/Next: trailers (see .gitmessage)" >&2
+fi
+exit 0
