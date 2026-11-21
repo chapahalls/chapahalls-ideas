@@ -13,17 +13,49 @@ Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento estrut
 
 ## As 3 frentes
 
-Toda fala é Pessoal por padrão; Corporativo e Comunidade só recebem depois de confirmação por voz.
+Toda fala é Pessoal por padrão; Corporativo e Comunidade só recebem fala depois de confirmação por voz. Os carimbos automáticos do Corporativo (chegada, saída, parada) não dependem de fala nem de confirmação.
 
 | | 1. Pessoal | 2. Corporativo | 3. Comunidade |
 |---|---|---|---|
 | Quem lê | Só o motorista | Transportadora (CCO) e embarcador | Caminhoneiros na mesma rodovia e sentido, CCOs (anonimizado) |
-| Conteúdo | Histórias, família, pet, desabafo, recado para casa | RDO do trecho: paradas, tempo de espera, avarias, ocorrências, jornada | Acidente, desvio, blitz, buraco, parada segura |
-| Quando | Conversa livre | O agente pergunta na parada: "Como foi o trecho?" | Na hora |
-| Confirmação | Não precisa | Motorista aprova e pode editar o RDO | "Vou avisar: acidente na BR-116, km 230, sentido norte. Confirma?" |
-| Validade | Permanente | Permanente, para auditoria | Expira em poucas horas |
-| Ferramenta Agora | Conversational AI + Chat | STT + Chat | Signaling + Chat |
-| Valor | Companhia, recado da família | Prova de tempo de espera, sinistro, jornada (5h30 de direção / 30 min de pausa) | Aviso antes de chegar ao problema |
+| Conteúdo | Histórias, família, pet, desabafo, recado para casa | Registro do trecho: chegada e saída no cliente, paradas, tempo de espera, avarias, ocorrências | Acidente, desvio, blitz, buraco, parada segura |
+| Quando | Conversa livre | Carimbos automáticos na hora (geofence + relógio do servidor); relato por voz quando o motorista quiser | Na hora |
+| Confirmação | Não precisa | Relato: "Vou registrar para a transportadora: avaria na lona. Confirma?" Depois de gravado, **não é editável** | "Vou avisar: acidente na BR-116, km 230, sentido norte. Confirma?" |
+| Validade | Permanente | Permanente e imutável, para auditoria | Expira em poucas horas |
+| Ferramenta Agora | Conversational AI + Chat | Conversational AI (relato) + Chat (entrega) | Signaling + Chat |
+| Valor | Companhia, recado da família | Prova de tempo de espera (estadia > 5h, Lei 11.442) e de ocorrências | Aviso antes de chegar ao problema |
+
+## Corporativo: registro não editável
+
+O registro do trecho não é editável e não depende do condutor: a fala do motorista só acrescenta contexto, nunca altera hora ou local.
+
+**Base legal**
+
+- CTB art. 67-C: no máximo 5h30 de direção ininterrupta.
+- CTB art. 67-E e Lei 13.103: jornada registrada "de maneira fidedigna"; o equipamento eletrônico deve "funcionar de forma independente de qualquer interferência do condutor, quanto aos dados registrados".
+- STF, ADI 5322 (2023): tempo de espera na carga e descarga conta como jornada.
+- Lei 11.442, art. 11, §5º: carga e descarga em até 5h a partir da chegada; depois disso é devida estadia por tonelada/hora. Hoje o motorista raramente consegue provar o horário de chegada (CNTA 2025: 84,7% dos que esperam mais de 5h não recebem estadia).
+
+**Regras do registro**
+
+| Regra | Como |
+|---|---|
+| Hora e local não vêm do motorista | Chegada, saída e paradas detectadas por geofence/GPS; hora do servidor, não do celular |
+| Nada é apagado nem editado | Log só de inclusão (append-only); cada evento leva o hash do anterior |
+| Correção = adendo | Se o motorista ou o agente errou, entra um novo evento "correção de #N"; o original continua visível |
+| Fala vira anexo, não campo | Relato por voz é transcrito e anexado ao evento; não muda os carimbos |
+| Sem sinal | Evento gerado no aparelho com hora do GPS, marcado "registrado offline", entregue pelo Chat quando a conexão volta |
+
+**O que não é:** não substitui o controle oficial de jornada (rastreador/tacógrafo da transportadora). É prova complementar de espera e ocorrências.
+
+**Exemplo**
+
+```
+14:02  CHEGADA     Cliente X, Registro/SP   (geofence, automático)
+14:05  RELATO      "Fila de 12 caminhões, sem previsão"   (voz, confirmado)
+19:47  LIBERAÇÃO   Início da descarga       (geofence da doca, automático)
+→ Espera: 5h45  |  Excedente para estadia: 0h45
+```
 
 ## Núcleo comum e roteamento
 
@@ -52,9 +84,9 @@ O CCO só entra quando há risco real ou quando o motorista pede; cansaço comum
 | 2 | Sinal persiste ou passa de 5h30 | Agente sugere a próxima parada segura | Só o motorista |
 | 3 | Sem resposta ao agente, ou "preciso de ajuda" | Abre canal de voz com o operador | CCO |
 
-- **O CCO recebe:** ocorrências estruturadas com resumo de uma linha, RDO aprovado, status de jornada, escalonamentos de nível 3, eventos da Comunidade anonimizados.
+- **O CCO recebe:** ocorrências estruturadas com resumo de uma linha, registro do trecho (carimbos automáticos + relatos confirmados), tempo de espera e excedente de estadia, status de jornada, escalonamentos de nível 3, eventos da Comunidade anonimizados.
 - **O CCO não recebe:** nada da frente Pessoal, áudio bruto, curva de fala, sinais de nível 1 e 2.
-- **Tela do operador:** fila priorizada (emergência, sinistro, atraso), mapa com veículos e eventos, botão "falar" que entra no canal do motorista, RDOs do dia.
+- **Tela do operador:** fila priorizada (emergência, sinistro, atraso), mapa com veículos e eventos, botão "falar" que entra no canal do motorista, registros do dia (somente leitura, também para o operador).
 
 ## Stack Agora
 
@@ -64,10 +96,10 @@ Tudo roda na rede da Agora; nenhum produto dela funciona offline, então o "sem 
 |---|---|---|
 | [Conversational AI Engine](https://www.agora.io/en/products/conversational-ai-engine/) | Copiloto de voz, interrupção, LLM próprio | Português não confirmado na página: testar ASR e TTS primeiro |
 | [Signaling](https://www.agora.io/en/products/signaling/) | Alertas da Comunidade em tempo real, presença online/offline | Sem limite de tamanho de mensagem documentado na página |
-| [Chat](https://www.agora.io/en/products/chat/) | Entrega quando o sinal volta; Pessoal e RDO | Cifra no servidor (TLS + arquivos cifrados), não ponta a ponta |
+| [Chat](https://www.agora.io/en/products/chat/) | Entrega quando o sinal volta; Pessoal e registro do trecho | Cifra no servidor (TLS + arquivos cifrados), não ponta a ponta |
 | [RTC](https://www.agora.io/en/products/agora-rtc/) | Canal de voz operador ↔ motorista (nível 3) | — |
 | [AI Noise Suppression](https://www.agora.io/en/products/ai-noise-suppression/) | Ruído da cabine | Motor e vento não citados: testar |
-| [Media Services](https://www.agora.io/en/products/media-services/) | Transcrição para o RDO | — |
+| [Media Services](https://www.agora.io/en/products/media-services/) | Transcrição dos relatos do registro | — |
 | [Analytics](https://www.agora.io/en/products/agora-analytics/) | Opcional: qualidade de rede por trecho | — |
 
 - [ ] Testar português no Conversational AI Engine antes de qualquer outra coisa
@@ -83,8 +115,8 @@ O MVP é 100% online via Agora; tudo que depende de operação offline ou de har
 - Extrator de eventos e roteador para as 3 frentes, com confirmação por voz
 - Comunidade: alerta entre dois clientes na mesma rodovia e sentido
 - Cansaço: tempo ao volante + ritmo da fala, escalonamento em 3 níveis
-- Painel CCO: fila, mapa, botão "falar", RDOs
-- RDO gerado no fim do trecho, aprovado pelo motorista
+- Painel CCO: fila, mapa, botão "falar", registros
+- Registro do trecho não editável: carimbos automáticos (GPS simulado), relatos por voz como anexo, correção só por adendo, cálculo de espera e excedente de 5h
 - Pessoal: histórico guardado e recado para a família
 
 **Fora (e por quê)**
@@ -108,7 +140,7 @@ Cada fase só começa quando o gate da anterior passa; se a fase 1 não passar a
 | Sáb 14h | 1. Canal de voz | Português, resposta abaixo de 2 s, interrupção, LLM reserva definido |
 | Sáb 19h | 2. Comunidade | Extrator sem invenção, roteador com confirmação, alerta entre 2 clientes |
 | Sáb 23h | 3. Cansaço e CCO | 3 níveis funcionando, sem falso positivo na sessão desperta, painel CCO |
-| Dom 7h | 4. Corporativo e Pessoal | RDO aprovado pelo motorista, Pessoal isolado dos outros destinos |
+| Dom 7h | 4. Corporativo e Pessoal | Registro imutável (tentativa de editar falha; correção vira adendo), espera calculada, Pessoal isolado dos outros destinos |
 | Dom 9h | 5. Validação | 6 ou mais testadores externos, números em `docs/validacao.md` |
 | Dom 11h | 6. Entrega | Repo com tag, vídeo de 2 min, 10 slides, demo ensaiada (prazo final 12h) |
 
@@ -122,7 +154,7 @@ A ordem segue o valor na demo: Comunidade impressiona mais e vem antes; Pessoal 
 2. Motorista B, atrás, é avisado por voz; o evento aparece no mapa do CCO.
 3. A responde cada vez mais devagar; o agente puxa conversa (nível 1) e sugere parada (nível 2).
 4. A deixa de responder; nível 3 abre o canal e o operador do CCO entra por voz.
-5. Na parada, A conta como foi o trecho; o RDO aparece no painel. Ele grava um recado para a filha, que fica no Pessoal.
+5. A chega ao cliente: a chegada é carimbada sozinha. Ele fala "fila de 12 caminhões"; o relato entra como anexo. Tempo acelerado até a liberação: o painel mostra 5h45 de espera e 0h45 de excedente. Ele grava um recado para a filha, que fica no Pessoal.
 
 **Validação**
 
@@ -147,11 +179,13 @@ O maior risco técnico é a latência em português; o maior risco de produto é
 | Português ou latência > 2 s no Conversational AI | Demo ao vivo quebra | Testar primeiro; LLM reserva trocável por variável de ambiente |
 | Motorista calado (microssono é silêncio) | Cansaço não é detectado | Agente puxa conversa; tempo de resposta vira o sinal |
 | Fala pessoal roteada para Corporativo ou Comunidade | Perda total de confiança | Pessoal por padrão; confirmação por voz para os outros destinos |
-| Corporativo vira fiscalização | Motorista para de usar | Níveis 1 e 2 nunca saem do motorista; RDO só com aprovação |
+| Corporativo vira fiscalização | Motorista para de usar | Níveis 1 e 2 nunca saem do motorista; relato só com confirmação; o registro também protege o motorista (prova de espera) |
+| Registro vendido como controle de jornada | Banca ou jurídico derruba | Dizer "prova complementar de espera e ocorrências"; jornada oficial segue no rastreador/tacógrafo |
+| Carimbo depende do motorista ("cheguei") | Registro perde valor de prova | Chegada/saída por geofence e hora do servidor; voz só anexa contexto |
 | Prometer "criptografado, ninguém vê" | Banca derruba | Dizer "cifrado no servidor"; o áudio passa por STT e LLM na nuvem |
 | Validação circular do cansaço | Banca questiona | Testadores externos, cansaço induzido por tarefa paralela |
 | Falha no nível 3 com acidente real | Responsabilidade | Posicionar como apoio, não garantia; escrito no README |
 | LGPD (voz e jornada são dados do motorista) | Jurídico | Consentimento por destino; tela "o que a empresa vê" |
 | Sem sinal na rodovia | Alerta não chega | Entrega adiada via Chat; LoRa como próximo passo |
 
-Pendências: nome do time e integrantes.
+Pendências: nome do time e integrantes; caso do motorista autônomo (TAC) no Corporativo.

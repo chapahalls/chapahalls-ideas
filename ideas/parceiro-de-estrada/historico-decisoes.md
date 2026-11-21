@@ -60,8 +60,19 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **Escalonamento em 3 níveis**: níveis 1 e 2 ficam só com o motorista; o CCO entra no nível 3 (sem resposta ao agente, ou pedido de ajuda). Assim o cansaço não vira punição.
 - Quem paga é a transportadora; quem usa é o motorista — por isso a frente Pessoal existe.
 
+## 6. RDO aprovado pelo motorista → registro não editável
+
+- **Problema do desenho anterior:** um RDO que o motorista aprova e edita não tem valor de prova. A Lei 13.103 / CTB art. 67-E exige que o equipamento eletrônico funcione "de forma independente de qualquer interferência do condutor, quanto aos dados registrados".
+- **Onde está a dor real:** estadia. Lei 11.442 fixa 5h para carga/descarga, depois disso é devido valor por tonelada/hora; CNTA 2025: 46,1% sempre esperam 5h ou mais, 84,7% desses não recebem estadia. O gargalo é provar o horário de chegada (há caso no TJMT em que prints de WhatsApp foram contestados como prova).
+- **Decisão:** o Corporativo vira registro do trecho **não editável**: chegada, saída e paradas por geofence e hora do servidor; log só de inclusão com hash encadeado; correção só por adendo; a voz só anexa relato confirmado.
+- **Posicionamento:** prova complementar de espera e ocorrências, não controle de jornada (que segue no rastreador/tacógrafo).
+- **Descartado:** "Como foi o trecho?" no fim da viagem como fonte principal: era relato de memória, editável, sem carimbo.
+- **Em aberto:** motorista autônomo (TAC), dono da própria estadia.
+- Fontes: [Lei 13.103](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13103.htm), [CTB art. 67 comentado](https://ctbdigital.com.br/artigo/art67/), [ANTT nota técnica estadia](https://www.gov.br/antt/pt-br/assuntos/cargas/arquivos/arquivos-pagamento-do-tempo-adicional-de-carga-e-descarga/sei_31291793_nota_tecnica___antt_3335.pdf/@@download/file), [pesquisa CNTA 2025](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes), [TJMT](https://www.legjur.com/jurisprudencia/eme/908.2495.7726.5333).
+
 ## Pendências
 
 - Nome do time e integrantes
+- Caso do motorista autônomo (TAC) no Corporativo
 - Testar português no Conversational AI Engine
 - Escolher o LLM reserva

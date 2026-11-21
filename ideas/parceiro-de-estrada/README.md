@@ -18,7 +18,7 @@ Arquivos desta pasta:
 
 - **Quem:** caminhoneiros do transporte rodoviário de cargas (TRC) e os Centros de Controle Operacional (CCO) das transportadoras.
 - **Problema concreto:** cansaço ao volante e acidentes/tombamentos; motorista avisando o CCO digitando mensagens pré-programadas no rastreador enquanto dirige; informação da pista (acidente, desvio, blitz) que não chega a quem vem atrás.
-- **Benefício:** pausa sugerida antes do risco, aviso por voz do que vem pela frente, registro do trecho (RDO) sem digitar, contato direto com o CCO só quando há risco real.
+- **Benefício:** pausa sugerida antes do risco, aviso por voz do que vem pela frente, registro do trecho não editável (chegada, espera, ocorrências) que prova estadia acima de 5h, contato direto com o CCO só quando há risco real.
 
 ## Por que voz (C4 · 15%)
 
@@ -32,10 +32,11 @@ Agente:    Entendi: acidente na BR-116, km 230, sentido norte, faixa da direita.
 Motorista: Pode avisar.
 Agente:    Avisado. Você está há 4h40 dirigindo. Tem posto com área de descanso no km 262. Que tal parar lá?
 Motorista: Tá, paro lá.
-[na parada]
-Agente:    Como foi o trecho?
-Motorista: Esperei duas horas pra descarregar em Registro, fora isso tranquilo.
-Agente:    Anotei no relatório do trecho: 2h de espera na descarga em Registro. Mando pra transportadora?
+[chega ao cliente em Registro — chegada carimbada sozinha, 14:02]
+Motorista: Fila de doze caminhões aqui, ninguém dá previsão.
+Agente:    Registro pra transportadora: fila de 12 caminhões, sem previsão. Confirma?
+Motorista: Confirma.
+Agente:    Registrado. Você chegou às 14:02; se passar das 19:02, conta estadia.
 ```
 
 - **Interrupção (barge-in):** o motorista corta o agente a qualquer momento (ex.: no meio da sugestão de parada) e o agente para de falar.
@@ -44,7 +45,7 @@ Agente:    Anotei no relatório do trecho: 2h de espera na descarga em Registro.
 
 ## Como a Agora entra (C2 · 25%)
 
-- **Produto Agora:** Conversational AI Engine (copiloto, interrupção, LLM próprio), Signaling (alertas da Comunidade em tempo real, presença), Chat (entrega quando o sinal volta; Pessoal e RDO), RTC (operador CCO ↔ motorista), AI Noise Suppression (ruído da cabine).
+- **Produto Agora:** Conversational AI Engine (copiloto, interrupção, LLM próprio), Signaling (alertas da Comunidade em tempo real, presença), Chat (entrega quando o sinal volta; Pessoal e registro do trecho), RTC (operador CCO ↔ motorista), AI Noise Suppression (ruído da cabine).
 - **Fluxo:** microfone → Agora Conversational AI (STT → LLM → TTS) → extrator de eventos → roteador → Pessoal (Chat) / Corporativo (Chat → painel CCO) / Comunidade (Signaling + Chat).
 - **O que a demo mostra da integração:** conversa por voz com interrupção; alerta chegando por voz num segundo cliente; operador do CCO entrando por voz no canal do motorista.
 
@@ -55,13 +56,13 @@ Agente:    Anotei no relatório do trecho: 2h de espera na descarga em Registro.
   2. Motorista B, atrás, recebe o aviso por voz; evento aparece no mapa do CCO.
   3. A responde cada vez mais devagar → agente puxa conversa (nível 1) → sugere parada (nível 2).
   4. A para de responder → nível 3 abre canal de voz com o operador do CCO.
-  5. Na parada, A conta o trecho → RDO no painel; grava recado para a filha (Pessoal).
-- **Simulado / mockado:** posição GPS e rodovia; integração com rastreadores; dois "caminhões" são dois notebooks; sessões de cansaço induzidas.
+  5. A chega ao cliente → chegada carimbada sozinha; relato por voz entra como anexo; tempo acelerado → painel mostra espera e excedente de 5h; grava recado para a filha (Pessoal).
+- **Simulado / mockado:** posição GPS, geofence do cliente e rodovia; tempo acelerado na espera; integração com rastreadores; dois "caminhões" são dois notebooks; sessões de cansaço induzidas.
 - **Preexistente:** _(preencher)_
 - **Maior risco técnico:** português e latência < 2 s no Conversational AI Engine (português não confirmado na página do produto).
 
 ## Validação e evolução (C5 · 10%)
 
 - **Como testamos durante o hackathon:** 6+ testadores externos que não sabem o que dispara o alerta; cansaço induzido por tarefa paralela (conta de cabeça) vs. sessão sem tarefa; medir latência, acerto do roteamento (zero vazamento do Pessoal), eventos sem invenção, falsos positivos.
-- **Limitações conhecidas:** depende de sinal de celular (nenhum produto Agora funciona offline); cansaço pela voz não detecta motorista calado sem o agente puxar conversa; não substitui o controle oficial de jornada.
+- **Limitações conhecidas:** depende de sinal de celular (nenhum produto Agora funciona offline); cansaço pela voz não detecta motorista calado sem o agente puxar conversa; não substitui o controle oficial de jornada (o registro do trecho é prova complementar de espera e ocorrências, não ponto).
 - **Próximos passos:** LoRa para trechos sem cobertura; ConvoAI Device Kit na cabine (4G/eSIM); integração com rastreadores; rádio PX como fonte de eventos.
