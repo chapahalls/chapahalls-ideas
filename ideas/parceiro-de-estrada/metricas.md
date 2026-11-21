@@ -7,6 +7,22 @@ Todas as métricas que pesquisamos, numa página só. As fontes completas, a for
 - [`embasamento.md`](embasamento.md): primeiro levantamento (CNT 2025 lido no PDF original)
 - [`pesquisa/`](pesquisa/): notas completas de cada pesquisa
 
+## O que o caminhoneiro carrega nas costas
+
+Headline sugerida: **"O Brasil anda de caminhão: 63% de toda a carga, 220 mil viagens por dia. Quando eles param, a indústria cai 11% em um mês."**
+
+| Métrica | Valor | Fonte |
+|---|---|---|
+| Fatia da carga do país que vai por rodovia | **~63% do TKU** (ferrovia 19%, hidrovia 15%, dutos 4%; 2023) | [ILOS via Revista BNB](https://www.bnb.gov.br/revista/cse/article/download/3245/2257/11345) (setorial) |
+| Sem contar minério e combustíveis | **mais de 85%** da carga vai por rodovia | [CNI](https://noticias.portaldaindustria.com.br/noticias/infraestrutura/brasil-e-a-dependencia-das-rodovias-desafios-e-caminhos-para-investimentos/) (setorial) |
+| Volume em 2025 | **1,4 bilhão de toneladas, 80,4 milhões de viagens, 749,4 bi TKU** (≈ 220 mil viagens e 3,8 milhões de toneladas por dia, conta do time) | [ANTT Anuário TRC 2025](https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/anuario_trc_2025_antt.pdf) (oficial) |
+| Faturamento do transporte rodoviário de carga | **~R$ 427 bi (2024)**; maior atividade da pesquisa de serviços do IBGE (13,1% da receita do setor em 2022) | [IBGE PAS](https://biblioteca.ibge.gov.br/visualizacao/periodicos/150/pas_2022_v24_informativo.pdf) (oficial) |
+| PIB de transporte, armazenagem e correio | R$ 395,7 bi (2025) | [CNT Radar PIB](https://cdn.cnt.org.br/diretorioVirtual/94747915-7102-4fb1-86ad-901618f95d61.pdf) (setorial) |
+| Fretes emitidos por rodovia | 96,9% dos fretes em notas de transporte (CT-e) em 2025 | [Qive](https://qive.com.br/panorama-do-contas-a-pagar/como-as-empresas-transportam-mercadorias-no-brasil) (vendor; conta número de fretes, não peso) |
+| Greve de 2018 (cerca de 11 dias) | **produção industrial −11,0% em maio**, maior queda desde 2008; atividade econômica (IBC-Br) −3,34% no mês; mais de 90% dos postos sem combustível em alguns estados | [IBGE e Banco Central](https://www.bcb.gov.br/htms/relinf/port/2018/09/ri201809b1p.pdf) (oficial); detalhes em [`pesquisa/seguranca_nacional.md`](pesquisa/seguranca_nacional.md) |
+
+**Não usar:** "R$ 3 trilhões em mercadorias por ano" (é só São Paulo, e há outra versão que fala em R$ 1,2 tri, sem metodologia); "5,7% do PIB em frete rodoviário" (estudo ILOS com dados de 2008); "a greve custou R$ 15 bi" sem dizer que a metodologia não foi divulgada.
+
 ## Problema: acidentes e custo
 
 | Métrica | Valor | Fonte |
