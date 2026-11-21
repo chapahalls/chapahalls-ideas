@@ -6,9 +6,10 @@
 
 ## 1. Resumo executivo
 
-**Nome provisório de trabalho:** RODAR / Parceiro de Estrada _(nome comercial definitivo do app será definido pelo time posteriormente)_.
+**Nome provisório de trabalho:** RODAR / Parceiro de Estrada _(nome comercial definitivo do app será definido pelo time posteriormente)_.  
+**Foco Central do Produto:** **Soluciona os gargalos de comunicação manual no setor de transporte rodoviário e logística de cargas.**
 
-O projeto é um copiloto de IA por voz para caminhoneiros que atua em **três frentes integradas**, estruturadas sob um **modelo de conta e negócio inspirado no GitHub**:
+O projeto é um copiloto de IA por voz para caminhoneiros e operações logísticas que elimina a comunicação manual, fragmentada e perigosa (digitação em teclados de macros do rastreador com risco **23× maior**, mensagens manuais em grupos de WhatsApp ao volante e apontamentos manuais de espera em doca), atuando em **três frentes integradas** sob um **modelo de conta e negócio inspirado no GitHub**:
 - **Modelo de Conta & Negócio estilo GitHub:** o caminhoneiro cria e é dono da sua **conta pessoal na plataforma** (gratuita e vitalícia: acompanha o motorista mesmo que ele troque de transportadora ou atue como autônomo, preservando seus contatos pessoais e sua reputação na Comunidade). Quando opera para uma transportadora (ETC), sua conta é vinculada à **Organização Corporativa (CCO)** daquela empresa, que paga a assinatura B2B.
 - **Swap fluido por voz + Comunidade aberta nos dois modos:** o motorista alterna com fluidez entre o **Modo Pessoal** e o **Modo Corporativo** pela própria voz (`"modo pessoal"` ⇄ `"modo corporativo"`), mantendo isolamento total entre vida privada e empresa, enquanto o **Modo Comunidade / Sociedade** (alertas da rodovia) **permanece aberto e ativo em ambos os modos**:
 1. **Pessoal & Companhia:** facilita a comunicação por voz com **familiares e amigos** (já que o motorista passa muito tempo longe de casa) e atua como um **copiloto companheiro de viagem** para combater a solidão na cabine, manter o motorista ativo e engajado e **reduzir os índices de acidentes causados por sonolência** (sugerindo paradas seguras e acionando apoio quando necessário).

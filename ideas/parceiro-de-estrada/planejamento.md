@@ -4,7 +4,9 @@ Versão de 21/11/2026 — Documento unificado do time (`RODAR / Parceiro de Estr
 
 ## Visão
 
-Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento estruturado e vai para um de três destinos — Pessoal, Corporativo ou Comunidade.
+**Foco Central:** **Soluciona os gargalos de comunicação manual no setor de transporte rodoviário e logística de cargas.**
+
+Copiloto de voz para caminhoneiros e operações logísticas: substitui a comunicação manual (teclado de macros do rastreador, mensagens manuais de WhatsApp ao volante e registros manuais de fila/espera) transformando cada fala do motorista em um evento estruturado para um de três destinos — Pessoal, Corporativo ou Comunidade.
 
 - **Problema:** o transporte rodoviário de cargas move o Brasil, e caminhões parados, tombados ou com motorista exausto são rotina. Hoje o motorista avisa o CCO digitando mensagens pré-programadas no rastreador, dirigindo.
 - **Proposta:** a voz substitui o teclado, faz companhia na viagem, sugere pausa quando o cansaço aparece e avisa outros motoristas do que vem pela frente.

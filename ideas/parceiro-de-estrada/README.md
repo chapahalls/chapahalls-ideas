@@ -4,7 +4,7 @@
 - **Status:** avaliada
 - **Nota do judge:** 4,75 / 5 ([`ideas/scores/rodar.md`](../scores/rodar.md) · [`ideas/scores/parceiro-de-estrada.md`](../scores/parceiro-de-estrada.md))
 
-> Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento e vai para um de três destinos — **1. Pessoal** (família, amigos e companhia ativa / Modo Atenção contra solidão e sonolência), **2. Corporativo** (relato real de atrasos/ocorrências ao CCO + diário de espera não editável) ou **3. Comunidade** (alertas de acidentes e engarrafamentos para caminhoneiros na mesma rodovia).
+> **Foco central:** **Soluciona os gargalos de comunicação manual no setor de transporte rodoviário e logística de cargas.** Copiloto de voz para caminhoneiros e operações logísticas onde cada fala do motorista elimina uma interação manual (teclado de macros, WhatsApp ao volante, anotação de doca) e vira um evento estruturado para um de três destinos — **1. Pessoal** (família, amigos e companhia ativa / Modo Atenção contra solidão e sonolência), **2. Corporativo** (relato real de atrasos/ocorrências ao CCO + diário de espera não editável) ou **3. Comunidade** (alertas de fim de fila e acidentes para caminhoneiros na mesma rodovia).
 
 Arquivos desta pasta e contexto unificado do time:
 
