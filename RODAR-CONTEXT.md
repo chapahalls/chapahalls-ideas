@@ -61,6 +61,27 @@ O motorista conversa em linguagem natural e o copiloto identifica intenções, e
 - **Foco em Fim de Fila / Pista Parada e riscos reais (sem blitz):** reportar por voz fim de fila, acidentes, interdições, óleo/carga na pista, animais, buracos e neblina (1 morte a cada 6 sinistros com caminhões/ônibus nas federais — PRF 2024). Alertas de blitz ficam fora (PL 5.596/2013 e coerência com segurança).
 - **Ciclo de vida e confirmação dupla do "não":** cada alerta tem validade por tipo (fim de fila 15 min, acidente 30 min, interdição/clima 1 h, buraco 24 h) e é entregue a quem vem atrás na mesma rodovia e sentido. Ao passar pelo local, o agente pergunta *"ainda tá lá?"*: `"sim"` renova o prazo; `"não"` exige **confirmação dupla** repetindo o conteúdo (*"Hum, então o acidente do km 230 já liberou, é isso? Me confirma aí."*) e soma o peso/reputação de quem respondeu antes de derrubar o alerta (na dúvida ou silêncio, o alerta é mantido).
 
+### 3.4 Estratégia Comercial B2B2C (Estilo GitHub): Como convencemos as empresas a contratar
+
+> **Síntese para o Pitch:** *"Ferramenta corporativa que o caminhoneiro odeia vira sucata no painel; app pessoal que a empresa não vê não tem quem pague. Nós resolvemos os dois lados com o modelo GitHub: o caminhoneiro entra de graça pela Conta Pessoal e pela Comunidade porque o copiloto faz companhia e protege a privacidade dele; e a transportadora paga R$ 30–40/mês pelo Modo Corporativo porque uma única estadia comprovada ou um único acidente de R$ 763 mil evitado paga a frota inteira."*
+
+1. **Cobertura imediata de Agregados e Autônomos (Zero Hardware):**
+   - Quase toda transportadora (ETC) depende de caminhoneiros agregados e autônomos (TAC) cuja frota tem **24,4 anos de idade média** (ANTT 2025) e não possui o teclado de macros nem a câmera da transportadora.
+   - Com o modelo GitHub, o motorista já tem sua conta pessoal no celular; ao ser contratado para uma viagem, a transportadora apenas vincula a conta dele à sua **Organização (CCO)**, ganhando visibilidade operacional, diário de doca e alerta de risco (nível 3) em 100% da frota própria e terceirizada sem instalar hardware.
+2. **ROI Direto no Caixa: Cobrança de Estadia (Lei 11.442) e Controle de Espera (STF ADI 5322):**
+   - **41,3%** dos motoristas passam a maior parte da jornada esperando carga/descarga (CNT 2025) e **84,7%** das esperas acima de 5h não são pagas por falta de prova robusta (CNTA 2025). Desde a **ADI 5322 do STF (2023)**, o tempo de espera também conta como jornada para o motorista CLT.
+   - O **Diário de Trecho Não Editável** (geofence + hora do servidor + hash append-only + relato por voz confirmado) comprova o tempo de doca: recuperar **uma única estadia de 3h excedentes num caminhão de 30 t (~R$ 217)** já paga mais de 5 meses da assinatura daquele veículo (**R$ 30–40/mês**).
+3. **Redução de Sinistros (R$ 763,7 mil) por ~1% do custo de Câmeras de Fadiga (e sem rejeição sindical):**
+   - Caminhões estão em **28% dos sinistros nas federais** (<5% da frota, **R$ 5,1 bi/ano**, **R$ 763,7 mil por sinistro fatal** — ONTL 2026), e digitar macros dirigindo aumenta em **23× o risco de evento crítico** vs. viva-voz (**OR 0,65** — VTTI/FMCSA).
+   - Câmeras de fadiga (DMS) custam **R$ 2,8 mil a R$ 8 mil de hardware por caminhão** e sofrem resistência dos motoristas por filmarem a cabine. Nossa solução custa **R$ 35/mês sem hardware**: numa frota de **1.000 caminhões (R$ 420 mil/ano)**, evitar **1 único sinistro grave no ano** paga o contrato da frota inteira, e o motorista adota porque os níveis 1 e 2 ficam só com ele.
+4. **Retenção na Crise de Mão de Obra (88% de escassez) + Conformidade NR-1 Psicossocial (Maio/2026):**
+   - **88% das transportadoras não conseguem contratar motoristas** (NTC) e desde **26/05/2026 a nova NR-1** exige gestão de riscos psicossociais (isolamento e jornada exaustiva) no PGR.
+   - A empresa comprova ação preventiva de saúde e segurança (Modo Atenção + incentivo a falar com a família nas paradas obrigatórias) mantendo 100% de conformidade com a **LGPD (art. 11)**, já que nunca acessa o Modo Pessoal.
+5. **Três Bolsos Compradores B2B:**
+   - **Transportadoras (ETC com CCO — SAM de R$ 170–250 mi/ano):** pagam por assento/veículo ativo na organização para operação de CCO, prova de estadia e segurança.
+   - **Seguradoras e Gerenciadoras de Risco:** como **62% dos prejuízos de carga vêm de acidentes** (Pamcary), subsidiam ou exigem o uso na apólice para reduzir engavetamentos de fim de fila e tombamentos.
+   - **Embarcadores e Terminais Logísticos (ex.: terminais de transbordo):** utilizam os dados auditáveis de chegada e fila para gestão de pátio e redução de disputas de estadia.
+
 ## 4. Como deve ser a interação por voz
 
 1. O motorista só precisa falar; não escolhe manualmente entre Trabalho/Pessoal/Estrada.
