@@ -70,6 +70,16 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 - **TAC:** o limite de 5h30 (CTB 67-C) vale para empregado e autônomo; o uso da ferramenta pelo TAC depende do contrato de cada transportadora, então fica fora do escopo.
 - Fontes: [Lei 13.103](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13103.htm), [CTB art. 67 comentado](https://ctbdigital.com.br/artigo/art67/), [ANTT nota técnica estadia](https://www.gov.br/antt/pt-br/assuntos/cargas/arquivos/arquivos-pagamento-do-tempo-adicional-de-carga-e-descarga/sei_31291793_nota_tecnica___antt_3335.pdf/@@download/file), [pesquisa CNTA 2025](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes), [TJMT](https://www.legjur.com/jurisprudencia/eme/908.2495.7726.5333).
 
+## 7. Comunidade: fim de fila, sem blitz, ciclo de vida do Waze por voz
+
+- **Foco:** o alerta mais valioso é o fim de fila / pista parada (colisões traseiras e engavetamentos em congestionamento causado por acidente). PRF 2024: 1 morte a cada 6 sinistros com caminhões e ônibus, contra 1 a cada 18 com carros.
+- **Concorrência:** grupos de WhatsApp (exigem pegar o celular, fake news) e Waze (sem perfil de caminhão, alerta e confirmação por toque; voz é pedido aberto dos usuários).
+- **Descartado:** alerta de blitz — PL 5.596/2013 propõe proibir, e contradiz o argumento de segurança.
+- **Notícia falsa → ciclo de vida do alerta** (modelo do Waze, por voz): validade por tipo; só quem passa no mesmo trecho e sentido confirma ou nega; "sim" renova; cada "não" soma o peso de quem respondeu e o alerta cai quando iguala o peso de quem alertou; reputação por histórico.
+- **Decisão do time:** o agente sempre confirma repetindo o conteúdo, inclusive na negação ("Hum, então o buraco do km 230 sumiu, é isso? Me confirma aí."). Derrubar alerta verdadeiro é o erro mais perigoso: silêncio ou resposta confusa mantém o alerta.
+- **Riscos:** CTB art. 252 (uso do celular; mitigação: toque zero) e efeito de rede (começar pela frota da transportadora).
+- Fontes: [PRF via Portal do Trânsito](https://www.portaldotransito.com.br/noticias/mobilidade-e-tecnologia/transporte-de-carga/acidentes-com-caminhoes-e-onibus-causaram-tres-vezes-mais-mortes-que-veiculos-pequenos-em-2024-nas-rodovias-federais/), [Waze: duração dos alertas no Brasil](https://www.waze.com/discuss/t/duracao-dos-alertas/375087), [Waze: sugestão de confirmação por voz](https://waze.uservoice.com/forums/59223-waze-suggestion-box/suggestions/51348319-voice-confirm-or-expiry-of-reports), [PL 5.596/2013](https://tecnoblog.net/arquivo/projeto-lei-proibir-waze-cctci/), [CTB art. 252 e viva-voz](https://www.portaldotransito.com.br/?p=18067).
+
 ## Pendências
 
 - Nome do time e integrantes

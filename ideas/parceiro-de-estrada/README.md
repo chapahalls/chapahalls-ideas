@@ -17,7 +17,7 @@ Arquivos desta pasta:
 ## Problema e público (C3 · 20%)
 
 - **Quem:** caminhoneiros do transporte rodoviário de cargas (TRC) e os Centros de Controle Operacional (CCO) das transportadoras.
-- **Problema concreto:** cansaço ao volante e acidentes/tombamentos; motorista avisando o CCO digitando mensagens pré-programadas no rastreador enquanto dirige; informação da pista (acidente, desvio, blitz) que não chega a quem vem atrás.
+- **Problema concreto:** cansaço ao volante e acidentes/tombamentos; motorista avisando o CCO digitando mensagens pré-programadas no rastreador enquanto dirige; informação da pista (fim de fila, acidente, interdição) que não chega a quem vem atrás sem pegar o celular — hoje circula em grupos de WhatsApp.
 - **Benefício:** pausa sugerida antes do risco, aviso por voz do que vem pela frente, registro do trecho não editável (chegada, espera, ocorrências) que prova estadia acima de 5h, contato direto com o CCO só quando há risco real.
 
 ## Por que voz (C4 · 15%)
@@ -40,6 +40,7 @@ Agente:    Registrado. Você chegou às 14:02; se passar das 19:02, conta estadi
 ```
 
 - **Interrupção (barge-in):** o motorista corta o agente a qualquer momento (ex.: no meio da sugestão de parada) e o agente para de falar.
+- **Confirmação:** todo alerta relatado é repetido (tipo, km, sentido) antes de publicar; um "não, já saiu" pede confirmação dupla, e silêncio mantém o alerta.
 - **Falha e recuperação:** sem entender → pede para repetir só o dado que faltou (km, sentido); sem sinal → evento fica guardado e é entregue quando a conexão volta (Agora Chat).
 - **Latência alvo:** resposta < 2 s.
 
@@ -53,7 +54,7 @@ Agente:    Registrado. Você chegou às 14:02; se passar das 19:02, conta estadi
 
 - **Demo path (2 min):**
   1. Motorista A avisa acidente; confirma; publica na Comunidade.
-  2. Motorista B, atrás, recebe o aviso por voz; evento aparece no mapa do CCO.
+  2. Motorista B, atrás, recebe o aviso por voz; evento aparece no mapa do CCO. Ao passar no local: "ainda tá lá?" → "não" → agente pede confirmação → alerta some.
   3. A responde cada vez mais devagar → agente puxa conversa (nível 1) → sugere parada (nível 2).
   4. A para de responder → nível 3 abre canal de voz com o operador do CCO.
   5. A chega ao cliente → chegada carimbada sozinha; relato por voz entra como anexo; tempo acelerado → painel mostra espera e excedente de 5h; grava recado para a filha (Pessoal).
