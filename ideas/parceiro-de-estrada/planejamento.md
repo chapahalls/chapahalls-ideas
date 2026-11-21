@@ -8,8 +8,8 @@ Copiloto de voz para caminhoneiros: cada fala do motorista vira um evento estrut
 
 - **Problema:** o transporte rodoviário de cargas move o Brasil, e caminhões parados, tombados ou com motorista exausto são rotina. Hoje o motorista avisa o CCO digitando mensagens pré-programadas no rastreador, dirigindo.
 - **Proposta:** a voz substitui o teclado, faz companhia na viagem, sugere pausa quando o cansaço aparece e avisa outros motoristas do que vem pela frente.
-- **Tese de valor:** o motorista usa porque a frente Pessoal é dele; a transportadora paga pelo Corporativo e pelo CCO; a Comunidade cria o efeito de rede.
-- **Núcleo do produto:** Pessoal + Corporativo, separados como o perfil pessoal e o de trabalho do Android. A Comunidade é complemento no produto, mas fica na demo porque é a parte que mais mostra Agora funcionando (C2).
+- **Tese de valor (Modelo estilo GitHub):** o motorista cria sua **conta pessoal gratuita na plataforma** (que é dele para sempre, preserva seus contatos pessoais e sua reputação na Comunidade mesmo se trocar de empresa) e vincula-se à **organização da transportadora (Modo Corporativo / CCO)**, que paga a assinatura B2B; a Comunidade cria o efeito de rede.
+- **Núcleo do produto e Swap de Modos:** **Modo Pessoal** e **Modo Corporativo** são separados (com swap fluido por voz `"modo pessoal"` ⇄ `"modo corporativo"`), enquanto a frente **Comunidade / Sociedade permanece aberta e ativa nos dois modos** (o motorista recebe e reporta alertas da via estando em qualquer um dos modos).
 - **ODS:** 3 (meta 3.6, mortes no trânsito); secundários 8 e 9.
 
 ## As 3 frentes
@@ -54,12 +54,14 @@ O Pessoal é um modo separado do Corporativo, como o perfil pessoal e o de traba
 | Lembretes pessoais | Criar, ouvir, cumprir | Só criar ("me lembra de…") |
 | Dados | Nunca vão para a empresa | Registro do trecho |
 
-**Swap**
+**Swap e Modelo de Conta (estilo GitHub)**
 
-- Troca por voz ("modo pessoal" / "modo trabalho"); o agente confirma em que modo está.
+- **Conta do motorista + Organização da transportadora:** como no GitHub, o motorista tem sua conta pessoal própria na plataforma e atua dentro da organização da transportadora quando está no modo Corporativo.
+- **Troca fluida por voz** ("modo pessoal" / "modo trabalho"): o agente confirma em que modo está.
+- **Comunidade / Sociedade aberta nos dois modos:** alertas da via (fim de fila, acidente, interdição e confirmação *"ainda tá lá?"*) funcionam tanto no modo Pessoal quanto no modo Corporativo.
 - Viagem em andamento abre no Corporativo; ao parar fora da pista, o agente oferece o Pessoal.
 - Segurança atravessa os dois modos: cansaço nível 3 e "preciso de ajuda" chamam o CCO mesmo no Pessoal. É a única exceção, escrita no consentimento.
-- Nada passa de um modo para o outro sem o motorista pedir e confirmar.
+- Nada passa do Pessoal para o Corporativo sem o motorista pedir e confirmar.
 
 **Ciclo de vida do lembrete**
 
