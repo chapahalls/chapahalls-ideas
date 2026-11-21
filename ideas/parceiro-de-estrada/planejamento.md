@@ -23,7 +23,7 @@ Toda fala é Pessoal por padrão; Corporativo e Comunidade só recebem fala depo
 | Confirmação | Não precisa | Relato: "Vou registrar para a transportadora: avaria na lona. Confirma?" Depois de gravado, **não é editável** | "Vou avisar: acidente na BR-116, km 230, sentido norte. Confirma?" |
 | Validade | Permanente | Permanente e imutável, para auditoria | Expira sozinho por tipo (15 min a 24 h); renovado ou derrubado por quem passa |
 | Ferramenta Agora | Conversational AI + Chat | Conversational AI (relato) + Chat (entrega) | Signaling + Chat |
-| Valor | Companhia, recado da família | Prova de tempo de espera (estadia > 5h, Lei 11.442) e de ocorrências | Aviso antes de chegar ao problema |
+| Valor | Companhia, recado da família | Prova de tempo de espera (estadia > 5h, Lei 11.442) e de ocorrências | Aviso antes de chegar ao problema, sem tocar no celular |
 
 ## Corporativo: registro não editável
 
