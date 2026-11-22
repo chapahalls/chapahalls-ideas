@@ -18,6 +18,10 @@ Arquivos desta pasta e contexto unificado do time:
 | [`expansao-e-por-que-agora.md`](expansao-e-por-que-agora.md) | Resposta aos especialistas: TAM expandido e roadmap (ônibus, ferrovia/Rumo, LatAm), crescimento histórico, por que agora (Starlink, roaming, voz barata), resiliência logística, comparáveis (Legora) |
 | [`embasamento.md`](embasamento.md) | Dados sobre solidão, sono, jornada, comunicação e acidentes, com fontes, para o pitch e a banca |
 | [`historico-decisoes.md`](historico-decisoes.md) | Como a ideia evoluiu, o que foi descartado e por quê, pesquisa dos produtos Agora |
+| [`contexto-produto.md`](contexto-produto.md) | Contexto do produto para o repo: integração com a empresa (rota, break points, regras de reporte, documentos), fluxo do app, check-in, estadia, GPS dupla prova, modelo de dados, escopo do MVP |
+| [`problemas-e-decisoes.md`](problemas-e-decisoes.md) | Os 16 problemas levantados, causa, solução proposta e a decisão do time (15 decididos, 1 descartado) + fluxograma |
+| [`fluxograma.svg`](fluxograma.svg) · [`revisao-fluxo.html`](revisao-fluxo.html) | Fluxograma em raias (CCO, agente, motorista) e o quadro interativo de revisão (abrir o HTML no navegador) |
+| [`impacto-e-custos.md`](impacto-e-custos.md) | Impacto do problema e de resolver: espera no recebimento, multas e retenção, perda de carga, custo da hora parada, estimativa do custo da falta de comunicação e do CCO, com fontes |
 
 ## Problema e público (C3 · 20%)
 

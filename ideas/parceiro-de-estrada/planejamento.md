@@ -1,5 +1,7 @@
 # Parceiro de Estrada — Planejamento
 
+> Ver [`impacto-e-custos.md`](impacto-e-custos.md): o pitch abre com horas de caminhão parado; a estadia é prova e pressão sobre o recebedor.
+
 Versão de 21/11/2026 — Documento unificado do time (`RODAR / Parceiro de Estrada`).
 
 ## Visão
@@ -13,7 +15,7 @@ Copiloto de voz para caminhoneiros e operações logísticas: substitui a comuni
 - **Tese de valor (Modelo estilo GitHub):** o motorista cria sua **conta pessoal gratuita na plataforma** (que é dele para sempre, preserva seus contatos pessoais e sua reputação na Comunidade mesmo se trocar de empresa) e vincula-se à **organização da transportadora (Modo Corporativo / CCO)**, que paga a assinatura B2B; a Comunidade cria o efeito de rede.
 - **Como convencemos as empresas a contratar (5 Gatilhos B2B2C):**
   1. **Integração instantânea de Agregados e Autônomos (Zero Hardware):** a transportadora vincula a conta pessoal do agregado à sua Organização (CCO) na hora do embarque, sem precisar instalar teclado de macros nem câmera no caminhão terceirizado (frota TAC tem 24,4 anos de idade média).
-  2. **Payback em 1 única estadia (Lei 11.442 + STF ADI 5322):** o diário não editável (geofence + hora do servidor + hash + relato por voz) prova esperas `> 5h` (84,7% hoje não recebem estadia); recuperar um único evento de 3h (~R$ 217) paga mais de 5 meses da assinatura (R$ 30–40/mês) e controla o passivo trabalhista de espera como jornada.
+  2. **Payback em 1 única estadia (Lei 11.442 + STF ADI 5322):** o diário não editável (geofence + hora do servidor + hash + relato por voz) prova esperas `> 5h` (84,7% hoje não recebem estadia); recuperar um único evento de 3h (~R$ 225) paga mais de 2 meses da assinatura (R$ 100/mês) e controla o passivo trabalhista de espera como jornada.
   3. **Redução de sinistros (R$ 763,7 mil) sem o custo e a rejeição de câmeras (R$ 2,8–8 mil):** corta o risco **23× maior** de digitar macros dirigindo e aciona o CCO por voz no nível 3 sem filmar o rosto do motorista (evitar 1 sinistro grave paga o contrato anual de 1.000 caminhões = R$ 420 mil).
   4. **Retenção de motoristas (88% de escassez) + Conformidade NR-1 Psicossocial (Maio/2026):** atende à exigência de gestão de riscos psicossociais (isolamento/jornada) com blindagem LGPD (empresa não vê o Modo Pessoal).
   5. **Três compradores B2B:** Transportadoras (ETC com CCO), Seguradoras/Gerenciadoras de Risco (62% dos prejuízos de carga são acidentes) e Embarcadores/Terminais Logísticos.

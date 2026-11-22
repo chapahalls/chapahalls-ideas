@@ -69,7 +69,7 @@ Headline sugerida: **"O Brasil anda de caminhão: 63% de toda a carga, 220 mil v
 | **SAM** (frotas de empresa com CCO) | **R$ 170–250 mi/ano** | conta do time |
 | **SOM** em 5 anos | R$ 2,5–10 mi de receita recorrente | conta do time |
 | **TAM expandido** (ônibus, ferrovia, outras frotas, América Latina) | **R$ 1,3–3,2 bi/ano**, até ~R$ 6 bi com preço de telemetria corporativa | conta do time |
-| Referência de preço | rastreamento a R$ 60–100 por veículo/mês; RODAR a R$ 30–40 | Vivo |
+| Referência de preço | rastreamento a R$ 60–100 por veículo/mês; RODAR a R$ 100 (custo de voz Agora ≈ R$ 83) | Vivo; Agora |
 | Régua do pitch | 1.000 caminhões ≈ R$ 420 mil por ano | conta do time |
 
 As contas do time usam premissas (preço por caminhão, fração de caminhões entre os veículos registrados, fração de frotas com CCO) explicadas em `mercado-e-evidencias.md` e `expansao-e-por-que-agora.md`.

@@ -156,17 +156,20 @@ Depois das entrevistas, acrescentar: "X interações e Y minutos por ocorrência
 
 | Item Agora | Preço |
 |---|---|
-| Conversational AI Engine, tudo incluído (STT, LLM, TTS) | US$ 0,10/min; primeiros 300 min grátis ([Agora](https://docs.agora.io/en/ai/reference/pricing)) |
-| Configuração base + reconhecimento de voz ARES | US$ 0,0099 + US$ 0,0166 = US$ 0,0265/min ([Agora](https://docs.agora.io/en/conversational-ai/overview/pricing)) |
+| Conversational AI Engine, tudo incluído (STT, LLM, TTS); mesmo preço com chave própria (BYOK) | US$ 0,10/min; primeiros 300 min grátis ([Agora, atualizado em 31/07/2026](https://docs.agora.io/en/ai/reference/pricing)) |
+| Áudio RTC | US$ 0,00099/min (mesma fonte) |
 
 **Custo por caminhão (conta nossa):** 4 interações/dia × 1,5 min × 25 dias = 150 min/mês; dólar a R$ 5,50.
 
 | Configuração | Custo/caminhão/mês |
 |---|---|
-| Tudo incluído (US$ 0,10/min) | ≈ R$ 82 |
-| Base + ARES (US$ 0,0265/min) | ≈ R$ 22 |
+| Conversational AI (US$ 0,10/min) | ≈ R$ 82,50 |
+| Áudio RTC (US$ 0,00099/min) | ≈ R$ 0,82 |
+| **Total** | **≈ R$ 83** |
 
-**Consequência:** o preço de R$ 30–40/caminhão do `metricas.md` só fecha na configuração base. A faixa de US$ 0,007–0,091/min do `metricas.md` é de vários fornecedores, não da Agora. Caminhos:
+A configuração "Base + ARES" a US$ 0,0265/min (≈ R$ 22) não aparece mais na página de preços da Agora e saiu desta conta.
+
+**Consequência:** o preço de R$ 30–40/caminhão não fecha. Preço adotado: R$ 100/caminhão/mês. A faixa de US$ 0,007–0,091/min do `metricas.md` é de vários fornecedores, não da Agora. Caminhos:
 1. Preço de R$ 60–100/caminhão (faixa de rastreamento), justificado pelo retorno medido no piloto.
 2. Poucos minutos por caminhão: os gatilhos por evento (não por relógio) também controlam custo.
 
