@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parceiro de Estrada — revisão</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet"><style id="css">
+/* VOICE: operacional, seco, como um quadro de despacho
+   IDEA: folha de horário suíça / quadro do CCO
+   PICTURE: fluxograma em raias (CCO, agente, motorista); folha numerada de problemas
+   COLOUR and TYPE: branco, preto, vermelho sinal; Archivo larga
+   LAYOUT: régua grossa no topo, numerais grandes pendurados à esquerda */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0e0e0e);--ink:light-dark(#111,#f1f1f1);--mute:light-dark(#6b6b6b,#9a9a9a);--line:light-dark(#dcdcdc,#2e2e2e);--lane:light-dark(#f3f3f3,#171717);--red:light-dark(#e4002b,#ff5a6e);--rs:light-dark(#fdeaee,#33121a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Archivo,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px);max-width:1240px;margin:0 auto}
+.top{border-top:10px solid var(--ink);padding-bottom:0;max-width:none}
+.top>*{max-width:1240px;margin-inline:auto}
+.kick{margin:0 auto 6px;color:var(--mute);font-size:14px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.05;margin:0 auto 20px;font-stretch:112%;font-weight:800;text-wrap:balance}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.tabs a{padding:10px 16px;min-height:44px;color:var(--ink);text-decoration:none;font-weight:700;border:2px solid transparent;border-bottom:0;margin-bottom:-2px}
+.tabs a[aria-current=page]{border-color:var(--ink);background:var(--bg)}
+.tabs .c{color:var(--red)}
+pre,.scroll{overflow-x:auto}
+pre{white-space:pre-wrap;font-size:13px;border:1.5px solid var(--line);padding:12px}
+figure{margin:0}
+figcaption{font-size:14px;color:var(--mute);margin-top:10px;max-width:70ch}
+.legend{display:flex;gap:8px 24px;flex-wrap:wrap;font-size:14px;margin-bottom:16px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:22px;height:14px;border:1.5px solid var(--ink)}
+.legend i.a{border:2px solid var(--red);background:var(--rs)}
+.legend i.d{width:14px;transform:rotate(45deg) scale(.8);border-width:2.5px}
+.flow{display:block;width:100%;min-width:760px;height:auto}
+.flow text{fill:var(--ink);font:12.5px Archivo,system-ui,sans-serif}
+.flow .lh{font-weight:800;font-size:14px}
+.flow .ph{font-weight:800;font-size:13px}
+.flow .nd{fill:var(--bg);stroke:var(--ink);stroke-width:1.5}
+.flow .a{fill:var(--rs);stroke:var(--red);stroke-width:2}
+.flow .dc{fill:var(--bg);stroke:var(--ink);stroke-width:2.5}
+.flow .ed{fill:none;stroke:var(--mute);stroke-width:1.5}
+.flow .lane{fill:var(--lane)}
+.flow .rule{stroke:var(--ink);stroke-width:1.5}
+.flow .lb{fill:var(--bg)}
+.flow .el{font-size:11.5px;font-weight:700}
+.flow marker path{fill:var(--mute)}
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);margin-bottom:24px}
+.sum div{padding:12px 16px 12px 0;border-right:1px solid var(--line);margin-right:16px}
+.sum div:last-child{border:0}
+.sum b{display:block;font-size:clamp(40px,7vw,72px);line-height:1;font-stretch:112%;font-weight:800;font-variant-numeric:tabular-nums}
+.sum .o b{color:var(--red)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+button{font:inherit;font-weight:700;min-height:44px;padding:8px 14px;border:2px solid var(--ink);background:var(--bg);color:var(--ink);cursor:pointer;border-radius:0}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.list{list-style:none;margin:0;padding:0}
+.card{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.num{font-size:44px;line-height:1;font-weight:800;font-stretch:112%;font-variant-numeric:tabular-nums}
+.s-aberto .num{color:var(--red)}
+.s-descartado .num,.s-descartado h3{color:var(--mute)}
+.s-descartado h3{text-decoration:line-through}
+.area{margin:0;font-size:13px;color:var(--mute)}
+h3{margin:2px 0 10px;font-size:20px;line-height:1.25}
+dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 14px}
+dt{font-size:13px;color:var(--mute);font-weight:700}dd{margin:0}
+label{display:block;font-size:13px;color:var(--mute);font-weight:700}
+textarea,input{display:block;width:100%;font:16px/1.4 Archivo,system-ui,sans-serif;padding:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);margin-top:4px;border-radius:0}
+.seg{display:flex;flex-wrap:wrap;margin-top:10px}
+.seg button{margin-right:-2px}
+.new{border-top:2px solid var(--ink);margin-top:28px;padding-top:16px;display:grid;gap:10px;max-width:760px}
+.new h2,.tools h2{font-size:20px;margin:0}
+.tools{margin-top:28px;display:grid;gap:10px;justify-items:start}
+.empty{color:var(--mute);padding:20px 0}
+.bar{position:sticky;bottom:0;background:var(--ink);color:var(--bg);padding:12px max(5vw,16px);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.bar[hidden]{display:none}
+.bar button{border-color:var(--bg);background:var(--red);color:#fff}
+@media(max-width:600px){.card{grid-template-columns:minmax(0,1fr);gap:6px}.num{font-size:32px}dl{grid-template-columns:minmax(0,1fr)}.sum b{font-size:40px}}
+@media(prefers-reduced-motion:no-preference){.card{animation:in .25s ease both}@keyframes in{from{opacity:0;transform:translateY(4px)}}}
+</style></head><body><div id="root"></div><script type="application/json" id="state">{"updated": "2026-11-22T00:19:16.924Z", "items": [{"id": 1, "area": "Fluxo", "problema": "Escalonamento sem ação final definida", "causa": "\"Ficar parado\" não dizia se é aguardar, não descarregar ou voltar", "solucao": "Regra configurável por transportadora (RegraEscalonamento); demo usa regra padrão mock", "resposta": "Segue a norma de cada transportadora", "status": "decidido"}, {"id": 2, "area": "LGPD", "problema": "Dado de saúde passa por voz → Agora → LLM", "causa": "A central já monitora, mas o canal é novo e envolve terceiros", "solucao": "Registrar a finalidade no termo do motorista; repassar só campos estruturados", "resposta": "Saúde já é monitorada pela central", "status": "decidido"}, {"id": 3, "area": "Documentos", "problema": "IA pode errar número de NF, peso ou valor", "causa": "LLM tende a aproximar ou inventar valores", "solucao": "Responder só com campos extraídos, citar o documento e dizer \"não encontrei\"", "resposta": "Como o usuario ja tem uma rota definida a central define os documentos entregues no app e interpretados pela IA.", "status": "decidido"}, {"id": 4, "area": "Segurança", "problema": "Pergunta obrigatória no meio de uma manobra", "causa": "Atualização é sempre necessária e o agente não sabe o momento", "solucao": "Permitir adiar até 2 min; sem resposta, escala para o CCO", "resposta": "Permitir adiar até 2 min; sem resposta, escala para o CCO", "status": "decidido"}, {"id": 5, "area": "Notificação", "problema": "Re-notificar o CCO vira ruído", "causa": "Repetir o mesmo canal não muda a atenção da central", "solucao": "Trocar de canal ao subir prioridade: push → destaque no painel → ligação/WhatsApp ao supervisor", "resposta": "Trocar de canal ao subir prioridade: push → destaque no painel → ligação(somente ligacao com a central)", "status": "decidido"}, {"id": 6, "area": "Fluxo", "problema": "Avisar só na chegada perde antecedência", "causa": "A Task era criada apenas no destino", "solucao": "Avisar na aproximação e criar a Task na chegada", "resposta": "", "status": "decidido"}, {"id": 7, "area": "Fluxo", "problema": "Motorista não sabe se o CCO confirmou", "causa": "A confirmação fica só no painel", "solucao": "Agente avisa o motorista quando a Task for confirmada", "resposta": "", "status": "decidido"}, {"id": 8, "area": "Estadia", "problema": "Início da estadia pode ser contestado", "causa": "A lei conta da chegada ao endereço; se o GPS falhar, não há prova", "solucao": "Geocerca do destino + check-in por voz + GPS do caminhão", "resposta": "Geocerca do destino + check-in por voz + GPS do caminhão", "status": "decidido"}, {"id": 9, "area": "Estadia", "problema": "Contador de estadia sem fim definido", "causa": "Não existe evento de \"descarga concluída\"", "solucao": "Motorista (voz) ou CCO confirma a descarga e encerra o contador", "resposta": "Motorista (voz) ou CCO confirma a descarga e encerra o contador", "status": "decidido"}, {"id": 10, "area": "Estadia", "problema": "Franquia de 5h pode variar por contrato", "causa": "Contratos podem prever outra franquia", "solucao": "franquia_h e valor por t/h configuráveis (valor atualizado pela ANTT)", "resposta": "franquia_h e valor por t/h configuráveis (valor atualizado pela ANTT)", "status": "decidido"}, {"id": 11, "area": "Prova", "problema": "As duas provas de GPS vêm do mesmo lado", "causa": "Celular e caminhão são da transportadora/motorista", "solucao": "Registro do destinatário: QR na portaria, assinatura ou canhoto", "resposta": "", "status": "descartado"}, {"id": 12, "area": "Prova", "problema": "GPS do celular é falsificável", "causa": "Apps de localização falsa", "solucao": "Rastreador do caminhão como prova forte; detectar mock location no Android", "resposta": "Rastreador do caminhão como prova forte; detectar mock location no Android", "status": "decidido"}, {"id": 13, "area": "Técnico", "problema": "Localização em segundo plano", "causa": "Android e iOS restringem; consumo de bateria", "solucao": "Foreground service + permissão \"sempre\"", "resposta": "Foreground service + permissão \"sempre\"", "status": "decidido"}, {"id": 14, "area": "Técnico", "problema": "Sem sinal em trechos da rodovia", "causa": "Cobertura celular irregular", "solucao": "Fila local de reportes e reenvio automático", "resposta": "Fila local de reportes e reenvio automático. StarLInk", "status": "decidido"}, {"id": 15, "area": "Técnico", "problema": "Wake word falha em cabine ruidosa", "causa": "Motor, rádio e vento", "solucao": "Medir falso acionamento; botão no volante como alternativa", "resposta": "Medir falso acionamento; botão no volante como alternativa", "status": "decidido"}, {"id": 16, "area": "IA", "problema": "Reporte marcado como completo com resposta vaga", "causa": "LLM aceita \"tudo certo\" como resposta para vários campos", "solucao": "Critério de aceite por campo obrigatório", "resposta": "Critério de aceite por campo obrigatório", "status": "decidido"}]}</script><script id="app">
+{
+const S = JSON.parse(document.getElementById('state').textContent);
+const root = document.getElementById('root');
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ST = {aberto:'Aberto', decidido:'Decidido', descartado:'Descartado'};
+let dirty = false, filter = 'todos', art = null, readOnly = false, msg = '';
+
+/* ---------- fluxograma ---------- */
+const LX = [150, 460, 770], LN = ['Central (CCO)', 'Agente de voz', 'Motorista'], FW = 920;
+const PH = [[0,'1 · Preparação'],[2,'2 · Retirada'],[6,'3 · Viagem'],[9,'A qualquer momento'],[11,'4 · Chegada e estadia']];
+const N = [
+ ['n1',0,0,'Cadastra rota, motorista,|break points, regras e docs'],
+ ['n2',1,1,'Envia rota e|documentos ao app'],
+ ['n3',2,1,'Recebe a rota'],
+ ['n4',1,2,'GPS entra na|geocerca da origem'],
+ ['n5',1,3,'Pergunta: “confirma|a retirada da carga?”'],
+ ['n6',2,3,'Confirma por voz +|relatório inicial'],
+ ['n7',1,4,'GPS celular e|caminhão batem?','d'],
+ ['n8',0,4,'Alerta: retirada|não validada','a'],
+ ['n9',1,5,'Registra RETIRADA|(EventoGeo)'],
+ ['n10',1,6,'A cada X min ou break|point: pede o status'],
+ ['n11',2,6,'Responde por voz|(pode adiar 2 min;|sem resposta → CCO)'],
+ ['n12',1,7,'Todos os campos|obrigatórios?','d'],
+ ['n14',0,7,'Recebe reporte|estruturado'],
+ ['n13',1,8,'Pergunta só o|que faltou'],
+ ['n16',2,9,'Wake word: ocorrência,|documento ou pergunta'],
+ ['n17',1,9,'Registra, lê o|documento, responde'],
+ ['n18',0,9,'Recebe a|ocorrência'],
+ ['n19',0,10,'Solicita uma|informação'],
+ ['n20',1,10,'Pergunta ao|motorista'],
+ ['n21',2,10,'Responde; a resposta|volta ao CCO'],
+ ['n22',1,11,'GPS: aproximando|do destino'],
+ ['n23',0,11,'Aviso: carga|chegando'],
+ ['n24',1,12,'Geocerca do destino:|“confirma a chegada?”'],
+ ['n25',2,12,'Check-in por voz: status,|tempo, ocorrências'],
+ ['n26',1,13,'Registra CHEGADA|(GPS celular + caminhão)'],
+ ['n27',0,13,'Task: carga chegou|+ inicia estadia','a'],
+ ['n28',1,14,'A cada X min: tempo|parado + franquia (5h)'],
+ ['n29',0,15,'CCO confirmou|a descarga?','d'],
+ ['n32',1,15,'Sobe prioridade|(após 5h: estadia em R$)','a'],
+ ['n33',2,15,'Avisa que vai ficar|parado (norma)','a'],
+ ['n30',0,16,'Encerra Task|e estadia'],
+ ['n31',2,16,'Avisado: liberado|pela central']
+];
+const E = [
+ ['n1','n2'],['n2','n3'],['n2','n4'],['n4','n5'],['n5','n6'],['n6','n7'],
+ ['n7','n8','não'],['n7','n9','sim'],['n9','n10'],['n10','n11'],['n11','n12'],
+ ['n12','n14','sim'],['n12','n13','não'],['n13','n11','repete','hv',70],
+ ['n16','n17'],['n17','n18'],['n19','n20'],['n20','n21'],
+ ['n22','n23'],['n22','n24'],['n24','n25'],['n25','n26'],['n26','n27'],
+ ['n26','n28','inicia contador'],['n28','n29','','hv'],['n29','n32','não'],
+ ['n32','n28','loop'],['n32','n33','limite'],['n29','n30','sim'],['n30','n31']
+];
+const ph = r => PH.filter(p => p[0] <= r).length;
+const Y = r => 90 + r * 96 + ph(r) * 44;
+const M = {};
+for (const [id, l, r, t, k] of N) {
+  const lines = t.split('|');
+  const d = k === 'd';
+  M[id] = {id, l, r, k, lines, x: LX[l], y: Y(r), w: d ? 210 : 232, h: d ? 44 + lines.length * 15 : 22 + lines.length * 16};
+}
+const FH = Y(16) + 70;
+
+function nodeSVG(n) {
+  const {x, y, w, h, lines, k} = n;
+  const shape = k === 'd'
+    ? `<polygon class="dc" points="${x},${y - h / 2} ${x + w / 2},${y} ${x},${y + h / 2} ${x - w / 2},${y}"/>`
+    : `<rect class="nd${k === 'a' ? ' a' : ''}" x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}"/>`;
+  const y0 = y - (lines.length - 1) * 8 + 4.5;
+  const txt = lines.map((s, i) => `<tspan x="${x}" y="${y0 + i * 16}">${esc(s)}</tspan>`).join('');
+  return shape + `<text text-anchor="middle">${txt}</text>`;
+}
+function edgeSVG([a, b, lab, mode, dx = 0]) {
+  const A = M[a], B = M[b];
+  let p, lx, ly;
+  if (A.l === B.l) {
+    p = B.y > A.y ? [[A.x, A.y + A.h / 2], [B.x, B.y - B.h / 2]] : [[A.x, A.y - A.h / 2], [B.x, B.y + B.h / 2]];
+  } else if (A.r === B.r) {
+    const s = B.x > A.x ? 1 : -1;
+    p = [[A.x + s * A.w / 2, A.y], [B.x - s * B.w / 2, B.y]];
+  } else if (mode === 'hv') {
+    const s = B.x > A.x ? 1 : -1, bx = B.x + dx, d = B.y > A.y ? 1 : -1;
+    p = [[A.x + s * A.w / 2, A.y], [bx, A.y], [bx, B.y - d * B.h / 2]];
+  } else {
+    const d = B.y > A.y ? 1 : -1, s = B.x > A.x ? 1 : -1;
+    p = [[A.x, A.y + d * A.h / 2], [A.x, B.y], [B.x - s * B.w / 2, B.y]];
+  }
+  lx = (p[0][0] + p[1][0]) / 2; ly = (p[0][1] + p[1][1]) / 2;
+  const path = `<path class="ed" marker-end="url(#ah)" d="M${p.map(q => q.join(' ')).join(' L')}"/>`;
+  if (!lab) return path;
+  const tw = lab.length * 6.6 + 12;
+  return path + `<rect class="lb" x="${lx - tw / 2}" y="${ly - 9}" width="${tw}" height="18"/><text class="el" text-anchor="middle" x="${lx}" y="${ly + 4}">${esc(lab)}</text>`;
+}
+function flowSVG() {
+  const lanes = LX.map((x, i) => (i === 1 ? `<rect class="lane" x="${x - 155}" y="0" width="310" height="${FH}"/>` : '') +
+    `<text class="lh" text-anchor="middle" x="${x}" y="30">${LN[i]}</text>`).join('');
+  const phases = PH.map(([r, t]) => { const y = Y(r) - 66; return `<line class="rule" x1="0" x2="${FW}" y1="${y - 14}" y2="${y - 14}"/><text class="ph" x="10" y="${y + 4}">${esc(t)}</text>`; }).join('');
+  return `<svg class="flow" viewBox="0 0 ${FW} ${FH}" role="img" aria-label="Fluxograma do Parceiro de Estrada em três raias: central, agente de voz e motorista, da preparação da rota até o encerramento da estadia">
+<defs><marker id="ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+${lanes}<line class="rule" x1="0" x2="${FW}" y1="44" y2="44"/>${phases}${E.map(edgeSVG).join('')}${Object.values(M).map(nodeSVG).join('')}</svg>`;
+}
+
+/* ---------- problemas ---------- */
+const count = s => S.items.filter(i => i.status === s).length;
+function cardHTML(it, n) {
+  return `<li class="card s-${it.status}" data-id="${it.id}">
+  <div class="num">${String(n).padStart(2, '0')}</div>
+  <div><p class="area">${esc(it.area)}</p><h3>${esc(it.problema)}</h3>
+  <dl><div><dt>Causa</dt><dd>${esc(it.causa)}</dd></div><div><dt>Solução proposta</dt><dd>${esc(it.solucao)}</dd></div></dl>
+  <label for="r${it.id}">Resposta do time</label><textarea id="r${it.id}" data-f="resposta" rows="2" placeholder="Decisão ou comentário do time">${esc(it.resposta)}</textarea>
+  <div class="seg" role="group" aria-label="Status">${Object.keys(ST).map(s => `<button type="button" data-st="${s}" aria-pressed="${it.status === s}">${ST[s]}</button>`).join('')}</div>
+  </div></li>`;
+}
+function listHTML() {
+  const its = S.items.map((it, i) => [it, i + 1]).filter(([it]) => filter === 'todos' || it.status === filter);
+  return its.length ? its.map(([it, n]) => cardHTML(it, n)).join('') : '<li class="empty">Nenhum item neste filtro.</li>';
+}
+function problemsHTML() {
+  const F = [['todos','Todos'],['aberto','Abertos'],['decidido','Decididos'],['descartado','Descartados']];
+  return `<section class="band">
+  <div class="sum" id="sum"></div>
+  <div class="chips" role="group" aria-label="Filtro">${F.map(([k, t]) => `<button type="button" data-fl="${k}" aria-pressed="${filter === k}">${t}</button>`).join('')}</div>
+  <ol class="list" id="list">${listHTML()}</ol>
+  <form class="new" id="new"><h2>Novo problema</h2>
+   <label for="f-p">Problema</label><input id="f-p" name="problema" required>
+   <label for="f-c">Causa</label><input id="f-c" name="causa">
+   <label for="f-s">Solução proposta</label><input id="f-s" name="solucao">
+   <label for="f-a">Área</label><input id="f-a" name="area" placeholder="Fluxo, Estadia, Técnico…">
+   <div><button type="submit">Adicionar</button></div></form>
+  <div class="tools"><h2>Levar para o repo</h2><button type="button" id="md">Copiar como Markdown</button><pre id="mdout" hidden></pre></div>
+  </section>`;
+}
+function sumHTML() {
+  return `<div class="o"><b>${count('aberto')}</b>abertos</div><div><b>${count('decidido')}</b>decididos</div><div><b>${count('descartado')}</b>descartados</div>`;
+}
+function toMD() {
+  const c = s => String(s || '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
+  return '## Problemas / causas / soluções\n\n| # | Área | Problema | Causa | Solução | Resposta do time | Status |\n|---|---|---|---|---|---|---|\n' +
+    S.items.map((i, n) => `| ${n + 1} | ${c(i.area)} | ${c(i.problema)} | ${c(i.causa)} | ${c(i.solucao)} | ${c(i.resposta)} | ${ST[i.status]} |`).join('\n') + '\n';
+}
+
+/* ---------- shell, rotas, salvar ---------- */
+root.innerHTML = `<header class="band top"><p class="kick">Parceiro de Estrada · Hackathon UNMUTE by Agora</p>
+<h1>Revisão do fluxo e dos problemas</h1>
+<nav class="tabs"><a href="#fluxo" data-v="fluxo">Fluxograma</a><a href="#problemas" data-v="problemas">Problemas <span class="c" id="cnt"></span></a></nav></header>
+<main id="view"></main>
+<div class="bar" id="bar" hidden><span id="barmsg"></span><button type="button" id="save">Salvar para o time</button></div>`;
+const view = document.getElementById('view');
+
+function route() {
+  const v = location.hash === '#problemas' ? 'problemas' : 'fluxo';
+  for (const a of root.querySelectorAll('.tabs a')) a.dataset.v === v ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current');
+  view.innerHTML = v === 'fluxo'
+    ? `<section class="band"><div class="legend"><span><i></i>Ação</span><span><i class="d"></i>Decisão</span><span><i class="a"></i>Alerta ou estadia</span></div>
+       <figure><div class="scroll">${flowSVG()}</div><figcaption>Cada raia mostra quem age em cada passo. O motorista só fala; a central só vê o painel; o agente faz a ponte, valida e escala. Em telas estreitas, role para os lados.</figcaption></figure></section>`
+    : problemsHTML();
+  refresh();
+}
+function refresh() {
+  document.getElementById('cnt').textContent = `· ${count('aberto')} abertos`;
+  const s = document.getElementById('sum'); if (s) s.innerHTML = sumHTML();
+  const bar = document.getElementById('bar'), btn = document.getElementById('save');
+  bar.hidden = !dirty && !msg;
+  document.getElementById('barmsg').textContent = msg || (art ? 'Alterações não salvas' : 'Alterações não salvas · salvar não está disponível nesta visualização');
+  btn.disabled = !art || readOnly || !dirty;
+}
+function doc() {
+  const SC = '<' + '/script>';
+  const json = JSON.stringify(S).replace(/</g, '\\u003c');
+  const head = document.head.querySelectorAll('link');
+  return '<!DOCTYPE html>\n<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(document.title) + '</title>' +
+    [...head].map(l => l.outerHTML).join('') +
+    '<style id="css">' + document.getElementById('css').textContent + '</style></head><body><div id="root"></div>' +
+    '<script type="application/json" id="state">' + json + SC +
+    '<script id="app">' + document.getElementById('app').textContent + SC + '</body></html>';
+}
+async function save() {
+  if (!art || readOnly) return;
+  const btn = document.getElementById('save');
+  btn.disabled = true; msg = 'Salvando…'; refresh();
+  try {
+    S.updated = new Date().toISOString();
+    await art.publish(doc());
+  } catch (e) {
+    const c = String(e && (e.code || e.message) || e);
+    if (/not_granted|not_writer/.test(c)) { readOnly = true; msg = 'Você tem acesso só de leitura a esta página.'; }
+    else if (/conflict/.test(c)) msg = 'Outra pessoa salvou antes; a página vai recarregar com a versão dela.';
+    else msg = 'Não foi possível salvar: ' + c;
+    refresh();
+  }
+}
+const item = el => S.items.find(i => i.id === +el.closest('[data-id]').dataset.id);
+root.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.st) {
+    const it = item(b); it.status = b.dataset.st; dirty = true; msg = '';
+    const li = b.closest('.card'); li.className = 'card s-' + it.status;
+    for (const x of li.querySelectorAll('[data-st]')) x.setAttribute('aria-pressed', x.dataset.st === it.status);
+    refresh();
+  } else if (b.dataset.fl) {
+    filter = b.dataset.fl;
+    for (const x of root.querySelectorAll('[data-fl]')) x.setAttribute('aria-pressed', x.dataset.fl === filter);
+    document.getElementById('list').innerHTML = listHTML();
+  } else if (b.id === 'save') save();
+  else if (b.id === 'md') {
+    const md = toMD(), out = document.getElementById('mdout');
+    out.textContent = md;
+    const ok = () => { b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar como Markdown', 1600); };
+    try { navigator.clipboard.writeText(md).then(ok, () => out.hidden = false); } catch (_) { out.hidden = false; }
+  }
+});
+root.addEventListener('input', e => {
+  const t = e.target; if (t.dataset.f !== 'resposta') return;
+  item(t).resposta = t.value; dirty = true; msg = ''; refresh();
+});
+root.addEventListener('submit', e => {
+  e.preventDefault();
+  const f = new FormData(e.target), v = k => String(f.get(k) || '').trim();
+  if (!v('problema')) return;
+  S.items.push({id: Math.max(0, ...S.items.map(i => i.id)) + 1, area: v('area') || 'Geral', problema: v('problema'), causa: v('causa'), solucao: v('solucao'), resposta: '', status: 'aberto'});
+  dirty = true; msg = ''; filter = 'todos'; route();
+  location.hash = '#problemas';
+});
+window.addEventListener('hashchange', route);
+route();
+try { const p = window.claude && window.claude.use && window.claude.use('artifact'); if (p) p.then(a => { art = a; refresh(); }, () => {}); } catch (_) {}
+}
+</script></body></html>
