@@ -30,7 +30,7 @@ Com um caminhão retido, a entrega atrasa, o cliente pode recusar e a carga pere
 
 ### 3. Perda de carga por espera longa
 
-Em perecíveis, a perda de qualidade por temperatura é **cumulativa e irreversível** ([Ciência e Tecnologia de Alimentos, 2010](https://www.redalyc.org/pdf/3959/395940099024.pdf)). Cada hora parada na doca com o motor ou a refrigeração no limite aumenta o risco de recusa e devolução. Na disputa, transportadora e recebedor discutem de quem é a culpa sem um horário confiável de chegada.
+Em perecíveis, a perda de qualidade por temperatura é **cumulativa e irreversível** ([Ciência e Tecnologia de Alimentos, 2010](https://www.redalyc.org/pdf/3959/39594%30099024.pdf)). Cada hora parada na doca com o motor ou a refrigeração no limite aumenta o risco de recusa e devolução. Na disputa, transportadora e recebedor discutem de quem é a culpa sem um horário confiável de chegada.
 
 Não encontrei número público de perda causada especificamente pela espera.
 
@@ -138,7 +138,7 @@ Cinco pontos que um jurado pode atacar:
 - [CNTA 2025: estadia e piso do frete — Mundo Logística](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-aceitam-frete-abaixo-do-piso-por-necessidade)
 - [CNTA 2025: jornada dos autônomos — Mundo Logística](https://mundologistica.com.br/noticias/realidade-dos-caminhoneiros-autonomos-brasil-2025)
 - [CNTA 2025: 9 fretes por mês — Mundo Logística](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes)
-- [Avaliação de temperaturas na cadeia do frio — Ciência e Tecnologia de Alimentos, 2010](https://www.redalyc.org/pdf/3959/395940099024.pdf)
+- [Avaliação de temperaturas na cadeia do frio — Ciência e Tecnologia de Alimentos, 2010](https://www.redalyc.org/pdf/3959/39594%30099024.pdf)
 - [SEFAZ-ES — multa de 30% por transporte sem documento fiscal (2017)](https://sefaz.es.gov.br/governador-sanciona-lei-que-aumenta-punicao-n)
 - [CC/MG — acórdão 17.264/05: apreensão e multa isolada de 40%](https://www.fazenda.mg.gov.br/secretaria/conselho_contribuintes/acordaos/2005/1/17264051.pdf)
 - [Multa de R$ 10.500 por CIOT ausente no MDF-e — Mundo Logística, abr/2026](https://mundologistica.com.br/noticias/piso-minimo-frete-como-evitar-multas)
