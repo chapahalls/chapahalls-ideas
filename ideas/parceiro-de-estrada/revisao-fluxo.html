@@ -27,7 +27,7 @@ figcaption{font-size:14px;color:var(--mute);margin-top:10px;max-width:70ch}
 .legend i{display:inline-block;width:22px;height:14px;border:1.5px solid var(--ink)}
 .legend i.a{border:2px solid var(--red);background:var(--rs)}
 .legend i.d{width:14px;transform:rotate(45deg) scale(.8);border-width:2.5px}
-.flow{display:block;width:100%;min-width:760px;height:auto}
+.flow{display:block;width:100%;min-width:1000px;height:auto}
 .flow text{fill:var(--ink);font:12.5px Archivo,system-ui,sans-serif}
 .flow .lh{font-weight:800;font-size:14px}
 .flow .ph{font-weight:800;font-size:13px}
@@ -82,8 +82,8 @@ const ST = {aberto:'Aberto', decidido:'Decidido', descartado:'Descartado'};
 let dirty = false, filter = 'todos', art = null, readOnly = false, msg = '';
 
 /* ---------- fluxograma ---------- */
-const LX = [150, 460, 770], LN = ['Central (CCO)', 'Agente de voz', 'Motorista'], FW = 920;
-const PH = [[0,'1 · Preparação'],[2,'2 · Retirada'],[6,'3 · Viagem'],[9,'A qualquer momento'],[11,'4 · Chegada e estadia']];
+const LX = [150, 460, 770, 1060], LN = ['Central (CCO)', 'Agente de voz', 'Motorista', 'Recebedor da carga'], FW = 1215;
+const PH = [[0,'1 · Preparação'],[2,'2 · Retirada'],[6,'3 · Viagem'],[9,'A qualquer momento'],[11,'4 · Chegada e estadia'],[16,'5 · CCO sem resposta após 3 tentativas'],[19,'6 · Descarga']];
 const N = [
  ['n1',0,0,'Cadastra rota, motorista,|break points, regras e docs'],
  ['n2',1,1,'Envia rota e|documentos ao app'],
@@ -111,12 +111,18 @@ const N = [
  ['n25',2,12,'Check-in por voz: status,|tempo, ocorrências'],
  ['n26',1,13,'Registra CHEGADA|(GPS celular + caminhão)'],
  ['n27',0,13,'Task: carga chegou|+ inicia estadia','a'],
- ['n28',1,14,'A cada X min: tempo|parado + franquia (5h)'],
- ['n29',0,15,'CCO confirmou|a descarga?','d'],
- ['n32',1,15,'Sobe prioridade|(após 5h: estadia em R$)','a'],
- ['n33',2,15,'Avisa que vai ficar|parado (norma)','a'],
- ['n30',0,16,'Encerra Task|e estadia'],
- ['n31',2,16,'Avisado: liberado|pela central']
+ ['n28',1,14,'Notifica o CCO (tentativa N/3):|push → painel → ligação;|tempo parado + estadia'],
+ ['n29',0,15,'CCO respondeu?','d'],
+ ['n32',1,15,'Já foram|3 tentativas?','d'],
+ ['n30',0,16,'Assume a Task e|trata com o recebedor'],
+ ['n34',1,16,'Avisa CCO e motorista e|liga para o responsável|pelo recebimento','a'],
+ ['n36',3,16,'Atende e responde:|previsão, doca, motivo'],
+ ['n37',1,17,'Repassa a resposta|do recebedor'],
+ ['n38',0,18,'Recebe: ligação feita|+ resposta do recebedor'],
+ ['n39',2,18,'Recebe a previsão|do recebedor'],
+ ['n40',2,19,'Confirma a descarga|por voz'],
+ ['n41',1,19,'Encerra Task|e estadia'],
+ ['n42',0,19,'Recebe descarga +|estadia calculada']
 ];
 const E = [
  ['n1','n2'],['n2','n3'],['n2','n4'],['n4','n5'],['n5','n6'],['n6','n7'],
@@ -125,7 +131,9 @@ const E = [
  ['n16','n17'],['n17','n18'],['n19','n20'],['n20','n21'],
  ['n22','n23'],['n22','n24'],['n24','n25'],['n25','n26'],['n26','n27'],
  ['n26','n28','inicia contador'],['n28','n29','','hv'],['n29','n32','não'],
- ['n32','n28','loop'],['n32','n33','limite'],['n29','n30','sim'],['n30','n31']
+ ['n32','n28','não: nova tentativa'],['n29','n30','sim'],['n32','n34','sim'],
+ ['n34','n36','liga (Agora SIP)'],['n36','n37'],['n37','n38'],['n37','n39'],
+ ['n39','n40'],['n40','n41'],['n41','n42']
 ];
 const ph = r => PH.filter(p => p[0] <= r).length;
 const Y = r => 90 + r * 96 + ph(r) * 44;
@@ -135,7 +143,7 @@ for (const [id, l, r, t, k] of N) {
   const d = k === 'd';
   M[id] = {id, l, r, k, lines, x: LX[l], y: Y(r), w: d ? 210 : 232, h: d ? 44 + lines.length * 15 : 22 + lines.length * 16};
 }
-const FH = Y(16) + 70;
+const FH = Y(19) + 70;
 
 function nodeSVG(n) {
   const {x, y, w, h, lines, k} = n;
@@ -161,7 +169,8 @@ function edgeSVG([a, b, lab, mode, dx = 0]) {
     const d = B.y > A.y ? 1 : -1, s = B.x > A.x ? 1 : -1;
     p = [[A.x, A.y + d * A.h / 2], [A.x, B.y], [B.x - s * B.w / 2, B.y]];
   }
-  lx = (p[0][0] + p[1][0]) / 2; ly = (p[0][1] + p[1][1]) / 2;
+  const t = p.length === 2 && p[0][0] === p[1][0] ? 0.3 : 0.5;
+  lx = p[0][0] + (p[1][0] - p[0][0]) * t; ly = p[0][1] + (p[1][1] - p[0][1]) * t;
   const path = `<path class="ed" marker-end="url(#ah)" d="M${p.map(q => q.join(' ')).join(' L')}"/>`;
   if (!lab) return path;
   const tw = lab.length * 6.6 + 12;
@@ -171,7 +180,7 @@ function flowSVG() {
   const lanes = LX.map((x, i) => (i === 1 ? `<rect class="lane" x="${x - 155}" y="0" width="310" height="${FH}"/>` : '') +
     `<text class="lh" text-anchor="middle" x="${x}" y="30">${LN[i]}</text>`).join('');
   const phases = PH.map(([r, t]) => { const y = Y(r) - 66; return `<line class="rule" x1="0" x2="${FW}" y1="${y - 14}" y2="${y - 14}"/><text class="ph" x="10" y="${y + 4}">${esc(t)}</text>`; }).join('');
-  return `<svg class="flow" viewBox="0 0 ${FW} ${FH}" role="img" aria-label="Fluxograma do Parceiro de Estrada em três raias: central, agente de voz e motorista, da preparação da rota até o encerramento da estadia">
+  return `<svg class="flow" viewBox="0 0 ${FW} ${FH}" role="img" aria-label="Fluxograma do Parceiro de Estrada em quatro raias: central, agente de voz, motorista e recebedor, da preparação da rota até a descarga, incluindo a ligação ao recebedor quando o CCO não responde">
 <defs><marker id="ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
 ${lanes}<line class="rule" x1="0" x2="${FW}" y1="44" y2="44"/>${phases}${E.map(edgeSVG).join('')}${Object.values(M).map(nodeSVG).join('')}</svg>`;
 }
@@ -228,7 +237,7 @@ function route() {
   for (const a of root.querySelectorAll('.tabs a')) a.dataset.v === v ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current');
   view.innerHTML = v === 'fluxo'
     ? `<section class="band"><div class="legend"><span><i></i>Ação</span><span><i class="d"></i>Decisão</span><span><i class="a"></i>Alerta ou estadia</span></div>
-       <figure><div class="scroll">${flowSVG()}</div><figcaption>Cada raia mostra quem age em cada passo. O motorista só fala; a central só vê o painel; o agente faz a ponte, valida e escala. Em telas estreitas, role para os lados.</figcaption></figure></section>`
+       <figure><div class="scroll">${flowSVG()}</div><figcaption>Cada raia mostra quem age em cada passo. O motorista só fala; a central só vê o painel; o agente faz a ponte, valida e escala. Se o CCO não responde após 3 tentativas, o agente liga para o responsável pelo recebimento e repassa a resposta ao CCO e ao motorista. Em telas estreitas, role para os lados.</figcaption></figure></section>`
     : problemsHTML();
   refresh();
 }

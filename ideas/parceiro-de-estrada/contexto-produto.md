@@ -63,21 +63,41 @@ O motorista pode, a qualquer momento:
 
 ### 3.5 Aviso automático de chegada (sem falar com o motorista)
 - Via GPS + rota, ao se aproximar do destino o agente avisa a central que a carga está chegando.
-- **Escalonamento:** se a central não confirmar em X tempo, a prioridade sobe progressivamente.
-- **Último nível:** o agente avisa o motorista que ele ficará aguardando/parado no destino.
+- **Escalonamento:** se a central não confirmar em X tempo, a prioridade sobe e o canal muda a cada tentativa: push → destaque no painel → ligação para a central.
+- **Último nível (após 3 tentativas sem resposta):** o agente liga direto para o responsável pelo recebimento da carga (seção 3.5.1).
 
 - Ao detectar a chegada, o sistema **cria uma Task para o CCO**: "carga da rota X chegou ao destino".
 - Enquanto a task não for confirmada, o CCO é **re-notificado a cada X tempo** com o **tempo parado** e a **estadia acumulada**, e a prioridade sobe.
-- A ação final, se a central nunca confirmar, segue a norma da transportadora (`RegraEscalonamento`).
+- Número de tentativas, intervalo e canais seguem a norma da transportadora (`RegraEscalonamento`); padrão da demo: 3 tentativas.
 
 ```
 chegada detectada (GPS + check-in)
    → cria Task no CCO (status: pendente)
    → inicia contador de estadia (inicio = chegada_em)
-   → a cada X min: notifica tempo parado + franquia restante (5h) + sobe prioridade
-   → após 5h: notifica estadia acumulada (R$)
-   → CCO confirma descarga → Task concluída, contador encerrado
-   → limite atingido → ação final definida pela transportadora
+   → tentativa 1..3, a cada X min: notifica tempo parado + franquia restante (5h) + estadia (R$)
+        canal sobe a cada tentativa: push → painel em destaque → ligação para a central
+   → CCO respondeu? sim → CCO assume a Task e trata com o recebedor
+   → 3 tentativas sem resposta → agente liga para o responsável pelo recebimento (3.5.1)
+   → motorista (voz) ou CCO confirma a descarga → Task concluída, estadia encerrada
+```
+
+### 3.5.1 CCO sem resposta: agente liga para o recebedor
+
+Depois de 3 tentativas sem resposta do CCO:
+
+1. O agente **avisa o CCO e o motorista** que vai ligar para o recebedor ("O CCO não respondeu em 3 tentativas. Estou ligando para o recebimento.").
+2. O agente **liga para o responsável pelo recebimento** cadastrado na rota (ligação telefônica feita pelo agente via Agora Conversational AI + SIP de saída). Ele se apresenta como assistente virtual da transportadora e informa: placa, carga, nota fiscal, horário de chegada e tempo parado.
+3. O agente pergunta e registra a **resposta do recebedor**: previsão de descarga, doca, motivo da espera ou pedido de documento.
+4. O agente **repassa a resposta** ao CCO (registro na Task, com transcrição e áudio) e ao motorista (por voz: "O recebimento disse que a doca 4 libera em 40 minutos.").
+5. Se o recebedor não atender, o agente registra a tentativa na Task (prova para a estadia) e avisa o motorista e o CCO.
+
+```
+3 tentativas sem resposta do CCO
+   → avisa CCO e motorista: "ligando para o recebimento"
+   → liga para responsavel_recebimento (Agora SIP)
+       atendeu → registra resposta (previsão, doca, motivo) → envia ao CCO (Task) e ao motorista (voz)
+       não atendeu → registra tentativa (horário, número) → avisa CCO e motorista
+   → contador de estadia continua até a confirmação da descarga
 ```
 
 ### 3.6 Chegada — check-in por voz
@@ -95,7 +115,7 @@ Motorista informa:
 ```
 Empresa
 Motorista
-Rota { origem, destino, trajeto, motorista_id, status }
+Rota { origem, destino, trajeto, motorista_id, status, responsavel_recebimento { nome, telefone_e164 } }
 BreakPoint { rota_id, gatilho (tempo | local), campos_requeridos[] }
 RegraReporte { rota_id, intervalo, campos_obrigatorios[] }
 Reporte { rota_id, timestamp, localizacao, campos{}, transcricao, completo: bool }
@@ -103,7 +123,8 @@ Ocorrencia { rota_id, tipo, descricao, localizacao, timestamp }
 Documento { rota_id, tipo, arquivo }
 SolicitacaoCentral { rota_id, pergunta, resposta, status }
 RegraEscalonamento { empresa_id, niveis[], tempo_por_nivel, acao_final }
-TaskCCO { rota_id, tipo: "chegada", status (pendente|confirmada), prioridade, criada_em, ultima_notificacao, notificacoes_enviadas, confirmado_em, confirmado_por }
+TaskCCO { rota_id, tipo: "chegada", status (pendente|confirmada|escalada_recebedor), prioridade, tentativas (0..3), canal_atual (push|painel|ligacao), criada_em, ultima_notificacao, confirmado_em, confirmado_por }
+LigacaoRecebedor { task_id, rota_id, numero, iniciada_em, atendida: bool, resposta { previsao, doca, motivo }, transcricao, audio_url, enviada_cco_em, enviada_motorista_em }
 EventoGeo { rota_id, tipo (RETIRADA|CHEGADA|DESCARGA), gps_celular{lat,lng,precisao,ts}, gps_caminhao{lat,lng,ts}, distancia_m, confirmacao_voz{audio_url, transcricao, ts}, status (validado|nao_validado) }
 Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valor_t_h (config ANTT), horas_excedentes, valor_acumulado }
 ```
@@ -118,6 +139,7 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
 - Registro de ocorrência por voz
 - Pedido da central → pergunta ao motorista
 - Aviso de chegada com escalonamento (GPS simulado)
+- CCO sem resposta após 3 tentativas → agente liga para o recebedor e repassa a resposta ao CCO e ao motorista
 - Check-in de chegada
 
 **Fora:**
@@ -140,6 +162,7 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
   - **Não fixar o valor no código:** ele é atualizado pela ANTT. Deixar configurável.
   - O registro com horário (GPS + check-in de voz) serve de **prova para cobrar estadia** do embarcador ou destinatário.
 - **Prova de retirada/chegada:** GPS do celular + GPS do caminhão + confirmação por voz do motorista. Os três ficam juntos em um `EventoGeo`.
+- **CCO sem resposta após 3 tentativas:** o agente avisa o CCO e o motorista, liga para o responsável pelo recebimento (Agora Conversational AI, chamada SIP de saída) e envia a resposta do recebedor ao CCO e ao motorista. A ligação e a resposta ficam na Task como prova da espera.
 - **Saúde do motorista:** a central já monitora saúde hoje. O agente só coleta e repassa no reporte, sem criar um processo novo.
 - **Documentos:** são enviados ao app pela central e **interpretados pela IA de voz**. O motorista pode perguntar ("qual o peso da NF?", "qual o número do CT-e?") e o agente responde com base no documento.
 - **Atualização periódica:** é obrigatória e não pode ser dispensada.
@@ -155,6 +178,8 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
 - **Re-notificação sem mudar o canal vira ruído:** se a central ignora o push, mais pushes não resolvem. A prioridade precisa trocar de canal (push → painel em destaque → ligação/WhatsApp para o supervisor).
 - **"Chegou" × "está chegando":** a regra anterior avisava na aproximação. Avisar só na chegada elimina a antecedência e aumenta a espera. Sugestão: notificar na aproximação e criar a Task na chegada.
 - **Motorista fora do loop:** ele não sabe se o CCO confirmou. O agente deve avisar quando a Task for confirmada.
+- **Ligação ao recebedor depende de SIP trunk:** a chamada de saída da Agora exige um SIP trunk (ex.: Twilio) e um número com caller ID. Se não ficar pronto até a demo, simular a ligação com um segundo cliente Agora RTC e declarar como simulado no README (E8).
+- **O agente liga para um terceiro:** ele deve se identificar como assistente virtual da transportadora logo no início e não pode prometer nada em nome do CCO. O número do recebedor vem do cadastro da rota, não de busca.
 - **Conectividade em rodovia:** mesmo sem offline no MVP, reportes precisam de fila e reenvio.
 - **Wake word em cabine ruidosa:** validar a taxa de acionamento falso e ter um botão físico/no volante como alternativa.
 - **Validação de completude:** a extração de campos via LLM pode marcar como "respondido" algo vago. Definir um critério por campo.
