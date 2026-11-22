@@ -1,5 +1,7 @@
 # Parceiro de Estrada — Planejamento
 
+> Ver [`impacto-e-custos.md`](impacto-e-custos.md): o pitch abre com horas de caminhão parado; a estadia é prova e pressão sobre o recebedor.
+
 Versão de 21/11/2026 — Documento unificado do time (`RODAR / Parceiro de Estrada`).
 
 ## Visão

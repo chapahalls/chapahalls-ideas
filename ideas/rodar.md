@@ -1,5 +1,7 @@
 # RODAR — Copiloto de voz para caminhoneiros (Pessoal, Corporativa e Comunidade)
 
+> Ver [`impacto-e-custos.md`](parceiro-de-estrada/impacto-e-custos.md): o pitch abre com horas de caminhão parado; a estadia é prova e pressão sobre o recebedor.
+
 - **Autor(es):** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`)
 - **Status:** avaliada
 - **Nota do judge:** 4,75 / 5 ([`ideas/scores/rodar.md`](scores/rodar.md))
