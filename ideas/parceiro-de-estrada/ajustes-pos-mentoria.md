@@ -83,5 +83,5 @@ Resposta para a banca: quando o recebedor tem agendamento, o agente usa esse sis
 - **O registro é vendido como dado para renegociar o contrato com o embarcador** ("o seu cliente X nos custou 40 horas paradas no mês"), não como cobrança contra o recebedor, que costuma ser cliente do embarcador.
 - **O aviso na aproximação contata o recebedor em toda entrega:** soma minutos da Agora e ligações SIP ao custo de R$ 83. Para contar no critério C2, o aviso da demo tem de ser a ligação por voz pela Agora, não mensagem de WhatsApp.
 - **SIP de saída testado ainda hoje;** se não funcionar até ~2h, assumir o plano B (segundo cliente Agora RTC, declarado como simulação).
-- **Confirmar o time (eliminatório E1):** os documentos listam 3 autores num time chamado "Quarteto".
+- **Time (eliminatório E1): confirmado.** Inscrição dos 3 integrantes confirmada pelo time em 21/11/2026: Jeferson, Henry e Lucas. Com 3 pessoas o time está no mínimo da regra: os 3 precisam estar presentes nos dois dias.
 - **Entrevistas:** acrescentar "por que vocês não cobram a estadia?" e "quando o cliente é avisado antes, a espera diminui? quanto?".

@@ -5,7 +5,7 @@
 - **Event:** UNMUTE by Agora · 2026-11-21 09:00 → **2026-11-22 12:00 (UTC-3)** submission · 13:00 pitches
 - **Rules & scoring:** `HACKATHON.md` (`/judge` scores against it)
 - **Chosen idea:** `ideas/<slug>.md`
-- **Team:** <names>
+- **Team:** Quarteto Chapahalls — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`). Inscrição dos 3 confirmada (E1).
 - **Definition of done:** the demo path below works from a fresh clone, following `README.md`.
 
 ## Demo path
