@@ -64,7 +64,7 @@ A decisão 11 foi descartada (QR na portaria, assinatura, canhoto). Mesmo assim,
 
 | Onde              | Problema                                                     | Correção                                                     |
 | ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Nome              | Parceiro de Estrada, Despacho por Voz e RODAR                | escolher um nome só para o pitch                             |
+| Nome              | Parceiro de Estrada, Despacho por Voz e RODAR                | **Decidido em 22/11: AvisAI.** Falta trocar nos arquivos. Conferir marca no INPI (semelhança com Avis, locadora de veículos) |
 | Preço             | **Atualizado no commit `05be239`:** a Agora cobra hoje só US$ 0,10/min (≈ R$ 83/caminhão/mês); o preço passou a R$ 100 nos arquivos de custo. O tamanho de mercado ainda usa R$ 30–40 | confirmar R$ 100 com o time e recalcular o tamanho de mercado |
 | ROI principal     | `planejamento.md` e `rodar.md` abrem com "payback em uma única estadia" (já corrigido para R$ 225 e R$ 100/mês no commit `05be239`) | abrir com horas de caminhão parado, como no `impacto-e-custos.md`; a estadia vira prova e pressão sobre o recebedor |
 | Valor da estadia  | `mercado-e-evidencias.md` trata R$ 2,41 como vigente "não confirmado" | R$ 2,50 por t/h desde abril de 2026 ([ANTT via Mundo Logística](https://mundologistica.com.br/noticias/antt-reajusta-estadia-tempo-adicional-carga-descarga)) |
@@ -85,3 +85,41 @@ Resposta para a banca: quando o recebedor tem agendamento, o agente usa esse sis
 - **SIP de saída testado ainda hoje;** se não funcionar até ~2h, assumir o plano B (segundo cliente Agora RTC, declarado como simulação).
 - **Time (eliminatório E1): confirmado.** Inscrição dos 3 integrantes confirmada pelo time em 21/11/2026: Jeferson, Henry e Lucas. Com 3 pessoas o time está no mínimo da regra: os 3 precisam estar presentes nos dois dias.
 - **Entrevistas:** acrescentar "por que vocês não cobram a estadia?" e "quando o cliente é avisado antes, a espera diminui? quanto?".
+
+## 9. Feedbacks adicionais dos mentores (22/11, 00:43)
+
+8. Quem assiste precisa ver e pensar "isso é viável" e "dá para colocar para rodar agora".
+9. O serviço de setup precisa ter um slide de modelo de negócio.
+
+### 9.1 Resposta ao feedback 8: viável e implantável agora (proposta, não decidida)
+
+Mostrar que o cliente não precisa de nada novo:
+
+| Peça | O que usa no dia 1 | O que fica para o setup |
+|---|---|---|
+| Motorista | o celular que já tem, com o app | — |
+| Localização | GPS do celular (na demo, simulado e declarado) | integração com o rastreador da frota (Sascar, Omnilink, Autotrac), que depende de API ou parceria com cada fornecedor |
+| Comunicação | 4G | Starlink só onde a frota já tem (Autotrac/Hughes) |
+| CCO | painel no navegador | integração com o TMS |
+| Regras | as que a transportadora já segue (procedimento de recusa, PGR, franquia de 5 h) | — |
+| Recebedores | lista de rotas e recebedores com telefone | levantar contatos que estão com o embarcador; número brasileiro no provedor de telefonia para a ligação de saída (cadastro pode levar dias) |
+
+Slide "o que a transportadora precisa para começar": 1) rotas e recebedores com telefone; 2) as regras; 3) motoristas com o app. Piloto de **4 semanas** (mesmo plano com engenheiro em campo do `RODAR-CONTEXT.md`).
+
+Cuidados para a banca não derrubar:
+- Não dizer "usa o rastreador que a frota já tem" como se fosse hoje: no dia 1 é o GPS do celular.
+- "Rastreador exigido por seguradora" está forte demais: em geral é a gerenciadora de risco, e para alguns tipos de carga. Suavizar ou achar fonte.
+- "Tudo roda na Agora hoje" só se sustenta com a demo rodando.
+
+### 9.2 Resposta ao feedback 9: modelo de negócio (valores são estimativas, validar)
+
+- **Setup (uma vez por transportadora):** cadastro de rotas, recebedores e regras; integração com TMS e rastreador; número de telefone; treino do CCO. 2 a 4 semanas de trabalho. Referência: R$ 10–20 mil por transportadora. Alternativa que vende melhor: setup grátis no piloto de 4 semanas e cobrado na conversão (ou abatido das primeiras mensalidades).
+- **Assinatura mensal por caminhão:** **decisão pendente**, mas o custo de voz já elimina R$ 30–40. Faixa viável: R$ 60–100.
+- **Custo de voz (recalcular no foco novo):** os 150 min/caminhão/mês do `RODAR-CONTEXT.md` vinham do companheiro de estrada (4 conversas por dia). No foco do caminhão parado, a estimativa é ~7 min por frete (ligação ao recebedor ~2 min; avisos ao motorista, check-in e descarga ~2,5 min; coleta ~2,5 min) × 9 fretes = **~63 min/mês ≈ R$ 35 por caminhão** na Agora (US$ 0,10/min, US$ 1 = R$ 5,50), **sem** o custo do provedor de telefonia das ligações ao recebedor.
+- **Âncora de valor:** no cenário base de `impacto-e-custos.md`, ≈ R$ 2.149 por caminhão por mês; um piloto de 10 caminhões vale ≈ R$ 21 mil por mês, então o setup se paga no primeiro mês. Estimativa sobre premissas do time.
+
+### 9.3 Decisões pendentes do time
+
+- Preço da assinatura: R$ 60 ou R$ 100 por caminhão/mês.
+- Setup cobrado no piloto ou só na conversão.
+- Recalcular o custo de voz no `RODAR-CONTEXT.md` (hoje R$ 83, com os 150 min antigos) quando o time aprovar a estimativa de ~63 min.
