@@ -26,7 +26,6 @@ A empresa cadastra:
    - status da carga
    - descrição da viagem
    - localização
-   - saúde/estado do motorista
    - outros campos configuráveis
 5. **Campos obrigatórios por reporte** — lista que o agente usa para validar a resposta do motorista.
 6. **Documentos** da entrega/transporte (NF, CT-e, MDF-e, ordem de coleta etc.).
@@ -47,9 +46,9 @@ A empresa cadastra:
 - **Divergência** (posições distantes ou um GPS sem sinal) → o evento é marcado como `nao_validado` e o CCO é alertado.
 
 ### 3.2 Durante a viagem — reportes periódicos
-- A cada X tempo (ou ao atingir um break point) o agente pergunta status da viagem e do motorista.
+- A cada X tempo (ou ao atingir um break point) o agente pergunta o status da viagem.
 - **Validação de completude:** se o motorista não cobrir todos os campos obrigatórios, o agente identifica o que faltou e pergunta só isso.
-  - Ex.: motorista fala "tudo certo, trânsito tranquilo" → agente: "E a carga, sem avarias? Como você tá se sentindo?"
+  - Ex.: motorista fala "tudo certo, trânsito tranquilo" → agente: "E a carga, sem avarias?"
 
 ### 3.3 Acionamento pelo motorista (comando de voz / wake word)
 O motorista pode, a qualquer momento:
@@ -63,6 +62,11 @@ O motorista pode, a qualquer momento:
 
 ### 3.5 Aviso automático de chegada (sem falar com o motorista)
 - Via GPS + rota, ao se aproximar do destino o agente avisa a central que a carga está chegando.
+- **Aviso prévio ao recebedor:** na aproximação, o agente avisa o CCO **e o recebedor** (placa, NF, horário previsto) e registra a resposta:
+  - confirma doca e horário → registra e avisa o motorista;
+  - não recebe hoje → aplica a regra da transportadora e avisa CCO e motorista;
+  - não atende → registra a tentativa como prova.
+  - Motivo: uma decisão da 3ª Turma Recursal do TJMT (jun/2026) condicionou o direito à estadia à comunicação prévia da chegada ao expedidor ou destinatário ([Legjur](https://www.legjur.com/jurisprudencia/eme/892.4612.0077.2649)); é decisão de turma recursal, não regra geral do tribunal. Na demo, o aviso é a ligação por voz pela Agora (conta para o C2), não mensagem.
 - **Escalonamento:** se a central não confirmar em X tempo, a prioridade sobe e o canal muda a cada tentativa: push → destaque no painel → ligação para a central.
 - **Último nível (após 3 tentativas sem resposta):** o agente liga direto para o responsável pelo recebimento da carga (seção 3.5.1).
 
@@ -71,6 +75,12 @@ O motorista pode, a qualquer momento:
 - Número de tentativas, intervalo e canais seguem a norma da transportadora (`RegraEscalonamento`); padrão da demo: 3 tentativas.
 
 ```
+aproximação (GPS, X min antes)
+   → avisa o CCO
+   → avisa o recebedor (ligação Agora): placa, NF, horário previsto
+       confirma → registra doca e horário, avisa o motorista
+       não recebe hoje → aplica a regra da transportadora, avisa CCO e motorista
+       não atende → registra a tentativa (prova)
 chegada detectada (GPS + check-in)
    → cria Task no CCO (status: pendente)
    → inicia contador de estadia (inicio = chegada_em)
@@ -83,7 +93,7 @@ chegada detectada (GPS + check-in)
 
 ### 3.5.1 CCO sem resposta: agente liga para o recebedor
 
-Depois de 3 tentativas sem resposta do CCO:
+Depois de 3 tentativas sem resposta do CCO (é o **segundo** contato com o recebedor; o primeiro foi o aviso na aproximação):
 
 1. O agente **avisa o CCO e o motorista** que vai ligar para o recebedor ("O CCO não respondeu em 3 tentativas. Estou ligando para o recebimento.").
 2. O agente **liga para o responsável pelo recebimento** cadastrado na rota (ligação telefônica feita pelo agente via Agora Conversational AI + SIP de saída). Ele se apresenta como assistente virtual da transportadora e informa: placa, carga, nota fiscal, horário de chegada e tempo parado.
@@ -133,12 +143,14 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
 
 ## 5. Escopo do MVP (demo)
 
+**Foco:** o caminhão parado, em torno da janela de descarga combinada com o recebedor. Os demais itens são add-ons e aparecem na demo só se reforçarem a história da chegada.
+
 **Dentro:**
 - Cadastro de 1 rota + regras no painel (pode ser seed/mock)
 - Relatório inicial, 1 ciclo de reporte com validação de campos faltantes
 - Registro de ocorrência por voz
 - Pedido da central → pergunta ao motorista
-- Aviso de chegada com escalonamento (GPS simulado)
+- Aviso de aproximação ao CCO e ao recebedor (ligação) e aviso de chegada com escalonamento (GPS simulado)
 - CCO sem resposta após 3 tentativas → agente liga para o recebedor e repassa a resposta ao CCO e ao motorista
 - Check-in de chegada
 
@@ -163,16 +175,14 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
   - O registro com horário (GPS + check-in de voz) serve de **prova para cobrar estadia** do embarcador ou destinatário.
 - **Prova de retirada/chegada:** GPS do celular + GPS do caminhão + confirmação por voz do motorista. Os três ficam juntos em um `EventoGeo`.
 - **CCO sem resposta após 3 tentativas:** o agente avisa o CCO e o motorista, liga para o responsável pelo recebimento (Agora Conversational AI, chamada SIP de saída) e envia a resposta do recebedor ao CCO e ao motorista. A ligação e a resposta ficam na Task como prova da espera.
-- **Saúde do motorista:** a central já monitora saúde hoje. O agente só coleta e repassa no reporte, sem criar um processo novo.
 - **Documentos:** são enviados ao app pela central e **interpretados pela IA de voz**. O motorista pode perguntar ("qual o peso da NF?", "qual o número do CT-e?") e o agente responde com base no documento.
-- **Atualização periódica:** é obrigatória e não pode ser dispensada.
+- **Atualização periódica:** é obrigatória e não pode ser dispensada. Ponto em aberto: reporte com o caminhão andando conflita com o alerta da mentoria de que voz não implica segurança na condução. Até decidir, a demo usa só o caminhão parado.
 
 ## 7. Riscos que continuam
 
 > Status atualizado: o time respondeu cada risco em [`problemas-e-decisoes.md`](problemas-e-decisoes.md). Lá vale a decisão final.
 
 
-- **Fluxo novo de dado de saúde:** a central já monitora, mas agora o dado passa por voz → Agora → LLM. Isso é um tratamento novo pela LGPD: registrar a finalidade no termo do motorista.
 - **Alucinação na leitura de documentos:** número de NF, peso e valores não podem ser "aproximados". O agente responde só com campos extraídos do documento, cita qual documento usou e diz "não encontrei" quando não achar.
 - **Atualização obrigatória × manobra:** manter obrigatória, mas permitir adiar por poucos minutos ("me pergunta em 2 min"). Se o motorista não responder dentro do limite, o agente escala para a central. Assim a atualização continua obrigatória sem forçar resposta em um momento de risco.
 - **Re-notificação sem mudar o canal vira ruído:** se a central ignora o push, mais pushes não resolvem. A prioridade precisa trocar de canal (push → painel em destaque → ligação/WhatsApp para o supervisor).
@@ -180,6 +190,7 @@ Estadia { rota_id, inicio (= chegada_em), fim, franquia_h: 5, capacidade_t, valo
 - **Motorista fora do loop:** ele não sabe se o CCO confirmou. O agente deve avisar quando a Task for confirmada.
 - **Ligação ao recebedor depende de SIP trunk:** a chamada de saída da Agora exige um SIP trunk (ex.: Twilio) e um número com caller ID. Se não ficar pronto até a demo, simular a ligação com um segundo cliente Agora RTC e declarar como simulado no README (E8).
 - **O agente liga para um terceiro:** ele deve se identificar como assistente virtual da transportadora logo no início e não pode prometer nada em nome do CCO. O número do recebedor vem do cadastro da rota, não de busca.
+- **Contradição sobre áudio:** `mercado-e-evidencias.md` decidiu nunca guardar áudio, mas `EventoGeo` e `LigacaoRecebedor` guardam `audio_url`. Decisão pendente: só transcrição (recomendado) ou guardar áudio com finalidade no termo e aviso ao recebedor de que a ligação é registrada. Só com a transcrição, a resposta do recebedor vira uma prova mais fraca (ele pode negar o que foi transcrito).
 - **Conectividade em rodovia:** mesmo sem offline no MVP, reportes precisam de fila e reenvio.
 - **Wake word em cabine ruidosa:** validar a taxa de acionamento falso e ter um botão físico/no volante como alternativa.
 - **Validação de completude:** a extração de campos via LLM pode marcar como "respondido" algo vago. Definir um critério por campo.
