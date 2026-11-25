@@ -1,6 +1,6 @@
 # Project
 
-- **What:** RODAR — agente de voz que avisa o recebedor antes da chegada do caminhão, conta a estadia na doca (Lei 11.442) e só chama a central (CCO) quando alguém precisa decidir.
+- **What:** RODAR — agente de IA de voz que avisa o recebedor antes da chegada do caminhão, conta a estadia na doca (Lei 11.442) e só chama a central (CCO) quando alguém precisa decidir. A voz é o diferencial de acessibilidade. O que vendemos é a integração (setup) com os sistemas da transportadora (TMS, rastreador, financeiro); o dashboard é a vitrine. O pitch fala de três dores: caminhoneiro, dono e financeiro ([ADR-0001](docs/adr/0001-integracao-setup-e-tres-dores.md)).
 - **Stack:** FastAPI + Postgres (backend), React + Vite (painel CCO), React Native/Expo (app do motorista), Agora Conversational AI (voz). Docker.
 - **Código:** [rodar-backend](https://github.com/rodarglobal/rodar-backend) · [rodar-web](https://github.com/rodarglobal/rodar-web) · [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). Este repo (`rodar-ideas`) guarda só pesquisa e decisões.
 - **Run it / Test it:** ver o README de cada repositório de código.

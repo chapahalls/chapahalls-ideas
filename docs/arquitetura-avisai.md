@@ -1,5 +1,7 @@
 # AvisAI — Arquitetura, design e fluxos (plano inicial de implementação)
 
+> **Plano inicial, substituído pela implementação.** O código real está em [rodar-backend](https://github.com/rodarglobal/rodar-backend) (FastAPI + Postgres, **não** o `agent-server` em Node descrito abaixo), [rodar-web](https://github.com/rodarglobal/rodar-web) e [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). AvisAI virou o nome do agente de voz do RODAR. A referência vigente de produto e arquitetura é [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md). O posicionamento (integração, dashboard e três dores) está no [ADR-0001](adr/0001-integracao-setup-e-tres-dores.md). Este arquivo fica como histórico de design (tokens visuais, estados da voz, fluxos de tela).
+
 22/11/2026 · Mobile (Expo / React Native) + CCO web (React + Vite) + servidor do agente (Node). Tudo mockado, **menos a voz pela Agora**.
 
 ## 0. Regras do plano
@@ -154,7 +156,7 @@ documents(id TEXT PK, trip_id TEXT, kind TEXT, title TEXT, file_uri TEXT)
 chunks(id TEXT PK, document_id TEXT, text TEXT, embedding BLOB)  -- Float32Array
 ```
 
-**Banco vetorial local, versão de 5 h:** os embeddings dos PDFs mock são **pré-calculados** e vêm num JSON junto com o app; no primeiro uso vão para `chunks`. A busca é cosseno em JS sobre os chunks da viagem (dezenas de linhas, roda em milissegundos). A extensão `sqlite-vec` fica para depois: é mais rápida, mas custa tempo de build que não temos. A pergunta do motorista vira embedding pelo mesmo modelo no `agent-server` (ou, no mock, por palavra-chave) e os 3 melhores trechos vão como contexto para o agente, que responde citando o documento ou diz "não encontrei".
+**Banco vetorial local, versão do MVP:** os embeddings dos PDFs mock são **pré-calculados** e vêm num JSON junto com o app; no primeiro uso vão para `chunks`. A busca é cosseno em JS sobre os chunks da viagem (dezenas de linhas, roda em milissegundos). A extensão `sqlite-vec` fica para depois: é mais rápida, mas custa tempo de build que não temos. A pergunta do motorista vira embedding pelo mesmo modelo no `agent-server` (ou, no mock, por palavra-chave) e os 3 melhores trechos vão como contexto para o agente, que responde citando o documento ou diz "não encontrei".
 
 ### 5.4 Offline-first (fila de mensagens)
 
@@ -294,7 +296,7 @@ interface DomainEvent<T = unknown> {
 
 **Primeiro teste da noite:** português no ASR. A página de exemplo da Agora mostra `en-US`; confirmar o código de idioma `pt-BR` no fornecedor de ASR escolhido antes de qualquer tela.
 
-## 9. Plano de 5 h para 3 pessoas
+## 9. Plano de implementação do MVP (histórico)
 
 | Hora | Pessoa A (voz + servidor) | Pessoa B (mobile) | Pessoa C (CCO web + design) |
 |---|---|---|---|

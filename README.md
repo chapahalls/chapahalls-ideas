@@ -9,10 +9,12 @@ Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **
 | Nova ideia | `/idea <descrição>` no Claude Code, ou copie `ideas/TEMPLATE.md` |
 | Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge projeto` (pré-entrega) |
 | Checagem mecânica das regras | `sh scripts/check-rules.sh` (procura os três repos de código ao lado deste) |
-| Pesquisa do problema (demora em docas) | [`ideas/demora-em-docas/descoberta.md`](ideas/demora-em-docas/descoberta.md) |
+| Propósito e contexto do produto | [`RODAR-CONTEXT.md`](RODAR-CONTEXT.md) · [`ideas/rodar.md`](ideas/rodar.md) |
+| Pesquisa do problema (demora em docas), com fontes | [`ideas/demora-em-docas/descoberta.md`](ideas/demora-em-docas/descoberta.md) |
+| Decisões | [`docs/adr/`](docs/adr/) (ADR-0001: integração, dashboard e três dores) |
 | Skill + docs MCP da Agora | já configurado em `.claude/settings.json`: ao abrir o Claude Code no repo, aceite instalar o plugin `agora`. Manual: `/plugin marketplace add AgoraIO/skills` e `/plugin install agora@agora-skills` |
 
-Fluxo: cada um registra ideias → `/judge` monta o ranking → o time marca uma como `escolhida` → `/kickoff` transforma essa ideia no `PLAN.md`.
+Fluxo: a ideia escolhida é o [`rodar`](ideas/rodar.md) → `/judge projeto` checa os repositórios de código antes de 30/11 → decisões novas via `/adr`.
 
 ---
 
