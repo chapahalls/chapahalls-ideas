@@ -110,7 +110,7 @@ Nas enchentes de mai/2024 no RS houve até 170 pontos de bloqueio em 79 rodovias
 - O Ministério de Portos e Aeroportos publicou relatórios diários da situação logística no RS — [MPOR, 10/05/2024](https://www.gov.br/portos-e-aeroportos/pt-br/assuntos/10052024_RelatrioDirio_18h.pdf)
 
 ### Inferences
-- O RS 2024 mostra informação de rota fragmentada, desinformação (as "multas") e um canal oficial que dependia de WhatsApp. Um canal de voz por rodovia, com alertas validados pela central ou pela Defesa Civil, tem aqui um argumento concreto e não militarizado: resiliência e defesa civil. É o enquadramento mais seguro para uma banca de hackathon.
+- O RS 2024 mostra informação de rota fragmentada, desinformação (as "multas") e um canal oficial que dependia de WhatsApp. Um canal de voz por rodovia, com alertas validados pela central ou pela Defesa Civil, tem aqui um argumento concreto e não militarizado: resiliência e defesa civil. É o enquadramento mais seguro para um júri de hackathon.
 - O motorista como "sensor" (via interditada, ponte, água na pista) tem valor para a Defesa Civil, mas precisa de validação para não amplificar boatos.
 - Em desastres, a conectividade celular cai. Um app de voz depende de rede. Isso pede modo offline ou store-and-forward, e talvez SMS ou satélite, o que reabre a questão Starlink (seção 5).
 
@@ -132,7 +132,7 @@ O episódio Starlink/X de 2024 e a política de "nuvem soberana" (Serpro/Datapre
 
 ### Inferences
 - O que o RODAR pode dizer com honestidade: "fazemos uma camada brasileira, em português, com dados hospedados no Brasil e governança LGPD, para um canal que hoje depende de WhatsApp e de apps de navegação estrangeiros". Isso é verificável. "Protegemos a soberania nacional" já é exagero.
-- Paradoxo a reconhecer: o produto de voz quase certamente vai usar modelos de IA (STT/LLM/TTS) de provedores estrangeiros. Se o pitch é soberania, a banca pode perguntar onde rodam os modelos. Tenha a resposta pronta: hospedagem nacional, modelo aberto self-hosted ou roadmap para isso.
+- Paradoxo a reconhecer: o produto de voz quase certamente vai usar modelos de IA (STT/LLM/TTS) de provedores estrangeiros. Se o pitch é soberania, o júri pode perguntar onde rodam os modelos. Tenha a resposta pronta: hospedagem nacional, modelo aberto self-hosted ou roadmap para isso.
 - Dados agregados de fluxo (onde estão os caminhões, que carga, que rota) são sensíveis para defesa e para crime ao mesmo tempo. Soberania não basta: precisa de segurança da informação e minimização.
 
 ### Gaps
@@ -143,7 +143,7 @@ O episódio Starlink/X de 2024 e a política de "nuvem soberana" (Serpro/Datapre
 ## 6. Riscos e limites do enquadramento "segurança nacional"
 
 ### Takeaway
-O enquadramento pode sair pela culatra de quatro jeitos. O motorista pode ver o app como vigilância (diário de bordo não editável, mais "central"). Há o risco político: a categoria ligada a bloqueios de 2018 e 2022 e polarizada. Há a dependência de governo, com ciclo de venda longo. E há o desencaixe de tom numa banca de hackathon. A recomendação é usar "resiliência logística, segurança viária e defesa civil" como frente e deixar "infraestrutura crítica" como argumento de apoio.
+O enquadramento pode sair pela culatra de quatro jeitos. O motorista pode ver o app como vigilância (diário de bordo não editável, mais "central"). Há o risco político: a categoria ligada a bloqueios de 2018 e 2022 e polarizada. Há a dependência de governo, com ciclo de venda longo. E há o desencaixe de tom num júri de hackathon. A recomendação é usar "resiliência logística, segurança viária e defesa civil" como frente e deixar "infraestrutura crítica" como argumento de apoio.
 
 ### Cited Findings (base factual dos riscos)
 - Politização: os bloqueios de 2022 foram atos pós-eleitorais de apoiadores de Bolsonaro, com supostos apoios de empresários do agro. Em 2021 houve áudio do presidente nos grupos — [Correio Braziliense](https://www.correiobraziliense.com.br/politica/2022/11/5048745-como-planos-de-bloqueio-sairam-de-grupos-de-mensagem-para-as-ruas.html); [Congresso em Foco](https://www.congressoemfoco.com.br/governo/em-audio-enviado-por-whatsapp-bolsonaro-pede-a-caminhoneiros-o-fim-dos-bloqueios/); [CUT](https://www.cut.org.br/noticias/paralisacao-de-caminhoneiros-em-apoio-a-bolsonaro-tem-assinatura-do-agronegocio-ec57) [parcial: central sindical]
@@ -156,7 +156,7 @@ O enquadramento pode sair pela culatra de quatro jeitos. O motorista pode ver o 
 - Percepção de vigilância: o diário não editável mais escalonamento para uma central, embalados como "segurança nacional", soam como "o governo e a empresa vão me rastrear". Mitigações: o motorista é dono dos dados, com compartilhamento opt-in por evento; o diário serve para proteger o motorista (provar jornada, provar que foi vítima de roubo, contestar multa); dizer em público que o app não serve para monitorar mobilizações.
 - Politização: qualquer canal de voz por rodovia com milhares de caminhoneiros é, na prática, uma infraestrutura de mobilização. O governo pode ver isso como risco (o app poderia coordenar bloqueios) e a categoria como controle (o app poderia ser censurado). Precisa de política de moderação clara e neutra, e o pitch deve evitar "prevenir greves", que é tóxico para o usuário.
 - Dependência de governo: vender para GSI, PRF ou Defesa Civil exige licitação e acordo de cooperação, um ciclo de anos. Para um hackathon e um MVP, o comprador realista é a transportadora ou a seguradora (roubo de cargas, sinistro, fadiga). O governo entra como parceiro de dados, não como cliente.
-- Desencaixe de narrativa: numa banca de hackathon, "segurança nacional" pode soar grandioso ou militarista e desviar do usuário, que é o motorista cansado às 3h da manhã. Melhor tratar como "camada 3" do pitch: (1) a vida do motorista (fadiga, solidão, PNATRANS); (2) o negócio (roubo, sinistro, conformidade); (3) o país (resiliência logística, 2018, RS 2024, canal de crise brasileiro).
+- Desencaixe de narrativa: num júri de hackathon, "segurança nacional" pode soar grandioso ou militarista e desviar do usuário, que é o motorista cansado às 3h da manhã. Melhor tratar como "camada 3" do pitch: (1) a vida do motorista (fadiga, solidão, PNATRANS); (2) o negócio (roubo, sinistro, conformidade); (3) o país (resiliência logística, 2018, RS 2024, canal de crise brasileiro).
 - Alternativa à expressão "segurança nacional": "resiliência logística", "continuidade do abastecimento" ou "infraestrutura crítica de transportes (PNSIC)". São termos com amparo legal e menos carga ideológica.
 
 ### Gaps

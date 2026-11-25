@@ -101,5 +101,5 @@ Final, classificação geral entre todas as trilhas: US$ 3 mil / 2 mil / 1 mil (
 - **Ferramentas são livres** (item 6.3): Agora é escolha nossa, não requisito. Ela conta em H2 como qualquer outra tecnologia.
 - **IA é permitida e recomendada** (item 6.4).
 - **A propriedade intelectual é do time** (item 11.1), mas não há confidencialidade: o júri e os parceiros podem desenvolver algo parecido (item 11.4).
-- **Continuidade do UNMUTE:** o código do UNMUTE foi escrito em 21 e 22/11, dentro do período do Hack Brasil, e os repositórios foram criados em 22/11 com todo o histórico. Isso atende 6.1 e 6.2. Não copie para eles nada escrito antes de 04/11 que não fosse público.
+- **Repositórios de código:** criados em 22/11/2026, depois da abertura, com todo o histórico desde o primeiro commit. Isso atende 6.1 e 6.2. Não copie para eles nada escrito antes de 04/11 que não fosse público.
 - **Último commit antes de 30/11 23h59** é o que o júri vê. Depois disso, mais nada até a final.

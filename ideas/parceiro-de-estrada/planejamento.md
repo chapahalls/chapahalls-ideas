@@ -344,21 +344,21 @@ O maior risco técnico é a latência em português; o maior risco de produto é
 | Motorista calado (microssono é silêncio) | Cansaço não é detectado | Agente puxa conversa; tempo de resposta vira o sinal |
 | Fala pessoal roteada para Corporativo ou Comunidade | Perda total de confiança | Pessoal por padrão; confirmação por voz para os outros destinos |
 | Corporativo vira fiscalização | Motorista para de usar | Níveis 1 e 2 nunca saem do motorista; relato só com confirmação; o registro também protege o motorista (prova de espera) |
-| Registro vendido como controle de jornada | Banca ou jurídico derruba | Dizer "prova complementar de espera e ocorrências"; jornada oficial segue no rastreador/tacógrafo |
+| Registro vendido como controle de jornada | Júri ou jurídico derruba | Dizer "prova complementar de espera e ocorrências"; jornada oficial segue no rastreador/tacógrafo |
 | Carimbo depende do motorista ("cheguei") | Registro perde valor de prova | Chegada/saída por geofence e hora do servidor; voz só anexa contexto |
-| Prometer "criptografado, ninguém vê" | Banca derruba | Dizer "cifrado no servidor"; o áudio passa por STT e LLM na nuvem |
-| Validação circular do cansaço | Banca questiona | Testadores externos, cansaço induzido por tarefa paralela |
+| Prometer "criptografado, ninguém vê" | Júri derruba | Dizer "cifrado no servidor"; o áudio passa por STT e LLM na nuvem |
+| Validação circular do cansaço | Júri questiona | Testadores externos, cansaço induzido por tarefa paralela |
 | Falha no nível 3 com acidente real | Responsabilidade | Posicionar como apoio, não garantia; escrito no README |
 | LGPD (voz e jornada são dados do motorista) | Jurídico | Consentimento por destino; tela "o que a empresa vê" |
 | Sem sinal na rodovia | Alerta não chega | Entrega adiada via Chat; LoRa como próximo passo |
-| Uso do celular ao volante (CTB 252) | Multa / banca questiona | Toque zero, celular no suporte, só voz; declarado no README |
+| Uso do celular ao volante (CTB 252) | Multa / júri questiona | Toque zero, celular no suporte, só voz; declarado no README |
 | Alerta verdadeiro derrubado por engano | Caminhão chega ao problema sem aviso | "Não" com confirmação dupla; silêncio mantém; remoção por peso |
 | Alerta falso ou velho | Motorista perde confiança | Validade por tipo; "ainda está lá?" para quem passa; reputação |
 | Sem usuários no trecho | Comunidade não gera alerta | Começar pela frota da transportadora |
 | Empresa usa o Pessoal (NR-1, desempenho) | Produto vira vigilância; LGPD art. 11 | Conversa não gravada por padrão; transportadora nunca é controladora do Pessoal; tela "o que a empresa vê" |
 | Lembrete dispara em fila parada | Motorista se distrai na pista | Só parada real: > 5 min fora da pista ou motor desligado |
 | Família marca tudo como urgente | Motorista passa a ignorar sugestões de parada | Agente não diz "urgente"; após 2 recusas no trecho, segura até a parada |
-| Agente vira "amigo" e cria dependência | Risco emocional; banca questiona | Tom de companheiro, sem persona afetiva; puxa o contato real com a família; CVV em sinal de crise |
-| Recado pela API do WhatsApp/Telegram | Fora da Agora (não conta no C2); limites das APIs | Demo por link Agora; WhatsApp/Telegram como próximo passo |
+| Agente vira "amigo" e cria dependência | Risco emocional; júri questiona | Tom de companheiro, sem persona afetiva; puxa o contato real com a família; CVV em sinal de crise |
+| Recado pela API do WhatsApp/Telegram | Fora da Agora; limites das APIs | Demo por link Agora; WhatsApp/Telegram como próximo passo |
 
 **Time:** Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`) e Lucas (`@LucasLCO`). Contexto unificado com [`../../RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md) e [`../rodar.md`](../rodar.md).

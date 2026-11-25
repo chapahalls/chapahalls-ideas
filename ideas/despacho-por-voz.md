@@ -1,18 +1,17 @@
 # Despacho por Voz
 
-- **Autor(es):** Jeferson, Henry e Lucas (time Quarteto Chapahalls)
-- **Status:** avaliada
-- **Nota do judge:** 3,50 / 5 ([relatório](scores/despacho-por-voz.md)) — versão anterior desta ideia; reavaliar depois desta atualização
+- **Autor(es):** Jeferson, Henry e Lucas (time RODAR)
+- **Status:** incorporada ao RODAR ([`rodar.md`](rodar.md))
 
 > O motorista relata uma ocorrência por voz, no app, uma vez; o agente pergunta o que faltou, transforma a fala em evento estruturado, distribui para TMS, embarcador e gerenciadora de risco, e o CCO só decide as exceções — com a resposta voltando por voz para o motorista.
 
 **Problema que resolvemos:** o gargalo da comunicação manual entre a cabine e a central. Hoje tudo o que o motorista informa passa pela mão de um operador, que ouve, interpreta e redigita em vários sistemas.
 
-Origem: retorno da mentoria (Terron / newhack, 21/11) — "escolham uma tarefa operacional repetitiva e demonstrem com segurança". É um recorte da ideia [`parceiro-de-estrada`](parceiro-de-estrada/README.md), focado só no fluxo motorista ↔ central.
+Origem: retorno da mentoria — "escolham uma tarefa operacional repetitiva e demonstrem com segurança". É um recorte da ideia [`parceiro-de-estrada`](parceiro-de-estrada/README.md), focado só no fluxo motorista ↔ central.
 
 **Para quem:** a transportadora média brasileira, inclusive a que não tem TMS. Integração por conectores prontos para o que é padrão (EDI Proceda, TMS mais comuns); engenheiro em campo só nos primeiros clientes (ver *Integração e implantação*).
 
-## Problema e público (C3 · 20%)
+## Problema e público
 
 - **Quem:**
   - Motorista de transportadora com CCO (usuário do app).
@@ -44,7 +43,7 @@ Origem: retorno da mentoria (Terron / newhack, 21/11) — "escolham uma tarefa o
   - Operador: recebe só exceções, já estruturadas; decide com um clique.
   - Empresa: OCOREN, status e eventos de risco saem do mesmo registro, sem redigitar.
 
-## Por que voz (C4 · 15%)
+## Por que voz
 
 O WhatsApp entrega áudio; o agente entende o áudio. A voz aqui não é "falar em vez de digitar": é um agente que **pergunta o dado que faltou**, **transforma a fala em código de ocorrência**, **só confirma depois que a API aceita**, **consulta a norma da empresa citando a fonte** e **traz a decisão do despacho de volta** por voz. O motorista é o único ator da operação que não pode parar para preencher formulário.
 
@@ -69,7 +68,7 @@ flowchart TD
 - **Rotina do app:** pergunta por **evento**, não por relógio: entrada na área do cliente, parado há mais de 15 min, atraso sobre o previsto. Só pergunta com o veículo parado.
 - **Canal:** só o app (sem WhatsApp). _(sugestão)_ No produto, a voz pode ser embutida como SDK no app que o motorista já usa (app de entrega/comprovante da transportadora), em vez de um app novo.
 
-## A conversa (C1 · 25%)
+## A conversa
 
 ```
 Motorista: Cheguei no cliente, mas não descarregam hoje, falta agendamento.
@@ -104,7 +103,7 @@ Motorista: Recebi.
 | Agendamento com destinatário (agente liga ao cliente) | Não | Não (slide) |
 | Frete de retorno com autônomos | Não | Não (slide) |
 
-## Decisões aceitas (mentoria e banca)
+## Decisões aceitas (mentoria)
 
 - **Orientação só com fonte:** o agente cita o procedimento da empresa; sem fonte, diz que não sabe e consulta o responsável. Não gera rota, previsão de chegada nem orientação de jornada como fato.
 - **MDF-e fora do agente:** encerramento e inclusão de condutor são eventos fiscais; o agente pode avisar que a entrega terminou, mas quem executa é o TMS, com autorização.
@@ -229,14 +228,14 @@ Fazer hoje com 2–3 operadores (caminho mais rápido: integrante da Rumo). Regi
 
 **Concorrência no Brasil:** SimpliRoute (agente liga para o motorista) e Platform Science Virtual Tower (áudio na cabine a partir de evento de risco) ([Mundo Logística](https://mundologistica.com.br/entrevistas/brasil-aposta-simpliroute-escalar-ia-logistica), [Mundo Logística](https://mundologistica.com.br/noticias/platform-science-lanca-virtual-tower-agente-de-ia-que-trata-riscos-da-frota-em-minutos)). Diferencial: a ponta motorista → central, iniciada pelo motorista; a transportadora média, inclusive sem TMS; saída nos formatos que a operação já exige; norma da empresa com fonte. Ponto fraco: nada disso é barreira técnica — a defesa é foco no segmento médio e nos conectores prontos.
 
-## Como a Agora entra (C2 · 25%)
+## Como a Agora entra
 
 - **Produto Agora:** _(sugestão)_ Conversational AI Engine (agente de voz com interrupção), RTC (canal de voz do motorista no app), Signaling (decisão do despacho chegando em tempo real), AI Noise Suppression (ruído do pátio).
 - **Fluxo:** _(sugestão)_ microfone no app → Agora Conversational AI (STT → LLM com ferramentas → TTS) → backend (autorização + API sandbox + base de normas) → painel do CCO → clique do operador → Signaling → agente fala na mesma sessão.
 - **O que a demo mostra da integração:** _(sugestão)_ conversa com interrupção; evento aparecendo no painel só depois da confirmação da API; consulta a norma com a fonte citada; clique do operador voltando por voz em tempo real.
 - **A confirmar no MCP de docs da Agora:** onde roda a chamada de ferramenta (LLM customizado no backend) e como o agente fala por iniciativa própria quando o operador decide.
 
-## Escopo para ~24h
+## Escopo do MVP
 
 - **Demo path (2 min):**
   1. Motorista (parado no cliente) relata impedimento; agente confirma viagem e status.
@@ -255,9 +254,9 @@ Fazer hoje com 2–3 operadores (caminho mais rápido: integrante da Rumo). Regi
 - **Preexistente:**
 - **Maior risco técnico:** português e latência no Conversational AI Engine; chamada de ferramenta confiável a partir do agente; agente falar por iniciativa própria na sessão aberta.
 
-## Validação e evolução (C5 · 10%)
+## Validação e evolução
 
-- **Como testamos durante o hackathon:** _(sugestão)_
+- **Como testamos no MVP:** _(sugestão)_
   - Entrevistar separadamente 3 motoristas e 1 despachante sobre a última ocorrência: informações que faltaram, quantas interações, onde ficou o registro, tempo até a orientação, se consultaram alguma norma.
   - Em simulação estacionária, comparar voz com mensagem/formulário: identificação de viagem, status, correções e duração.
   - Verificar se o "despachante" consegue agir sem redigitar.

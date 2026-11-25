@@ -1,6 +1,6 @@
 # RODAR: ideias e pesquisa
 
-Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **Hack Brasil 2026** (trilha Logística & automação, submissão até 30/11/2026 23h59). O código fica em [rodar-backend](https://github.com/rodarglobal/rodar-backend), [rodar-web](https://github.com/rodarglobal/rodar-web) e [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). O projeto começou no UNMUTE by Agora (21 e 22/11/2026), a partir do hackathon kit.
+Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **Hack Brasil 2026** (trilha Logística & automação, submissão até 30/11/2026 23h59). O código fica em [rodar-backend](https://github.com/rodarglobal/rodar-backend), [rodar-web](https://github.com/rodarglobal/rodar-web) e [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). O repositório usa o hackathon kit (roadmap gerado do git, skills de commit, ADR, fases e judge).
 
 | O quê | Onde |
 |---|---|

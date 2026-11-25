@@ -2,7 +2,7 @@
 
 > <One-line pitch: who it is for and what it does for them.>
 
-- **Event:** Hack Brasil 2026 · trilha Logística & automação · submissão até **2026-11-30 23:59 (UTC-3)** · repos congelados 12-01 → 12-12 · final presencial **2026-12-12** (São Paulo). Histórico: começou no UNMUTE by Agora (21-22/11).
+- **Event:** Hack Brasil 2026 · trilha Logística & automação · submissão até **2026-11-30 23:59 (UTC-3)** · repos congelados 12-01 → 12-12 · final presencial **2026-12-12** (São Paulo).
 - **Rules & scoring:** `HACKATHON.md` (`/judge` scores against it)
 - **Chosen idea:** RODAR (`ideas/rodar.md`); problema detalhado em `ideas/demora-em-docas/descoberta.md`
 - **Team:** RODAR — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`), Eduardo. 4 = máximo do Hack Brasil (X9). Conferir no painel.

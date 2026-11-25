@@ -1,186 +1,238 @@
-# Demora em docas: descoberta do problema (Hack Brasil 2026)
+# Demora em docas: descoberta do problema
 
-25/11/2026 · As perguntas de descoberta (1 a 6), com fonte em cada número, lidas pelas regras do **Hack Brasil 2026, trilha Logística & automação** ([`HACKATHON.md`](../../HACKATHON.md)).
+25/11/2026 · As perguntas de descoberta (1 a 6), com fonte em cada número. Base do **impacto** (H3) e do **vídeo** (H4) do RODAR no Hack Brasil 2026, trilha Logística & automação ([`HACKATHON.md`](../../HACKATHON.md)).
 
 Legenda: **[F]** dado com fonte · **[I]** inferência nossa a partir dos dados · **[H]** hipótese que só entrevista ou teste confirma.
 
-> **Para que serve este documento no Hack Brasil:** é a base do **H3 Impacto** ("efeito sobre o problema e o público da trilha") e do **H4 Comunicação** (o vídeo de 3 min para um júri que não é de logística). Os números entram no README "Para o júri" dos três repositórios e no roteiro do vídeo. O produto já existe ([rodar-backend](https://github.com/rodarglobal/rodar-backend), [rodar-web](https://github.com/rodarglobal/rodar-web), [rodar-mobile](https://github.com/rodarglobal/rodar-mobile)); as seções 4 a 6 partem dele.
+> **Propósito do RODAR:** o caminhão para horas na doca e no pátio, e quem está ao volante é um público de 45 a 54 anos, em que metade dos brasileiros de 50 a 64 anos é analfabeta funcional, e que não pode digitar enquanto dirige. O RODAR é um **agente de IA de voz** que leva essa pessoa para dentro do fluxo logístico sem tela e sem portal: avisa o recebedor antes da chegada, conta a espera, prova cada hora parada e só chama a central quando alguém precisa decidir. A voz é o diferencial de **acessibilidade**; o resultado é logístico: menos caminhão parado sem dono.
 
-## 0. O que o Hack Brasil muda na leitura do problema
+## 0. Como o problema entra na nota
 
-| Regra | Consequência para o problema |
+| Regra do Hack Brasil | Consequência |
 |---|---|
-| H3 mede o efeito **sobre o problema e o público da trilha** (item 9.1) | O impacto que conta é **logístico**: horas de caminhão parado, custo da hora e informação que não chega ao recebedor. Sono, solidão e acidentes (o pitch do UNMUTE) ficam fora do foco, porque são Saúde, não Logística |
-| Enquadramento é condição (itens 5.4 e 5.5) | Problema e público precisam estar na trilha. "Mover bens e informação de forma mais eficiente" encaixa: o caminhão parado é um bem que não se move, e o aviso ao recebedor é informação que não circula |
-| O júri não precisa instalar nada (item 7.4) e **não é de logística** | Em uma frase e com um número, o vídeo precisa fazer alguém de ML ou finanças entender o que é estadia e doca |
-| Desempate: H1 → **H3** | Impacto é o segundo desempate. Um número de impacto **com fonte** vale mais que uma tela a mais |
-| Hoje os READMEs dos repos de código citam **zero** números de impacto | Maior alavanca de H3 com custo baixo antes de 30/11 (ver seção 6) |
+| H3 mede o efeito **sobre o problema e o público da trilha** | O impacto que conta é logístico: horas paradas, custo da hora e informação que não chega ao recebedor. A acessibilidade explica **por que o produto chega a quem os sistemas atuais não alcançam** |
+| O enquadramento é condição | O problema (caminhão parado) e o público (transportadora, motorista, recebedor) estão em "mover bens e informação de forma mais eficiente". A acessibilidade não deve virar o problema, senão o projeto parece da trilha Educação |
+| O júri não precisa instalar nada e **não é de logística** | O vídeo explica doca e estadia em uma frase, com um número |
+| Desempate: H1 → **H3** | Um número de impacto com fonte vale mais que uma tela a mais |
+| Os READMEs de código hoje não citam números de impacto | É a alavanca mais barata de H3 antes de 30/11 |
 
-## 0.1. Correções aos números trazidos (antes de ir para README, vídeo ou slides)
+## 0.1. Números revisados (só os marcados como confirmados vão para README, vídeo e slides)
 
 | Afirmação | Situação | O que dá para afirmar |
 |---|---|---|
-| 11h40 de espera nos CDs (2025) | **Confirmado** | IER 2025 (IPTC/SETCESP), Grande SP, 175 recebedores: CDs 11h40, atacadistas 5h56, home centers 4h33, média 5h09 (maior em 10 anos). [F1] |
-| "Mais de 90% não recebem estadia" | **Confirmado com ressalva** | 84,7% não recebem nem denunciam + 6,6% não recebem mas denunciam = **91,3% não recebem**. Só 8,6% recebem. A amostra da CNTA (2.002 autônomos) **não é probabilística**. [F2] |
-| 87% sem vaga exclusiva / 13% com vaga | **Confirmado, ano incerto** | 13% dos recebedores têm vaga para carga e descarga; 87% reservam vagas para clientes. [F3] |
-| 73% dão nota 0 a 5 à infraestrutura (CNTTT) | **Não encontrado** | **Não usar** até ter o link do relatório. |
-| Alimentos 32,26% a 40% dos roubos | **Não confirmado na NTC** | nstech: alimentos = 33,3% do prejuízo no 1º sem/2025 (2º lugar). Outra reportagem: 26,5%. [F4] |
-| Roubo ligado à espera na doca | **Sem evidência direta** | Só há: a noite é o período de maior risco [F5]. Tratar como [H]. |
-| Faixa de 46-50 anos | **Aproximado** | Média de 45 anos (CNT 2025) [F6], 46 anos (CNTA 2025) [F7] e 54 anos para o motorista profissional (Ilos/Senatran) [F8]. |
-| Escolaridade baixa | **Confirmado** | CNT 2025: **43,6% até o fundamental** [F6]. CNTA: **43,8% com fundamental incompleto** [F7]. |
-| Dificuldade digital acima de 50 anos (Viva/Motz) | **É declaração, não pesquisa** | Fala do CEO da Motz, sem número [F8]. Contraponto: **91% dos autônomos usam app de carga** [F9]. |
+| 11h40 de espera nos CDs (2025) | **Confirmado** | IER 2025 (IPTC/SETCESP), Grande SP, 175 recebedores: CDs 11h40, atacadistas 5h56, home centers 4h33, média 5h09, a maior em 10 anos [F1] |
+| "Mais de 90% não recebem estadia" | **Confirmado, com ressalva** | 84,7% + 6,6% = **91,3% não recebem**, e só 8,6% recebem. A amostra da CNTA (2.002 autônomos) não é probabilística [F2] |
+| 87% sem vaga exclusiva | **Confirmado, ano incerto** | Só 13% dos recebedores têm vaga para carga e descarga [F3] |
+| 73% dão nota 0 a 5 à infraestrutura (CNTTT) | **Não encontrado** | Não usar |
+| Alimentos 32,26% a 40% dos roubos | **Não confirmado na NTC** | nstech: 33,3% do prejuízo no 1º sem/2025 [F4] |
+| Roubo ligado à fila na doca | **Sem evidência direta** | Só sabemos que a noite é o período de maior risco [F5] |
+| Faixa de 46-50 anos | **Aproximado** | Média de 45 anos (CNT 2025) [F6] e 46 anos (CNTA 2025) [F7]; 54 anos para o motorista profissional (Ilos/Senatran) [F8] |
+| Escolaridade baixa | **Confirmado** | 43,6% até o fundamental [F6]; 43,8% com fundamental incompleto [F7] |
+| Analfabetismo funcional na faixa etária | **Confirmado (população geral)** | INAF 2024: 29% dos brasileiros de 15 a 64 anos; **51% entre 50 e 64 anos** [F29]. Não há recorte específico de caminhoneiros [I] |
+| "Portos já resolveram a fila" (versão anterior deste documento) | **Errado, corrigido** | O agendamento tirou a fila da rodovia em Paranaguá, mas a espera foi para o pátio: 6h43 em média no pico de 2023 [F23]. Em Santos, o caminhoneiro paga até ~R$ 800 por 24h de pátio regulador [F25]. Em Miritituba, a fila chegou a 25-45 km e a espera a até 3 dias na safra 2025/26 [F26]. Ver seção 1.1 |
 
 ## 1. Entender o problema
 
-**Qual é o problema?** O caminhão chega ao recebedor e fica horas parado antes de descarregar. A média na Grande SP foi de 5h09 em 2025, e de 11h40 nos CDs [F1]. Em 2019 era 2h50 [F10]: **o problema está piorando**.
+**Qual é o problema?** O caminhão chega ao recebedor (CD, atacado, loja, terminal portuário) e fica horas parado antes de descarregar. Na Grande SP, a média foi de 5h09 em 2025, e chegou a 11h40 nos CDs [F1]. Em 2019 era 2h50 [F10]: o problema está **piorando**.
 
-**Onde acontece?** Pior caso medido: CDs de varejo e indústria (11h40), depois atacadistas e atacarejos (5h56) e home centers (4h33) [F1]. O recebedor mais eficiente, um supermercado (Joanin), descarrega em **2h** [F1]. Esse é o benchmark de que a espera é gestão, não destino.
-- **Portos e terminais de safra** já têm solução: Paranaguá está sem filas na BR-277 desde 2011 com o Carga Online [F11], e em Santos a permanência caiu de 9h15 para 5h30 com agendamento e multa [F12]. Ainda há filas residuais na safra [F13]. **[I] O mercado do RODAR é o varejo e o abastecimento urbano, não o porto.**
-- **Terminais de fronteira:** sem dado. [H]
+### 1.1. Onde acontece
 
-**Por que acontece?** Ver a seção 3.
+**Varejo e indústria (Grande SP, IER 2025)** [F1]:
 
-**Quem é afetado?** No foco da trilha:
-- **Transportadora e autônomo:** ativo parado, ~R$ 146/h por caminhão (estimativa em [`impacto-e-custos.md`](../parceiro-de-estrada/impacto-e-custos.md)).
-- **Embarcador:** prazo e custo do frete.
-- **Recebedor:** pátio cheio, mas hoje **não paga** pela espera.
-- **Cidade:** fila na rua, porque 87% dos recebedores não têm vaga [F3].
+| Tipo de recebedor | Tempo médio de descarga |
+|---|---|
+| Centros de distribuição (varejo e indústria) | **11h40** |
+| Atacadistas e atacarejos | **5h56** |
+| Média geral | **5h09** |
+| Home centers e lojas de departamento | **4h33** |
+| Melhor recebedor (supermercado Joanin) | **2h** |
 
-Fora do foco: o motorista CLT (pela ADI 5322 do STF, a espera conta como jornada [F14]) e o consumidor (custo embutido no frete, [I]).
+**Portos e terminais.** Em 2025, o Brasil movimentou 1,4 bilhão de t pelos portos (+6,1%), e Santos sozinho movimentou 142,8 mi t [F27]. O grosso dessa carga chega de caminhão:
 
-**Quando acontece?** Na chegada sem janela, ou com janela que não é cumprida. Picos prováveis: safra nos portos e fim de ano no varejo [H, sem fonte].
+| Porto / corredor | O que existe | A espera hoje |
+|---|---|---|
+| **Santos (SP)** | Agendamento obrigatório da Autoridade Portuária (APS), fila virtual e pátios reguladores. Contêiner e carga solta: tolerância de 3h depois da janela. Granel vegetal: janela de 6h [F24] | Em 2014, o agendamento com multa baixou a permanência de 9h15 para 5h30 [F12]. Em mar/2026, o sindicato Sindgran ameaçou parar ~5 mil caminhoneiros contra a cobrança de **~R$ 800 por 24h** de pátio regulador. O acordo com a APS prevê discutir regras para **reduzir o tempo de espera nos pátios** [F25]. Em 2025 houve filas nos terminais de contêiner [F24]. Ainda há horas de fila mesmo com agendamento [F13] |
+| **Paranaguá (PR)** | Carga Online: o caminhão só sai da origem com data e janela; há cota por terminal e um Pátio de Triagem com 1.000 vagas [F11][F22] | Sem fila na BR-277 desde 2011 [F11]. O pátio recebeu **507.915 caminhões em 2025** (+29,5%) e bateu recorde de 2.523 em 24h [F22]. Permanência média de **6h43** no pico de jul/2023 [F23]; não achamos o dado de 2025 |
+| **Miritituba (PA), Arco Norte** | Estação de transbordo para barcaças. O acesso pela BR-163 tem trechos precários [F26] | Safra 2025/26: fila de **25 a 45 km**, espera de **2 a 3 dias**, "sem água ou banheiro". A Abiove alertou que a fila poderia durar até abril [F26] |
+| **Itaqui (MA)** | Agendamento consolidado, 5 pátios e 2.480 vagas [F28] | O terminal de grãos (Tegram) chegou à capacidade máxima e pediu ampliação da recepção de caminhões [F28]. Não achamos tempo de espera |
+| **Rio Grande (RS)** | — | Não achamos dado de fila ou de espera [H] |
+
+**[I] O que os portos ensinam:**
+1. O agendamento **tira a fila da rodovia, mas não zera a espera**: ela vai para o pátio regulador, e em Santos o motorista ainda paga por ela.
+2. Cada porto tem **seu próprio sistema** (APS, Carga Online, Itaqui), e o motorista que roda entre eles precisa lidar com todos.
+3. A fila no porto é **sazonal e enorme** (safra), enquanto a do varejo é **diária e espalhada**.
+
+**[I] Onde o RODAR entra primeiro:** nos **CDs, atacados e home centers**, onde não há agendamento obrigatório nem autoridade, e o aviso antecipado e a prova do tempo fazem mais diferença. Nos **portos**, o valor é outro: **registrar o tempo de pátio** (quem paga as 24h?) e **guiar o motorista por voz** num sistema de agendamento que ele não domina. Isso não está implementado e depende de integração [H].
+
+**Quando acontece?** Na chegada sem janela, ou com janela que não é cumprida. Nos portos, o pico é a safra (fev-abr no Arco Norte [F26]). No varejo, o pico provável é o fim de ano [H].
 
 **Com que frequência?** 46,1% dos autônomos enfrentam espera de 5h ou mais **sempre**, e 23,4% às vezes [F15].
 
 **Qual é a gravidade?**
-- **Dinheiro:** a hora parada custa ~R$ 146. A estadia só é paga depois de 5h e cobre cerca de metade disso: R$ 75/h para 30 t a R$ 2,50/t·h [F16].
-- **Custo escondido:** uma espera de 4h custa ~R$ 323 e **não gera cobrança nenhuma**, porque fica abaixo da franquia de 5h. [I]
-- **Segurança (só referência, fora do foco da trilha):** nos EUA, +15 min de espera média → +6,2% na taxa esperada de acidentes [F17]. Os dados são de 2013, e a FMCSA contestou a conclusão.
+- **Dinheiro:** a hora parada custa ~R$ 146 (estimativa em [`impacto-e-custos.md`](../parceiro-de-estrada/impacto-e-custos.md)). A estadia só é paga depois de 5h e cobre cerca de metade disso: R$ 75/h para 30 t [F16].
+- **Custo escondido:** uma espera de 4h (~R$ 323) não gera cobrança nenhuma, porque fica abaixo da franquia de 5h. [I]
+- **No porto o custo se inverte:** o motorista ainda paga o pátio (~R$ 800 por 24h em Santos) [F25].
+- **Condições:** até 3 dias sem água ou banheiro na fila de Miritituba [F26].
+- **Segurança (só referência):** nos EUA, +15 min de espera média → +6,2% na taxa esperada de acidentes. Os dados são de 2013 e a FMCSA contestou a conclusão [F17].
 
-**O que acontece se não resolver?** O problema já está piorando (2h50 → 5h09 entre 2019 e 2025) [F1][F10], numa categoria que envelhece e encolhe (motorista profissional com média de 54 anos [F8]). Cada hora parada tira capacidade de uma frota que não se renova. [I]
+**O que acontece se não resolver?** A espera piora (2h50 → 5h09 entre 2019 e 2025) [F1][F10] e a movimentação nos portos bate recorde ano a ano [F22][F27]. Isso acontece numa categoria que envelhece (54 anos em média [F8]). [I] Cada hora parada tira capacidade de uma frota que não se renova.
 
 **Por que ainda não foi resolvido?**
-1. **A punição existe no papel.** A Lei 11.442, art. 11, já prevê estadia depois de 5h e multa de até 5% do valor da carga para quem não registra os horários [F16][F18]. Falta cobrança, não lei.
-2. **Assimetria de poder.** 67,1% conhecem a lei [F2] e 91% não recebem. [I] Cobrar arrisca perder o próximo frete.
+1. **A lei existe:** estadia depois de 5h e multa de até 5% do valor da carga [F16][F18]. Falta cobrança.
+2. **Assimetria de poder:** 67,1% conhecem a lei e 91% não recebem a estadia [F2].
 3. **A estadia paga pouco e tarde** [F16].
-4. **Fiscalização reativa:** depende de denúncia [F18], e só 6,6% denunciam [F2].
-5. **As ferramentas são do pátio.** Os sistemas de agendamento e de gestão de pátio (YMS) são vendidos ao recebedor, que não sente o custo [F19][F20].
+4. **A fiscalização depende de denúncia** [F18], e só 6,6% denunciam [F2].
+5. **As ferramentas são do pátio e da tela.** Agendamento, gestão de pátio e portais portuários são vendidos ao recebedor ou ao terminal [F19][F20] e pedem que o motorista leia e digite. [I] Isso exclui justamente o público com mais dificuldade de leitura e que está dirigindo.
 
 ## 2. Entender as pessoas afetadas
 
-**Quem são?** O usuário do app é o caminhoneiro: 99,7% homens, média de 45-46 anos, 43,6% até o fundamental [F6][F7]. Os autônomos trabalham ~14h/dia, 25 dias por mês [F7]. **O comprador é a transportadora** (preço discutido no repo: R$ 100 por caminhão por mês).
+**Quem são?**
+- **Usuário: o caminhoneiro.** 99,7% são homens. A média de idade é de 45-46 anos, chegando a 54 entre motoristas profissionais. 43,6% estudaram até o fundamental [F6][F7][F8].
+- **Comprador: a transportadora.** O preço discutido no repo é R$ 100 por caminhão por mês.
+- **Também afetados:** o recebedor (CD, atacado, terminal), o embarcador e a cidade (fila na rua; 87% dos recebedores não têm vaga [F3]).
 
-**Como lidam hoje?** Esperam, dormem na cabine e não cobram (84,7%) [F2]. Comunicam-se por WhatsApp e apps de frete (91% usam app de carga) [F9].
+**Acessibilidade: por que a voz.**
+- **Leitura:** metade dos brasileiros de 50 a 64 anos é analfabeta funcional (INAF 2024) [F29]. É a faixa para onde a categoria caminha [F8]. Não há recorte para caminhoneiros, mas com 43,6% até o fundamental [F6] é razoável supor que a proporção seja alta. [I]
+- **Mãos e olhos ocupados:** segurar ou manusear o celular ao volante é infração **gravíssima**, e fone de ouvido também é infração (CTB, art. 252) [F30]. Digitar mensagem multiplica por ~23 o risco de evento crítico em caminhões, contra nenhum aumento ao falar em viva-voz (Olson et al., FMCSA 2009) [F31]. Com a voz pelo alto-falante, o celular fica no suporte e o motorista não toca nele.
+- **O celular ele já usa:** 91% dos autônomos usam app de carga [F9]. A barreira não é ter o aparelho. É **ler, digitar e navegar num portal diferente em cada CD e em cada porto** [F8]. A dificuldade com ferramentas digitais de trabalho é maior acima de 50 anos (declaração do CEO da Motz, sem número) [F8].
+
+**Como lidam hoje?** Esperam, dormem na cabine e não cobram (84,7%) [F2]. Comunicam-se por áudio de WhatsApp e apps de frete [F9]. Nos portos, alguns pagam o pátio [F25].
 
 **Maiores dificuldades:**
 - não saber quando vai descarregar;
-- não ter onde parar (87% dos recebedores sem vaga) [F3];
-- exigências extras, como devolução de paletes e restrição de horário [F3];
-- um portal de agendamento diferente em cada cliente [F8].
+- não ter onde parar [F3];
+- exigências extras, como paletes e restrição de horário [F3];
+- um sistema de agendamento diferente em cada porto ou cliente [F24][F11];
+- pagar pela espera no porto [F25].
 
 A ordem entre elas é [H].
 
-**O que gostariam de melhorar?** Não há dado direto. [H] Previsibilidade e receber a estadia.
+**O que gostariam de melhorar?** Não há dado direto. Indícios: em Santos, a pauta do sindicato é reduzir o tempo e o custo do pátio [F25]; no Arco Norte, ter condições básicas na fila [F26]. [H] Previsibilidade e receber pela espera.
 
-**Já tentaram alguma solução?** A denúncia (6,6%) [F2] e apps de terminal único, como o Caminho Ágil da Santos Brasil [F21]. Esses apps não servem a quem roda entre vários recebedores. [I]
+**Já tentaram alguma solução?** Denúncia (6,6%) [F2], greve ou paralisação (Santos, mar/2026) [F25] e apps de terminal único, como o Caminho Ágil da Santos Brasil [F21]. **Por que não basta:** cada solução cobre um terminal, e todas pressupõem tela e leitura. [I]
 
-**Ponto fraco da premissa "dificuldade com tecnologia":** 91% já usam app [F9]. A fricção é **digitar ao volante** e **ter um portal diferente em cada CD**, não usar o celular. [I] No vídeo, evite "quem nunca ajudou alguém com dificuldade em tecnologia", que soa condescendente. Prefira "um portal diferente em cada CD, e ele está dirigindo".
+**Cuidado no pitch:** fale de **acessibilidade**, não de "pessoa com dificuldade em tecnologia". O motorista usa o celular. O que o exclui é o portal escrito e a lei que o proíbe de tocar no aparelho dirigindo.
 
 ## 3. Investigar as causas
 
-**Causa principal:** o tempo do caminhão não custa nada a quem o retém. [I] A espera vira "estoque gratuito" do recebedor, o que os 91% sem estadia sustentam [F2].
+**Causa principal:** o tempo do caminhão não custa nada a quem o retém. [I] Nos portos, o custo chega a ser transferido ao motorista [F25].
 
-**Fatores que contribuem:** poucas docas e vagas [F3], falta de conferentes, paletes e canhotos, divergência fiscal na portaria e janela de agendamento que não se cumpre [F1][F3]. Só o fator das vagas tem percentual isolado nas fontes (13%).
+**Fatores que contribuem:**
+- docas, vagas e pátios insuficientes [F3][F28];
+- falta de conferentes, paletes e canhotos, divergência fiscal;
+- janelas de agendamento que não são cumpridas [F1][F3][F13];
+- acesso rodoviário precário (BR-163) [F26];
+- picos de safra acima da capacidade dos terminais [F26][F28].
 
 **Informação, tempo, recursos ou processo?**
-- **Recursos** (docas, conferentes) e **processo** (agendamento): são do recebedor.
-- **Incentivo** (estadia não cobrada): depende do contrato entre embarcador, transportadora e recebedor.
-- **Informação:** é o que o RODAR ataca. O recebedor fica sabendo **antes** da chegada, e o tempo parado vira um registro auditável.
+- **Recursos** (docas, conferentes, pátio) e **processo** (agendamento): são do recebedor ou do terminal.
+- **Incentivo:** depende do contrato entre embarcador, transportadora e recebedor.
+- **Informação e acesso a ela:** é onde o RODAR atua. O aviso chega ao recebedor antes da chegada, o tempo vira registro auditável, e o motorista participa **falando**, sem tela.
 
-**Causa pouco evidente:** a franquia de 5h esconde a maior parte do custo (ver *Gravidade*).
+**Causa pouco evidente:** o fluxo logístico pressupõe que o motorista leia e digite, e uma parte grande do público não consegue fazer isso, ou não pode fazer isso dirigindo [F29][F30]. [I] Quando ele não registra a chegada, não avisa o atraso e não guarda a prova, a espera fica sem dono.
 
-**5 porquês:**
+**5 porquês (CD):**
 1. O caminhão fica 11h no CD → porque não há doca livre.
-2. Não há doca livre → porque chegam mais caminhões do que o CD descarrega por hora.
-3. Chegam mais caminhões → porque o CD não controla a chegada.
-4. O CD não controla a chegada → porque esperar não lhe custa nada.
-5. Esperar não custa nada → porque o motorista não cobra, por medo de perder frete, e a transportadora não tem prova barata do tempo.
+2. Não há doca livre → porque o CD não controla a chegada.
+3. O CD não controla a chegada → porque esperar não lhe custa nada.
+4. Esperar não custa nada → porque ninguém registra o tempo.
+5. Ninguém registra o tempo → porque o registro depende de um motorista que dirige e de portais escritos.
 
-**Se eu resolver uma causa, o problema diminui?** Só se quem controla a capacidade agir.
-- **A favor:** Paranaguá acabou com a fila com cota por terminal e liberando o caminhão só quando há vaga [F11]. Santos reduziu a permanência com agendamento **e multa** [F12]. O Joanin descarrega em 2h [F1].
-- **Contra:** em Santos ainda há horas de fila mesmo com agendamento [F13].
-- **[I] Conclusão honesta para o H3:** dar prova ao motorista, sozinho, não reduz a espera, porque ele já sabe que tem direito. O efeito do RODAR vem de duas coisas: (a) o **aviso antecipado**, que deixa o recebedor preparar a doca e o conferente; (b) a **prova agregada**, que vai para quem tem poder de cobrar, a transportadora. Não prometa "acabar com a fila": prometa "a espera fica visível e tem dono".
+**5 porquês (porto):**
+1. O caminhão fica horas no pátio regulador → porque o terminal não chama.
+2. O terminal não chama → porque a janela não casou com a capacidade do dia.
+3. A janela não casou → porque o agendamento é feito longe do motorista e não se ajusta ao atraso real.
+4. O motorista paga o pátio → porque não há registro de quem causou a espera.
+
+**Se eu resolver uma causa, o problema diminui?**
+- **A favor:** Paranaguá tirou a fila da rodovia com cota e janela [F11]. O agendamento com multa reduziu a permanência em Santos [F12]. O Joanin descarrega em 2h [F1].
+- **Contra:** a espera migrou para o pátio [F23][F25], e em Santos há fila mesmo com agendamento [F13].
+- **[I] Conclusão honesta:** a voz não cria doca. O efeito do RODAR vem de (a) **antecipar a chegada**, para o recebedor preparar a doca, e (b) **tornar o tempo comprovável** para quem pode cobrar. A acessibilidade garante que isso aconteça **em toda entrega**, e não só quando o motorista consegue digitar.
 
 ## 4. Pensar na solução
 
 **Como poderia ser resolvido?** Três alavancas, da mais forte para a mais fraca:
-1. Regra imposta por quem controla o acesso (porto ou autoridade).
-2. Custo contratual da espera (estadia cobrada, ranking de recebedores).
-3. Informação (aviso de chegada, hora comprovada).
+1. Regra imposta por quem controla o acesso (portos).
+2. Custo contratual da espera.
+3. Informação e prova.
 
 O RODAR atua na 3 e alimenta a 2.
 
-**Já existe algo que funciona?** Nos portos, sim [F11][F12]. No varejo há sistemas de agendamento e de gestão de pátio, vendidos ao recebedor. A Trackage diz reduzir em até 60% a fila na portaria e tem como meta -50% de espera com a DHL, mas esses **números são do fabricante** [F19]. O Opendock roda em 63 plantas da Cascades [F20].
+**Já existe algo que funciona?** Nos portos há agendamento obrigatório [F11][F24]. No varejo há sistemas de agendamento e de gestão de pátio, vendidos ao recebedor [F19][F20]. Os números de redução de espera desses sistemas são **do fabricante** [F19].
 
-**O que o RODAR faz diferente (já implementado, conforme os READMEs dos repos):**
+**O diferencial do RODAR: IA de voz como acessibilidade.**
 
-| Causa (seção 3) | O que o RODAR faz | Onde está |
+| Barreira de hoje | Como o RODAR resolve | Onde está no produto |
 |---|---|---|
-| Falha na conciliação de horário | O agente avisa o recebedor e o CCO na **aproximação** (geocerca) | backend + app |
-| Estadia não cobrada, sem prova | Na chegada, conta a estadia (franquia de 5h, R$ 2,50/t·h) com hora do servidor e GPS em dupla prova | backend + painel |
-| CCO sobrecarregado, digitação ao volante | O motorista fala; o agente cria a Task e só chama o CCO quando alguém precisa decidir | app (voz Agora) + painel |
-| Recebedor que não responde | Escalonamento: insiste com o CCO e, sem resposta, **liga para o recebedor** e registra a resposta como prova | backend (ligação real desligada; plano B por canal RTC) |
-| Ninguém sabe quem atrasa | Indicadores de estadia por recebedor no painel | painel |
+| O motorista não pode tocar no celular dirigindo [F30] | Conversa por voz em tempo real, com o celular no suporte (Agora Conversational AI) | app + backend |
+| Leitura difícil para quase metade do público [F6][F29] | O agente pergunta o que falta ("qual doca?") e confirma em voz alta. Nenhum formulário | app |
+| Um portal diferente em cada cliente e porto [F8][F24] | Um único interlocutor, em português falado, para qualquer recebedor | app |
+| O recebedor não sabe que o caminhão está chegando | Aviso na **aproximação** (geocerca) ao recebedor e ao CCO | backend |
+| A espera não tem prova | Contador de estadia com hora do servidor e GPS em dupla prova | backend + painel |
+| Recebedor que não responde | Escalonamento: insiste com o CCO e, sem resposta, **liga para o recebedor** e registra a resposta | backend (ligação real desligada; plano B por canal RTC) |
+| Ninguém sabe quem atrasa | Indicadores de estadia por recebedor | painel |
 
-**Por que é melhor que as alternativas:** funciona em qualquer recebedor, sem integração (o app da Santos Brasil só serve o próprio terminal [F21]). Usa voz em vez de portal para um público de 45 anos ou mais. E agrega dados entre motoristas, enquanto o IER só publica um ranking por ano [F1].
+**Por que é melhor que as alternativas:**
+- Os sistemas atuais são do pátio e da tela. O RODAR é **do motorista e da voz**, e funciona em qualquer recebedor sem integração.
+- Áudio de WhatsApp é voz, mas não vira dado: nenhum aviso estruturado, nenhuma Task, nenhuma prova com hora. [I]
 
-**Onde é pior:** não cria doca nem conferente. Se o recebedor ignorar o aviso, o RODAR só documenta e pressiona.
+**Onde é pior:**
+- Não cria doca.
+- Nos portos, sem integração com o agendamento (APS, Carga Online), não ajusta a janela; só registra e avisa [H].
+- O reconhecimento de voz em cabine barulhenta e com sotaques regionais é um risco técnico [H].
 
-**Menor versão útil:** já existe. São 512 testes automatizados e uma validação ponta a ponta de 33/33 etapas, segundo os READMEs. O que **falta para o júri ver** é a demo pública no ar e o vídeo (seção 6).
+**Menor versão útil:** já existe. São 512 testes e uma validação ponta a ponta de 33/33 etapas, segundo os READMEs. Faltam a demo pública e o vídeo (seção 6).
 
-**Recursos necessários:** Agora ConvoAI (voz), um número de telefone para a ligação real ao recebedor e um parceiro transportadora para validar. [H] O **Nvoip Pro de 3 meses**, liberado a participantes com rascunho aprovado, pode suprir o número. Falta confirmar se ele integra com a chamada de saída da Agora.
+**Recursos necessários:**
+- Agora ConvoAI (voz).
+- Um número de telefone para a ligação real. [H] O Nvoip Pro dos participantes pode servir, mas falta confirmar a integração com a Agora.
+- Um parceiro transportadora para validar.
+- Para portos, acesso às APIs de agendamento [H].
 
 ## 5. Validar a ideia
 
-**Como confirmar que o problema existe?** Por dados secundários já está confirmado [F1][F2]. Falta saber **qual parte** dói mais para o comprador, a transportadora: as horas perdidas, a estadia não cobrada ou o CCO sobrecarregado.
+**Como confirmar que o problema existe?** Por dados secundários já está confirmado [F1][F2][F25][F26]. Falta saber, junto à transportadora, qual parte dói mais: as horas perdidas, a estadia não cobrada, o custo do pátio ou o CCO sobrecarregado.
 
 **Como conversar com os afetados?**
-- 10 motoristas em postos perto de polos de CD (Cajamar, Guarulhos, Barueri) e da CEAGESP.
-- 2 a 3 transportadoras pequenas (gestor de frota ou CCO).
-- Pergunte sobre o **passado**: "Na última entrega, quanto tempo esperou? Cobrou a estadia? Por que não?"
+- 10 motoristas em postos perto de polos de CD (Cajamar, Guarulhos, Barueri) e no pátio regulador de Cubatão (Santos).
+- 2 a 3 transportadoras pequenas.
+- Pergunte sobre o **passado**: "Na última entrega, quanto tempo esperou? Cobrou? Pagou o pátio?"
 
-**Quando validar:** use o **congelamento de 01/12 a 12/12**. O código não pode mudar, mas entrevistas e números podem ir para os slides e para a apresentação da final, que tem notas novas, do zero (item 9.3).
+**Como testar a acessibilidade:** compare voz e formulário com motoristas de **50 anos ou mais**. Meça a taxa de conclusão do check-in, o tempo e quantas vezes o motorista pediu ajuda.
 
-**Como testar sem mexer no código:** coloque 2 ou 3 motoristas para usar a demo pública numa entrega real, sem dado pessoal no repo (X6). Ou faça um "Mágico de Oz" com áudio de WhatsApp na chegada e na descarga.
+**Quando validar:** de 01/12 a 12/12, com os repositórios congelados. As entrevistas e os números vão para os slides da final, que tem notas novas.
 
-**Como saber se funcionou (métricas para a final):**
+**Como saber se funcionou:**
 - % de entregas com chegada e descarga registradas por voz.
-- Minutos entre o aviso antecipado e a chegada (tempo que o recebedor ganhou para preparar a doca).
-- Estadia devida identificada (R$) e quanto a transportadora cobrou.
-- Taxa de conclusão por voz nos motoristas com 50 anos ou mais.
+- Taxa de conclusão por voz × formulário, no grupo com 50 anos ou mais.
+- Minutos entre o aviso e a chegada.
+- Estadia devida identificada (R$) e cobrada.
 
 ## 6. Planejar o desenvolvimento
 
-**Objetivo principal:** tornar o caminhão parado na doca visível, comprovável e com dono, avisando o recebedor antes e chamando a central só quando precisa.
+**Objetivo principal:** com voz, colocar no fluxo logístico o motorista que os portais excluem, e tornar o caminhão parado visível, comprovável e com dono.
 
-**Tempo disponível:** **até 30/11/2026 23h59** (5 dias a partir de hoje) para fechar a submissão. Depois, os repos ficam congelados até a final de **12/12**, em São Paulo, onde o time termina o projeto no local.
+**Tempo disponível:** até **30/11/2026 23h59**. Depois, os repositórios ficam congelados até a final de **12/12** (São Paulo).
 
-**O que fazer primeiro (ordem por retorno na nota):**
-1. **S4 · Demo pública HTTPS no ar** e estável até o fim da avaliação (**H1**, primeiro desempate). Os três READMEs ainda têm o comentário "Demo publicada ... incluir antes de 30/11".
-2. **S5 · Vídeo de até 3 min** sem login (**H4**). Roteiro: a dor em uma frase com número ("11h40 parado num CD de SP; 9 em cada 10 autônomos não recebem pela espera") → o produto funcionando (aviso, chegada, estadia, escalonamento) → o resultado (estadia comprovada em R$).
-3. **H3 · Números de impacto com fonte** no bloco "Para o júri" dos três READMEs: 5h09 / 11h40 [F1], 91% sem estadia [F2] e o benchmark de 2h [F1]. Use só os que estão marcados como confirmados na tabela 0.1.
-4. **Enquadramento:** a frase de apresentação no painel fala de logística (doca, estadia, recebedor), não de segurança do motorista.
+**Ordem por retorno na nota:**
+1. **Demo pública HTTPS no ar** (H1, primeiro desempate).
+2. **Vídeo de até 3 min** (H4). Roteiro em quatro tempos:
+   - "11h40 parado num CD de SP; 9 em cada 10 autônomos não recebem pela espera";
+   - "e quem está ao volante não pode digitar, e metade dos brasileiros de 50 a 64 anos não lê com fluência";
+   - o produto por voz: aviso, chegada, estadia, escalonamento;
+   - a estadia comprovada em R$.
+3. **Números com fonte** no bloco "Para o júri" dos três READMEs, só os confirmados da tabela 0.1.
+4. **Frase do painel:** logística primeiro, acessibilidade como o "como". Exemplo: "Agente de voz que avisa o recebedor, conta a espera na doca e prova cada hora parada, sem o motorista tocar no celular".
 
-**Funcionalidades indispensáveis:** já estão no produto (aviso, chegada, estadia, escalonamento, painel). Não abra feature nova antes de 1 a 3 estarem prontos.
-
-**Tecnologias e conhecimentos:** as que já estão no produto (FastAPI, Postgres, React/Vite, Expo, Agora ConvoAI, Docker), mais hospedagem pública com HTTPS para a demo.
+**Funcionalidades indispensáveis:** já estão no produto. Não abra feature nova antes de 1 a 3 estarem prontos.
 
 **Principais dificuldades:**
-- A demo cair durante a avaliação: o júri passa a ver só o vídeo e o código (item 7.3).
-- A voz real depende de chaves e créditos da Agora. Se a demo pública usar o modo Demo ou mock, isso precisa estar declarado e o vídeo precisa mostrar a voz real.
-- Comprador ≠ usuário: o motorista sente a dor, quem paga é a transportadora. O vídeo precisa mostrar os dois.
-- A prova por GPS de celular pode ser contestada na Justiça: a dupla prova com o rastreador é simulada hoje.
-- **Commit depois de 30/11 23h59 desclassifica** (X8).
+- A demo cair durante a avaliação.
+- A voz real depende de chaves e créditos.
+- O comprador não é o usuário.
+- O GPS de celular é contestável (a dupla prova com o rastreador é simulada).
+- Portos exigem integração que não existe.
+- **Commit depois de 30/11 23h59 desclassifica.**
 
 ## Fontes
 
@@ -200,9 +252,19 @@ O RODAR atua na 3 e alimenta a 2.
 - [F14] ADI 5322 (STF, 2023): ver as fontes em [`parceiro-de-estrada/impacto-e-custos.md`](../parceiro-de-estrada/impacto-e-custos.md)
 - [F15] [Caminhoneiros autônomos trabalham 25 dias por mês (CNTA) — Mundo Logística](https://mundologistica.com.br/noticias/caminhoneiros-autonomos-trabalham-25-dias-por-mes)
 - [F16] [ANTT reajusta estadia para R$ 2,50/t·h — Mundo Logística](https://mundologistica.com.br/noticias/antt-reajusta-estadia-tempo-adicional-carga-descarga) · [Lei 11.442/2007, art. 11](https://www.legjur.com/legislacao/art/lei_00114422007-11)
-- [F17] [Driver detention increases crash risk and costs — DOT OIG, 2018](https://www.oig.dot.gov/sites/default/files/FMCSA%20Driver%20Detention%20Final%20Report.pdf) · [Resumo — CCJ](https://www.ccjdigital.com/driver-detention-costs-carriers-and-drivers-big-bucks-contributes-to-crashes-report-says/)
+- [F17] [Driver detention increases crash risk and costs — DOT OIG, 2018](https://www.oig.dot.gov/sites/default/files/FMCSA%20Driver%20Detention%20Final%20Report.pdf)
 - [F18] [Nota Técnica ANTT 4102 (carga e descarga)](https://www.gov.br/antt/pt-br/assuntos/cargas/carga-descarga/sei_41736493_nota_tecnica___antt_4102.pdf)
 - [F19] [DHL Supply Chain e Trackage lançam solução de gestão de pátio — Mundo Logística](https://mundologistica.com.br/noticias/dhl-supply-chain-e-trackage-lancam-solucao-para-gestao-de-patio)
 - [F20] [Case Cascades — Opendock](https://lp.opendock.com/hubfs/5041527/%5BCASE%5D%20Cascades%20BR-PT.pdf)
 - [F21] [Santos Brasil desenvolve app para caminhoneiros — Mobile Time](https://www.mobiletime.com.br/noticias/21/05/2021/santos-brasil-desenvolve-app-para-caminhoneiros-e-chega-a-mais-de-1-mil-maus-em-2-meses/)
-- [Regulamento do Hack Brasil 2026](https://hackbrasil.com/regulamento) (atualização de 18/11/2026)
+- [F22] [Pátio de Triagem de Paranaguá recebe mais de meio milhão de caminhões em 2025 — Governo do PR](https://www.parana.pr.gov.br/Audio/Novo-recorde-Patio-de-Triagem-de-Paranagua-recebe-mais-de-meio-milhao-de-caminhoes-em-2025) · [Recorde de 2,5 mil caminhões em 24h — Governo do PR](https://www.parana.pr.gov.br/Audio/Porto-de-Paranagua-registra-movimento-historico-de-mais-de-25-mil-caminhoes-em-24-horas)
+- [F23] [Porto de Paranaguá recebe o maior volume de caminhões da história no Pátio de Triagem (permanência de 6h43, jul/2023) — AEN-PR](https://www.parana.pr.gov.br/aen/Noticia/Porto-de-Paranagua-recebe-o-maior-volume-de-caminhoes-da-historia-no-Patio-de-Triagem)
+- [F24] [Norma de agendamento de caminhões no Porto de Santos muda de fase — Sindicomis](https://sindicomis.com.br/norma-de-agendamento-de-caminhes-no-porto-de-santos-muda-de-fase-em-1-de-janeiro/) · [Panorama de 2025: contêineres no Porto de Santos — Rodoquick (blog de transportadora, fonte fraca)](https://rodoquick.com.br/blog/panorama-de-2025-como-foi-o-transporte-de-containers-no-brasil-e-no-porto-de-santos/)
+- [F25] [APS e Sindgran suspendem paralisação de caminhoneiros no Porto de Santos — Agência Infra, mar/2026](https://agenciainfra.com/blog/aps-e-sindgran-suspendem-paralisacao-de-caminhoneiros-no-porto-de-santos/) · [Cobrança de ~R$ 800 por dia no pátio — Click Petróleo e Gás](https://clickpetroleoegas.com.br/cerca-de-5-mil-caminhoneiros-vao-parar-o-porto-de-santos-por-24-horas-na-quarta-feira-contra-uma-cobranca-de-800-reais-por-dia-btl96/)
+- [F26] [Fila de 45 km e até 3 dias sem água ou banheiro em Miritituba — Compre Rural](https://comprerural.com/caminhoneiros-enfrentam-fila-de-45-km-e-ate-3-dias-sem-agua-ou-banheiro-para-descarregar-soja-no-para/) · [Engarrafamento retarda exportação de soja no Pará — Forbes, fev/2026](https://forbes.com.br/forbes-agro/2026/02/engarrafamento-de-caminhoes-retardam-exportacao-recorde-de-soja-no-para/) · [Fila pode durar até abril, diz Abiove — Compre Rural](https://comprerural.com/preocupacao-fila-de-caminhoes-com-soja-no-para-pode-durar-ate-abril-diz-abiove/)
+- [F27] [Antaq: portos movimentam 1,4 bi de toneladas em 2025 — IstoÉ](https://istoe.com.br/antaq-portos-movimentam-14-bi-de-toneladas-em-2025-alta-anual-de-61-e-recorde-historico)
+- [F28] [Plano Safra — apresentação do MPor (Itaqui: agendamento, 5 pátios, 2.480 vagas), 2024](https://www.gov.br/portos-e-aeroportos/pt-br/assuntos/noticias/2024/02/apresentacao-plano-safra-mpor-1/@@download/file) · [Porto de Itaqui chega ao limite para grãos — InfoMoney](https://www.infomoney.com.br/?p=2391294)
+- [F29] [INAF 2024: analfabetismo funcional em 29% — UNICEF Brasil](https://www.unicef.org/brazil/comunicados-de-imprensa/analfabetismo-funcional-nao-apresenta-melhora-e-alcanca-29-por-cento-dos-brasileiros-mesmo-patamar-de-2018-aponta-novo-levantamento-do-inaf) · [51% entre 50 e 64 anos — Viva](https://viva.com.br/carreira-e-educacao/analfabetismo-funcional-alcanca-51-dos-brasileiros-entre-50-e-64-anos.html)
+- [F30] [Artigo 252 do CTB — Âmbito Jurídico](https://ambitojuridico.com.br/artigo-252-do-ctb/)
+- [F31] [Driver Distraction in Commercial Vehicle Operations — Olson et al., FMCSA/VTTI, 2009](https://www.fmcsa.dot.gov/sites/fmcsa.dot.gov/files/docs/DriverDistractionStudy.pdf)
+- [Regulamento do Hack Brasil 2026](https://hackbrasil.com/regulamento)

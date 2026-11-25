@@ -1,7 +1,7 @@
-# Parceiro de Estrada — Contexto do Produto (MVP Hackathon UNMUTE / Agora)
+# Parceiro de Estrada — Contexto do Produto (MVP)
 
 > Copiloto de voz para caminhoneiros, integrado à central (CCO) da transportadora.
-> Prazo: domingo 22/11, 12h. Tecnologia Agora obrigatória (voz em tempo real).
+> Voz em tempo real pela Agora Conversational AI.
 
 ---
 

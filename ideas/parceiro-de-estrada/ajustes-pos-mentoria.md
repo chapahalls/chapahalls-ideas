@@ -1,6 +1,6 @@
 # Parceiro de Estrada: ajustes após a mentoria
 
-21/11/2026 · revisão do `contexto-produto.md`, do `problemas-e-decisoes.md` e do `impacto-e-custos.md` contra os feedbacks da mentoria (Terron/NewHack e banca de mentores).
+21/11/2026 · revisão do `contexto-produto.md`, do `problemas-e-decisoes.md` e do `impacto-e-custos.md` contra os feedbacks dos mentores.
 
 ## 1. Foco e add-ons (decidido)
 
@@ -58,7 +58,7 @@ O campo "saúde/estado do motorista" sai do reporte periódico e do modelo de da
 
 ## 5. Resposta à decisão 11 (registro do destinatário)
 
-A decisão 11 foi descartada (QR na portaria, assinatura, canhoto). Mesmo assim, o produto já gera uma prova do outro lado: **a resposta do recebedor na ligação do agente** ("a doca libera em 40 minutos", "não recebemos hoje") fica registrada na Task, com horário. Usar isso como resposta quando a banca disser que a prova vem só da transportadora.
+A decisão 11 foi descartada (QR na portaria, assinatura, canhoto). Mesmo assim, o produto já gera uma prova do outro lado: **a resposta do recebedor na ligação do agente** ("a doca libera em 40 minutos", "não recebemos hoje") fica registrada na Task, com horário. Usar isso como resposta quando o júri disser que a prova vem só da transportadora.
 
 ## 6. Inconsistências para corrigir no repositório
 
@@ -74,16 +74,15 @@ A decisão 11 foi descartada (QR na portaria, assinatura, canhoto). Mesmo assim,
 
 Sistemas do lado do recebedor já reduzem a espera: a Cassol caiu de 4h para 15 min com a Tempo Certo ([Mundo Logística](https://mundologistica.com.br/noticias/cassol-adota-tecnologia-e-tempo-de-carga-e-descarga-cai-de-4-horas-para-15-minutos)); DHL e Trackage prometem até 50% menos espera num CD da Unilever ([Mundo Logística](https://mundologistica.com.br/noticias/dhl-supply-chain-e-trackage-lancam-solucao-para-gestao-de-patio)); fornecedores dos EUA falam em 40% (dado de fornecedor). O próprio IER 2025 cita "janelas de agendamento mal definidas" como gargalo ([SETCESP](https://setcesp.org.br/noticias/a-demora-que-compromete-a-eficiencia-2/)).
 
-Resposta para a banca: quando o recebedor tem agendamento, o agente usa esse sistema (confirma o horário, avisa o atraso); quando não tem (a maioria dos supermercados e pequenos recebedores), a ligação do agente vira o agendamento.
+Resposta para o júri: quando o recebedor tem agendamento, o agente usa esse sistema (confirma o horário, avisa o atraso); quando não tem (a maioria dos supermercados e pequenos recebedores), a ligação do agente vira o agendamento.
 
 ## 8. Ajustes da revisão crítica (confirmar com o time)
 
 - **A promessa muda de "esperar menos" para "não perder a janela, decidir rápido e provar cada hora parada".** Avisar antes não cria doca: se a doca está cheia, o aviso só muda a ordem da fila. A redução da espera fica como cenário otimista; os casos de 40 a 50% são do recebedor reorganizando a doca.
 - **A voz vai para o centro da demo:** o agente ligando para o recebedor e negociando ("a doca 4 libera em 40 minutos?") e o motorista explicando uma exceção. Geocerca, Task e contador são o palco.
 - **O registro é vendido como dado para renegociar o contrato com o embarcador** ("o seu cliente X nos custou 40 horas paradas no mês"), não como cobrança contra o recebedor, que costuma ser cliente do embarcador.
-- **O aviso na aproximação contata o recebedor em toda entrega:** soma minutos da Agora e ligações SIP ao custo de R$ 83. Para contar no critério C2, o aviso da demo tem de ser a ligação por voz pela Agora, não mensagem de WhatsApp.
+- **O aviso na aproximação contata o recebedor em toda entrega:** soma minutos da Agora e ligações SIP ao custo de R$ 83. Na demo, o aviso é a ligação por voz pela Agora, não mensagem de WhatsApp.
 - **SIP de saída testado ainda hoje;** se não funcionar até ~2h, assumir o plano B (segundo cliente Agora RTC, declarado como simulação).
-- **Time (eliminatório E1): confirmado.** Inscrição dos 3 integrantes confirmada pelo time em 21/11/2026: Jeferson, Henry e Lucas. Com 3 pessoas o time está no mínimo da regra: os 3 precisam estar presentes nos dois dias.
 - **Entrevistas:** acrescentar "por que vocês não cobram a estadia?" e "quando o cliente é avisado antes, a espera diminui? quanto?".
 
 ## 9. Feedbacks adicionais dos mentores (22/11, 00:43)
@@ -106,7 +105,7 @@ Mostrar que o cliente não precisa de nada novo:
 
 Slide "o que a transportadora precisa para começar": 1) rotas e recebedores com telefone; 2) as regras; 3) motoristas com o app. Piloto de **4 semanas** (mesmo plano com engenheiro em campo do `RODAR-CONTEXT.md`).
 
-Cuidados para a banca não derrubar:
+Cuidados para o júri não derrubar:
 - Não dizer "usa o rastreador que a frota já tem" como se fosse hoje: no dia 1 é o GPS do celular.
 - "Rastreador exigido por seguradora" está forte demais: em geral é a gerenciadora de risco, e para alguns tipos de carga. Suavizar ou achar fonte.
 - "Tudo roda na Agora hoje" só se sustenta com a demo rodando.

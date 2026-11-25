@@ -2,7 +2,7 @@
 
 Todas as métricas que pesquisamos, numa página só. As fontes completas, a força de cada fonte e o contexto estão nos relatórios:
 
-- [`mercado-e-evidencias.md`](mercado-e-evidencias.md): mercado, custo do problema, ciência, concorrentes, riscos, números de slide e Q&A da banca
+- [`mercado-e-evidencias.md`](mercado-e-evidencias.md): mercado, custo do problema, ciência, concorrentes, riscos, números de slide e Q&A do júri
 - [`expansao-e-por-que-agora.md`](expansao-e-por-que-agora.md): TAM expandido, roadmap, crescimento histórico, por que agora, resiliência logística, comparáveis
 - [`embasamento.md`](embasamento.md): primeiro levantamento (CNT 2025 lido no PDF original)
 - [`pesquisa/`](pesquisa/): notas completas de cada pesquisa

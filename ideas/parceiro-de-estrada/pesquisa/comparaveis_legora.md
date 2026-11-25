@@ -36,7 +36,7 @@ Research date: 2026-11-21. All figures are dated. "Confirmed" means a company an
 - Bloomberg notes that traditional SaaS companies aim for about a 10x ARR valuation, while Harvey's March 2026 mark was about 44x (Sacra). — [Bloomberg Gov](https://news.bloomberglaw.com/bloomberg-government-news/harveys-8-billion-question-can-ai-startup-match-its-hype); [Sacra](https://www.sacra.com/c/harvey)
 
 ### Inferences
-- When the hackathon experts said "Legora", they almost certainly meant this company. It is the most cited 2025–2026 example of a profession-specific AI company reaching unicorn status and then a multi-billion valuation within about 3 years.
+- When the mentors said "Legora", they almost certainly meant this company. It is the most cited 2025–2026 example of a profession-specific AI company reaching unicorn status and then a multi-billion valuation within about 3 years.
 - Legora's lesson is speed (about $4M to more than $200M ARR in about 2 years) and a buyer with a high willingness to pay (law firms, billed by the hour). It is not a small-market lesson, because legal services is a market of hundreds of billions of dollars.
 
 ### Gaps

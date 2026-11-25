@@ -19,7 +19,7 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 
 ## 2. Diário de bordo → "tipo RDO de obra"
 
-- "Jarvis para o caminhoneiro" foi **descartado**: assistente genérico vira "ChatGPT com voz" e não dá para provar nada em 24h.
+- "Jarvis para o caminhoneiro" foi **descartado**: assistente genérico vira "ChatGPT com voz" e não dá para provar nada no MVP.
 - **Diário de bordo** foi aceito por dar base legal ao alerta: Lei 13.103/2015 — 30 min de pausa a cada 5h30 de direção (cargas) e 11h de descanso ininterrupto, que após a ADI 5322 (STF, 2023) não pode ser fracionado. O STF também passou a contar o tempo de espera na carga/descarga como jornada. Fontes: [STF](https://noticias.stf.jus.br/?p=58525), [Diário do Transporte](https://diariodotransporte.com.br/2025/08/30/lei-do-motorista-advogado-ilo-lobel-da-luz-analisa-decisao-do-stf-sobre-jornada-e-descanso/).
 - Evoluiu para um **"RDO do trecho"** (como o Relatório Diário de Obra): o agente pergunta na parada "Como foi o trecho?" e gera paradas, tempo de espera, avarias e ocorrências.
 - Cuidados: não chamar de registro oficial (não vale como controle de jornada); o reporte **não** pode ser obrigatório; motivação tem que ser concreta (km rodados, tempo até chegar, recado da família), não frase de coach.
@@ -34,7 +34,7 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 
 - Proposta: rede mesh (LoRa) entre caminhões para avisar quem usa o sistema, inclusive sem sinal.
 - Pesquisa nos produtos Agora (15 páginas, abaixo): **nenhum funciona offline, em LAN ou mesh**. A implantação privada do Signaling existe, mas exige servidor próprio e contato com o suporte.
-- Mesh por Wi-Fi/Bluetooth alcança metros; caminhões ficam a km. LoRa precisa de hardware (ex.: ESP32 + SX1276) e fica fora da Agora (critério E2).
+- Mesh por Wi-Fi/Bluetooth alcança metros; caminhões ficam a km. LoRa precisa de hardware (ex.: ESP32 + SX1276) e fica fora da Agora.
 - **Decisão:** sem mesh/LoRa no MVP. "Sem sinal" é tratado com **entrega adiada do Agora Chat** + **Signaling** em tempo real. LoRa vai para o slide de próximos passos (um evento "work" compacto cabe num pacote LoRa — bom argumento de arquitetura).
 
 ### Produtos Agora pesquisados
@@ -82,7 +82,7 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 
 ## 8. Pessoal: modo separado (swap), lembretes e tom de companheiro
 
-- **Núcleo:** Pessoal + Corporativo; Comunidade vira complemento no produto, mas fica na demo (é onde a Agora mais aparece, C2).
+- **Núcleo:** Pessoal + Corporativo; Comunidade vira complemento no produto, mas fica na demo (é onde a Agora mais aparece).
 - **Separação:** modelo do perfil de trabalho do Android — a empresa só vê o perfil de trabalho; o pessoal não fica visível nem acessível. Troca de modo por voz; segurança (nível 3, "preciso de ajuda") atravessa os dois modos.
 - **Decisão do time:** no modo Corporativo, envio pessoal é bloqueado e vira lembrete ("mandar mensagem para esposa"), disparado na próxima parada real (> 5 min fora da pista ou motor desligado).
 - **Recado recebido:** comum espera a parada; urgente avisa já e sugere parada, **sem mencionar que é urgente** (decisão do time) e sem ler o conteúdo dirigindo; após 2 recusas, segura.
@@ -94,8 +94,8 @@ Resumo da conversa de brainstorm (21/11/2026, manhã) para quem não estava. Ord
 ## 9. Unificação de contextos (Jeferson, Henry e Lucas — RODAR / Parceiro de Estrada)
 
 - **Convergência:** os levantamentos de arquitetura do `RODAR-CONTEXT.md` (Jeferson) e o planejamento/pesquisa de mercado de `ideas/parceiro-de-estrada/` (Henry e Lucas) foram unificados sob o nome **RODAR / Parceiro de Estrada** nas **3 frentes**: **1. Pessoal & Companhia (Modo Atenção + Família/Amigos via swap e lembrete na parada)**, **2. Corporativa (CCO + Diário de espera não editável)** e **3. Comunidade (Alertas de fim de fila/acidente na mesma via com confirmação dupla)**.
-- **Offline e Mesh/DTN no Roadmap Futuro:** decisão conjunta de manter o MVP de 24h 100% focado na stack online da **Agora** (Conversational AI + RTC + Signaling/Chat + AI Noise Suppression, com fila local no remetente para oscilações curtas), movendo a operação de voz offline no Android (`whisper.cpp`/`llama.cpp`) e a rede oportunista **Mesh/DTN (`A → B → C` store-carry-forward)** para *Próximos passos (P2)* junto com LoRa e Rádio PX 27 MHz.
-- **Validação e Vídeo Demo:** protocolo ajustado para a realidade do time no hackathon (**3 testadores × 5 cenários = 15 interações medidas** + registro de aprendizados concretos em `docs/validacao.md`), com gravação do **vídeo demo de 2 minutos** assim que o produto estiver solidificado.
+- **Offline e Mesh/DTN no Roadmap Futuro:** decisão conjunta de manter o MVP 100% focado na stack online da **Agora** (Conversational AI + RTC + Signaling/Chat + AI Noise Suppression, com fila local no remetente para oscilações curtas), movendo a operação de voz offline no Android (`whisper.cpp`/`llama.cpp`) e a rede oportunista **Mesh/DTN (`A → B → C` store-carry-forward)** para *Próximos passos (P2)* junto com LoRa e Rádio PX 27 MHz.
+- **Validação e Vídeo Demo:** protocolo ajustado para a realidade do time (**3 testadores × 5 cenários = 15 interações medidas** + registro de aprendizados concretos em `docs/validacao.md`), com gravação do **vídeo demo de 2 minutos** assim que o produto estiver solidificado.
 
 ## Pendências
 
