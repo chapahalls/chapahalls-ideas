@@ -27,7 +27,7 @@ Delegate to the **verifier** subagent. Give it, verbatim: the phase number and t
 
 For NEEDS HUMAN items, ask the user to confirm them in one message (list them), and record their answer in the evidence file's last section.
 
-**Rules check, every phase:** run `sh scripts/check-rules.sh` too and show its E2 (Agora) and E7 (credentials) lines: a leaked key or Agora missing from the path is a stop, whatever the phase. On the **last phase** (submission), also run the `judge` agent in project mode: any disqualifier FAILED blocks the tag, just like a FAILED criterion.
+**Rules check, every phase:** run `sh scripts/check-rules.sh` too and show its X1 (new repo), X6 (credentials/personal data) and X7/X8 (deadline/freeze) lines: any FALHA there is a stop, whatever the phase. On the **last phase** (submission), also run the `judge` agent in project mode: any disqualifier FAILED blocks the tag, just like a FAILED criterion.
 
 ## 3. Tag
 

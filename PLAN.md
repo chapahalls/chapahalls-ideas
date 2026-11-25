@@ -2,16 +2,16 @@
 
 > <One-line pitch: who it is for and what it does for them.>
 
-- **Event:** UNMUTE by Agora · 2026-11-21 09:00 → **2026-11-22 12:00 (UTC-3)** submission · 13:00 pitches
+- **Event:** Hack Brasil 2026 · trilha Logística & automação · submissão até **2026-11-30 23:59 (UTC-3)** · repos congelados 12-01 → 12-12 · final presencial **2026-12-12** (São Paulo). Histórico: começou no UNMUTE by Agora (21-22/11).
 - **Rules & scoring:** `HACKATHON.md` (`/judge` scores against it)
-- **Chosen idea:** `ideas/<slug>.md`
-- **Team:** Quarteto Chapahalls — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`). Inscrição dos 3 confirmada (E1).
+- **Chosen idea:** RODAR (`ideas/rodar.md`); problema detalhado em `ideas/demora-em-docas/descoberta.md`
+- **Team:** RODAR — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`), Eduardo. 4 = máximo do Hack Brasil (X9). Conferir no painel.
 - **Definition of done:** the demo path below works from a fresh clone, following `README.md`.
 
 ## Demo path
 
 <!-- The exact steps you will show the judges (2 min demo). The verifier walks this at every phase close.
-     Score-driven: show a real voice conversation through Agora (C1/C2), one interruption (barge-in), one failure + recovery. -->
+     Score-driven (HACKATHON.md): the product working end to end on the public demo (H1), the effect on the truck stopped at the dock (H3), one failure + recovery. Fits the 3-min video. -->
 
 1. <step>
 2. <step>

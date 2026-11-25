@@ -1,6 +1,6 @@
-# UNMUTE · by Agora: ideias
+# RODAR: ideias e pesquisa
 
-Repositório do time para **juntar e escolher ideias** para o hackathon UNMUTE by Agora (21 e 22/11/2026), feito a partir do hackathon kit.
+Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **Hack Brasil 2026** (trilha Logística & automação, submissão até 30/11/2026 23h59). O código fica em [rodar-backend](https://github.com/rodarglobal/rodar-backend), [rodar-web](https://github.com/rodarglobal/rodar-web) e [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). O projeto começou no UNMUTE by Agora (21 e 22/11/2026), a partir do hackathon kit.
 
 | O quê | Onde |
 |---|---|
@@ -8,7 +8,8 @@ Repositório do time para **juntar e escolher ideias** para o hackathon UNMUTE b
 | Ideias (uma por arquivo) + ranking | [`ideas/`](ideas/README.md) |
 | Nova ideia | `/idea <descrição>` no Claude Code, ou copie `ideas/TEMPLATE.md` |
 | Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge projeto` (pré-entrega) |
-| Checagem mecânica das regras | `sh scripts/check-rules.sh` |
+| Checagem mecânica das regras | `sh scripts/check-rules.sh` (procura os três repos de código ao lado deste) |
+| Pesquisa do problema (demora em docas) | [`ideas/demora-em-docas/descoberta.md`](ideas/demora-em-docas/descoberta.md) |
 | Skill + docs MCP da Agora | já configurado em `.claude/settings.json`: ao abrir o Claude Code no repo, aceite instalar o plugin `agora`. Manual: `/plugin marketplace add AgoraIO/skills` e `/plugin install agora@agora-skills` |
 
 Fluxo: cada um registra ideias → `/judge` monta o ranking → o time marca uma como `escolhida` → `/kickoff` transforma essa ideia no `PLAN.md`.
