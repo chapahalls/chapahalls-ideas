@@ -181,6 +181,11 @@ O RODAR atua na 3 e alimenta a 2.
 - Nos portos, sem integração com o agendamento (APS, Carga Online), não ajusta a janela; só registra e avisa [H].
 - O reconhecimento de voz em cabine barulhenta e com sotaques regionais é um risco técnico [H].
 
+**Como vendemos ([ADR-0001](../../docs/adr/0001-integracao-setup-e-tres-dores.md)):** o lado do recebedor não precisa de integração, porque o aviso chega por voz ou ligação. A integração é com os sistemas **da transportadora**: TMS, rastreador e financeiro. A venda é setup + assinatura por caminhão. O dashboard é a vitrine e atende quem não tem sistema. O pitch fala de três dores:
+- **caminhoneiro:** espera, estadia e acessibilidade;
+- **dono:** ~R$ 146/h de caminhão parado e CCO sobrecarregado;
+- **financeiro:** estadia não faturada e custo abaixo da franquia nunca cobrado.
+
 **Menor versão útil:** já existe. São 512 testes e uma validação ponta a ponta de 33/33 etapas, segundo os READMEs. Faltam a demo pública e o vídeo (seção 6).
 
 **Recursos necessários:**
