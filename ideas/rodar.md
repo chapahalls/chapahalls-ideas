@@ -16,11 +16,20 @@
 
 ## Impacto (H3)
 
-- **Quem:** transportadoras (compradoras) e seus motoristas (usuários). Também ganham os recebedores (CDs, atacados, home centers, terminais portuários) que querem preparar a doca.
+- **Quem (três frentes, [ADR-0001](../docs/adr/0001-integracao-setup-e-tres-dores.md)):**
+  - **caminhoneiro**, o usuário;
+  - **dono** (transportadora ou autônomo dono do caminhão), que decide a compra;
+  - **financeiro**, que fatura a estadia.
+
+  O recebedor (CD, atacado, home center, terminal) recebe o aviso, mas não compra.
 - **Problema concreto:**
   - **CDs, atacados e lojas:** na Grande SP, a descarga levou 5h09 em média em 2025 e **11h40 nos CDs**; nos atacadistas e atacarejos, 5h56; nos home centers, 4h33 [F1]. 91% dos autônomos que esperam mais de 5h não recebem a estadia [F2].
   - **Portos:** em Santos, o motorista chega a pagar ~R$ 800 por 24h de pátio regulador [F25]. Em Paranaguá, foram 507 mil caminhões no pátio em 2025 [F22]. Em Miritituba, a fila chegou a 45 km e a espera a até 3 dias [F26].
 - **Por que o problema sobrevive:** a lei já prevê a estadia [F16], mas o tempo parado não tem registro nem dono. E os sistemas que existem (agendamento, gestão de pátio, portais portuários) **pressupõem que o motorista lê e digita** [F19][F24].
+- **A dor de cada frente:**
+  - **Caminhoneiro:** horas paradas, estadia não paga, proibido de digitar dirigindo [F30], e no porto ainda paga o pátio [F25].
+  - **Dono:** o caminhão parado custa ~R$ 146/h, e o CCO vive de ligação e redigitação.
+  - **Financeiro:** a estadia devida não é faturada. Uma espera de 4h (~R$ 323) nunca é cobrada, e a estadia cobre só ~metade do custo da hora [F16].
 - **Efeito esperado:**
   - o recebedor sabe da chegada **antes** e prepara a doca (o melhor recebedor de SP descarrega em 2h [F1]);
   - cada hora parada vira **prova com hora do servidor**, e a estadia devida vira um valor em R$;
@@ -53,6 +62,8 @@
 
 ## Implementação técnica (H2)
 
+- **O que vendemos:** a **camada de integração** com os sistemas que a transportadora já usa (TMS, rastreador, financeiro, agendamento). O dashboard é a vitrine e atende o cliente sem sistema (ADR-0001).
+- **Portas e adaptadores:** os contratos ficam em `rodar-backend/backend/app/portas.py`, e cada um tem um adaptador real e um fake. Hoje os adaptadores reais são de infraestrutura (Agora, OpenAI, Twilio). Os de mercado (TMS via EDI OCOREN, rastreador, ERP, agendamento portuário) estão no roadmap. **Não chamar de integração o que não existe como adaptador.**
 - **Arquitetura:** o app do motorista (Expo) fala com a nuvem da Agora. O backend (FastAPI + Postgres) é o plano de controle (tokens, join/leave/speak/call, LLM próprio com ferramentas, regras). O painel do CCO (React + Vite) recebe eventos por SSE.
 - **Por que essas tecnologias:** a Agora entrega áudio em tempo real com interrupção (barge-in) e telefonia. O LLM próprio permite ferramentas e regras de negócio (estadia, escalonamento).
 - **Qualidade:** CI com lint e testes nos três repos, JWT assinado, papel `cco`, CORS restrito e limite de ligações.
@@ -64,7 +75,8 @@
   1. "11h40 parado num CD de SP. 9 em cada 10 autônomos não recebem pela espera."
   2. "Quem está ao volante não pode digitar, e metade dos brasileiros de 50 a 64 anos não lê com fluência."
   3. O produto por voz: aviso, chegada, estadia, escalonamento.
-  4. "Estadia comprovada: R$ X."
+  4. O mesmo evento chegando ao sistema da transportadora (se houver conector demonstrável) e ao painel.
+  5. "Estadia comprovada: R$ X", com as três frentes: o motorista para de esperar sem dono, o dono recupera hora de caminhão, o financeiro fatura.
 - **Para um júri que não é de logística:** "o caminhão fica horas parado esperando para descarregar, ninguém paga por isso, e quem poderia avisar está dirigindo".
 
 ## Escopo até o prazo (30/11/2026 23h59)
@@ -75,6 +87,7 @@
   - não integra com o agendamento dos portos (APS, Carga Online);
   - o ASR em cabine barulhenta e com sotaques regionais ainda não foi testado;
   - o GPS de celular é contestável (a dupla prova com o rastreador é simulada).
+- **Antes de 30/11, se der tempo:** um conector de mercado demonstrável, sem integração com nenhum cliente real. O mais barato é gerar a ocorrência no formato **EDI OCOREN** a partir dos eventos de chegada e descarga. Isso é código no `rodar-backend` (responsável: Lucas).
 - **Próximos passos (final, 12/12):**
   - validação com motoristas de 50 anos ou mais;
   - número telefônico real para o recebedor;

@@ -1,6 +1,6 @@
-# <Project name>
+# RODAR
 
-> <One-line pitch: who it is for and what it does for them.>
+> Para transportadoras: um agente de voz que avisa o recebedor, conta a espera na doca e prova cada hora parada, sem o motorista tocar no celular, e entrega esses eventos ao TMS, ao rastreador e ao financeiro que a empresa já usa ([ADR-0001](docs/adr/0001-integracao-setup-e-tres-dores.md)).
 
 - **Event:** Hack Brasil 2026 · trilha Logística & automação · submissão até **2026-11-30 23:59 (UTC-3)** · repos congelados 12-01 → 12-12 · final presencial **2026-12-12** (São Paulo).
 - **Rules & scoring:** `HACKATHON.md` (`/judge` scores against it)
@@ -45,6 +45,15 @@ Status values: planned | open | done (<date> · phase/<n>-<slug>)
 ## Parking lot
 
 <!-- Ideas we are not doing now. Pull one into a phase via /adr if the plan changes. -->
+
+Conectores de mercado (ADR-0001). Cada um vira um adaptador em `rodar-backend/backend/app/integracoes/`, atrás de uma porta:
+
+- **TMS** via EDI OCOREN (Proceda): Senior, TOTVS, Bsoft. Ocorrências de chegada, espera e descarga.
+- **Rastreador/telemetria** (Sascar, Omnilink, Autotrac): troca o GPS simulado pela dupla prova real.
+- **Financeiro/ERP:** estadia devida por entrega, para faturar ao embarcador ou recebedor.
+- **Gerenciadora de risco:** ocorrências em rota.
+- **Agendamento de docas e pátio** (YMS) e **agendamento portuário** (APS Santos, Carga Online Paranaguá): o aviso de chegada vai para a janela, e o tempo de pátio é registrado.
+- **Telefonia real** para o recebedor (SIP; avaliar Nvoip).
 
 ## Dropped
 

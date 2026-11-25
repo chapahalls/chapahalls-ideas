@@ -19,14 +19,19 @@
 
   O RODAR troca a tela pela **conversa por voz**.
 - **Resultado:** o recebedor prepara a doca antes; a espera vira prova com hora e valor em R$; a central só é chamada nas exceções.
+- **O que vendemos ([ADR-0001](docs/adr/0001-integracao-setup-e-tres-dores.md)):** a **camada de integração**. A voz do motorista vira evento estruturado e é entregue aos sistemas que a transportadora já usa (TMS, rastreador, financeiro). O **dashboard** é a vitrine e atende o cliente que não tem sistema. Não é o diferencial.
 
-## 2. Quem usa e quem paga
+## 2. As três dores (quem usa, quem decide, quem paga)
 
-| Papel | O que ganha |
-|---|---|
-| **Motorista** (usuário; CLT ou autônomo agregado) | Fala em vez de digitar. A espera fica registrada sem ele precisar pedir |
-| **Transportadora / CCO** (compradora, ~R$ 100 por caminhão por mês) | Menos ligações e redigitação; prova para cobrar a estadia; ranking de recebedores |
-| **Recebedor** (CD, atacado, home center, terminal) | Aviso antecipado para preparar doca e conferente |
+| Frente | A dor, com número | O que o RODAR entrega |
+|---|---|---|
+| **Caminhoneiro** (usuário; CLT ou autônomo) | Espera de 5h09 em média e 11h40 em CDs [F1]. 91% não recebem a estadia [F2]. Não pode digitar dirigindo [F30]. 51% dos brasileiros de 50 a 64 anos são analfabetos funcionais [F29]. No porto, paga até ~R$ 800 por 24h de pátio [F25] | Fala em vez de digitar. A espera fica registrada sem ele pedir, e a prova é dele também |
+| **Dono** (transportadora ou autônomo dono do caminhão; quem decide a compra) | O caminhão parado custa ~R$ 146/h (estimativa em [`impacto-e-custos.md`](ideas/parceiro-de-estrada/impacto-e-custos.md)). O CCO vive de ligação e redigitação em vários sistemas | Aviso antecipado ao recebedor, CCO só nas exceções, eventos entregues ao TMS e ao rastreador sem redigitar |
+| **Financeiro** (quem fatura e cobra) | A estadia devida não é faturada. Uma espera de 4h (~R$ 323) nunca é cobrada, porque fica abaixo da franquia. A estadia (R$ 75/h para 30 t) cobre só ~metade do custo da hora [F16] | Estadia devida por entrega, em R$, com prova (hora do servidor + GPS), pronta para faturar ou renegociar contrato; ranking de recebedores |
+
+O **recebedor** (CD, atacado, home center, terminal) não compra. Ele recebe o aviso antecipado para preparar a doca e o conferente.
+
+**Modelo de receita (ADR-0001):** setup de implantação e integração + assinatura por caminhão (~R$ 100/mês). O preço do setup está em aberto [H].
 
 ## 3. Fluxo do produto
 
@@ -36,7 +41,7 @@
 4. **Espera:** o agente pergunta o status por voz. Quando o recebedor não responde, insiste com o CCO e, sem resposta, liga para o recebedor e registra a resposta como prova.
 5. **Descarga:** o motorista confirma por voz; o contador fecha e o valor da estadia devida aparece no painel.
 
-## 4. Arquitetura (implementada)
+## 4. Arquitetura
 
 | Repositório | Papel |
 |---|---|
@@ -45,6 +50,19 @@
 | [rodar-web](https://github.com/rodarglobal/rodar-web) | Site e painel do CCO (React + Vite): frota, Tasks, linha do tempo com transcrição, indicadores de estadia |
 
 A voz roda na **Agora Conversational AI** (ASR ARES, TTS MiniMax), e o LLM é da OpenAI. O áudio vai do aparelho direto para a nuvem da Agora; o backend é o plano de controle. Não guardamos áudio, só a transcrição.
+
+**Integração por portas e adaptadores.** O backend define contratos em `backend/app/portas.py` (`typing.Protocol`). Cada porta tem um adaptador real em `backend/app/integracoes/` e um fake para teste. Um sistema de mercado entra como adaptador novo, sem mexer nas regras de domínio (estadia, geocerca, escalonamento).
+
+| Sistema de mercado | Para quê | Estado |
+|---|---|---|
+| Agora (voz e chamada), OpenAI (LLM), Twilio (SIP) | Voz e ligação | **Adaptador real** |
+| TMS via EDI OCOREN (Senior, TOTVS, Bsoft) | Ocorrências de chegada, espera e descarga sem redigitar | Roadmap |
+| Rastreador/telemetria (Sascar, Omnilink, Autotrac) | Dupla prova real da posição (hoje simulada) | Roadmap |
+| Financeiro/ERP | Estadia devida por entrega para faturar | Roadmap |
+| Gerenciadora de risco | Ocorrências em rota | Roadmap |
+| YMS / agendamento de docas; agendamento portuário (APS, Carga Online) | Aviso entra na janela; tempo de pátio registrado | Roadmap |
+
+Só chamamos de integração o que está como **adaptador real** (ADR-0001).
 
 ## 5. Onde atuar primeiro
 
@@ -62,7 +80,7 @@ A voz roda na **Agora Conversational AI** (ASR ARES, TTS MiniMax), e o LLM é da
 ## 7. Evolução
 
 - Piloto com uma transportadora; teste de voz × formulário com motoristas de 50 anos ou mais.
-- Integração com agendamento portuário e TMS (EDI OCOREN).
+- Conectores de mercado da tabela da seção 4, começando pelo TMS via EDI OCOREN, que é padrão do mercado.
 - Voz offline para trechos sem sinal.
 - Ranking público de recebedores por tempo de descarga.
 
