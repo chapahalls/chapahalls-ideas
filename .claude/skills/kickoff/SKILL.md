@@ -13,10 +13,10 @@ Input from the user: $ARGUMENTS
 
 Read `HACKATHON.md` (rubric, disqualifiers, deliverables) and `ideas/README.md`. If an idea is marked `escolhida`, start from `ideas/<slug>.md` and its score in `ideas/scores/`. If none is chosen, suggest the top of the ranking and ask. Then:
 
-- The **demo path** must show, through Agora: a real voice conversation, one interruption (barge-in) and one failure with recovery (C1 and C2 are 50% of the score). It has to fit the 2-minute video.
-- The **last phase** is "Submission" and ends before **2026-11-22 12:00 (UTC-3)**. Its acceptance criteria: `sh scripts/check-rules.sh` exits 0; public repo with a delivery tag (e.g. `v1.0-entrega`); narrated video ≤ 2 min; deck ≤ 10 slides; OS description covering problem, audience, solution and Agora usage.
-- For the stack (ADR 0001), use the `agora` skill / Agora docs MCP to pick the Agora product (Conversational AI Engine, RTC, RTM...) and its quickstart, instead of guessing APIs.
-- The README you write must have the sections that `scripts/check-rules.sh` looks for: how to run, dependencies/requirements, delivered version, pre-existing components and simulations.
+- The **demo path** must show the product working end to end on a public HTTPS demo (H1 execução is the first tie-breaker, and the jury may not install anything), with one failure and its recovery. It has to fit the 3-minute video.
+- The **last phase** is "Submission" and ends before **2026-11-30 23:59 (UTC-3)**. Its acceptance criteria: `sh scripts/check-rules.sh` exits 0 on the three code repos; demo HTTPS link up; video ≤ 3 min without login; panel submission with name, tagline, description, track, repo links, demo and video (S1-S6). After that, no commits until the final on 2026-12-12.
+- Tools are free (item 6.3). For anything touching Agora (our voice stack), use the `agora` skill / Agora docs MCP instead of guessing APIs.
+- The README you write must have the sections that `scripts/check-rules.sh` looks for: how to run, dependencies/requirements, pre-existing/third-party components, simulations, demo link and video link.
 
 ## 1. Gather what's missing
 

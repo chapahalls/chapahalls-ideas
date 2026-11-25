@@ -1,17 +1,17 @@
-# <Project name>
+# RODAR
 
-> <One-line pitch: who it is for and what it does for them.>
+> Para transportadoras: um agente de voz que avisa o recebedor, conta a espera na doca e prova cada hora parada, sem o motorista tocar no celular, e entrega esses eventos ao TMS, ao rastreador e ao financeiro que a empresa já usa ([ADR-0001](docs/adr/0001-integracao-setup-e-tres-dores.md)).
 
-- **Event:** UNMUTE by Agora · 2026-11-21 09:00 → **2026-11-22 12:00 (UTC-3)** submission · 13:00 pitches
+- **Event:** Hack Brasil 2026 · trilha Logística & automação · submissão até **2026-11-30 23:59 (UTC-3)** · repos congelados 12-01 → 12-12 · final presencial **2026-12-12** (São Paulo).
 - **Rules & scoring:** `HACKATHON.md` (`/judge` scores against it)
-- **Chosen idea:** `ideas/<slug>.md`
-- **Team:** Quarteto Chapahalls — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`). Inscrição dos 3 confirmada (E1).
+- **Chosen idea:** RODAR (`ideas/rodar.md`); problema detalhado em `ideas/demora-em-docas/descoberta.md`
+- **Team:** RODAR — Jeferson (`@STT4jeferson`), Henry (`@HenryFacens`), Lucas (`@LucasLCO`), Eduardo. 4 = máximo do Hack Brasil (X9). Conferir no painel.
 - **Definition of done:** the demo path below works from a fresh clone, following `README.md`.
 
 ## Demo path
 
 <!-- The exact steps you will show the judges (2 min demo). The verifier walks this at every phase close.
-     Score-driven: show a real voice conversation through Agora (C1/C2), one interruption (barge-in), one failure + recovery. -->
+     Score-driven (HACKATHON.md): the product working end to end on the public demo (H1), the effect on the truck stopped at the dock (H3), one failure + recovery. Fits the 3-min video. -->
 
 1. <step>
 2. <step>
@@ -45,6 +45,15 @@ Status values: planned | open | done (<date> · phase/<n>-<slug>)
 ## Parking lot
 
 <!-- Ideas we are not doing now. Pull one into a phase via /adr if the plan changes. -->
+
+Conectores de mercado (ADR-0001). Cada um vira um adaptador em `rodar-backend/backend/app/integracoes/`, atrás de uma porta:
+
+- **TMS** via EDI OCOREN (Proceda): Senior, TOTVS, Bsoft. Ocorrências de chegada, espera e descarga.
+- **Rastreador/telemetria** (Sascar, Omnilink, Autotrac): troca o GPS simulado pela dupla prova real.
+- **Financeiro/ERP:** estadia devida por entrega, para faturar ao embarcador ou recebedor.
+- **Gerenciadora de risco:** ocorrências em rota.
+- **Agendamento de docas e pátio** (YMS) e **agendamento portuário** (APS Santos, Carga Online Paranaguá): o aviso de chegada vai para a janela, e o tempo de pátio é registrado.
+- **Telefonia real** para o recebedor (SIP; avaliar Nvoip).
 
 ## Dropped
 

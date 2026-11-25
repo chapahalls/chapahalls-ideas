@@ -40,7 +40,7 @@ Pesquisa de 21/11/2026 para responder três perguntas: os caminhoneiros falam de
 - 🟢 Veículos de carga estão em **28% dos sinistros nas rodovias federais** com menos de 5% da frota; sinistro fatal custa em média **R$ 763,7 mil** (ONTL/Infra S.A. 2026, dados PRF 2024). Detalhes em [mercado-e-evidencias.md](mercado-e-evidencias.md).
 - 🔴 "46% das mortes nas rodovias federais envolvem caminhões" (Anuário PRF 2025 via [Mecânica Online](https://mecanicaonline.com.br/2026/09/quase-metade-das-mortes-em-rodovias-federais-envolve-caminhoes-tecnologia-pode-reduzir-riscos/)): **não usar** até conferir no anuário original.
 - 🟡 De janeiro a julho de 2026 foram 1.681 mortes em sinistros com caminhões, alta de 4,5% sobre 2025 ([Portal do Trânsito](https://www.portaldotransito.com.br/noticias/mortes-em-sinistros-envolvendo-caminhoes-aumentam-nas-rodovias-federais-em-2026/)). A própria PRF diz que esses dados não permitem atribuir causa.
-- ⚠️ A PRF registra a causa "condutor dormindo" (4.524 menções em sinistros com veículos de carga nas rodovias concedidas), mas o período não é claro e um sinistro tem várias causas. Não dizer na banca que "X% dos acidentes são por sono" no Brasil. *(Corrigido: a versão anterior dizia que a PRF não tinha esse dado.)*
+- ⚠️ A PRF registra a causa "condutor dormindo" (4.524 menções em sinistros com veículos de carga nas rodovias concedidas), mas o período não é claro e um sinistro tem várias causas. Não dizer no júri que "X% dos acidentes são por sono" no Brasil. *(Corrigido: a versão anterior dizia que a PRF não tinha esse dado.)*
 
 ## 4. Comunicação
 
@@ -62,7 +62,7 @@ Pesquisa de 21/11/2026 para responder três perguntas: os caminhoneiros falam de
 - 🟢 **37,8% dizem que os locais de carga e descarga têm pouca ou nenhuma estrutura** em condições ruins (27,9% poucas e ruins + 9,9% nenhuma; CNT 2025, p. 24).
 - Isso dá força ao **RDO do trecho** ("esperei 2h pra descarregar em Registro"): o tempo de espera conta como jornada desde o STF (ADI 5322) e hoje mal é registrado. É um gancho bom para a transportadora e o embarcador pagarem pelo produto.
 
-## 6. O que vai contra a ideia (para a banca não pegar de surpresa)
+## 6. O que vai contra a ideia (para o júri não pegar de surpresa)
 
 - 🟢 **Os motoristas não pedem mais descanso:** 54,5% acham as 11h de descanso "mais que suficientes" e só 2,6% acham insuficientes; 58% querem poder **fracionar** o descanso (CNT 2025, p. 31-34). Um agente que "manda parar" pode ser visto como chato ou como fiscal. **Mitigação:** o agente sugere e oferece o posto bom mais perto, sem ordenar; os níveis 1 e 2 não saem do motorista (já está no plano).
 - 🟢 **Postos de parada:** os serviços que mais importam são banheiro com chuveiro (79%), restaurante (67,8%) e estacionamento com vigilância (55,8%) (CNT 2025, p. 23). **Use isso:** quando o agente sugerir uma parada, ele diz que o posto tem chuveiro e vigilância. É o que faz o motorista aceitar.
@@ -79,7 +79,7 @@ Usar só estes, todos 🟢 ou 🟡 confirmados:
 4. **41% passam a maior parte do dia esperando carga ou descarga.** (CNT 2025)
 5. **Veículos de carga em 28% dos sinistros nas federais, com menos de 5% da frota.** (ONTL/Infra S.A. 2026)
 
-## 8. Lacunas e como validar hoje (C5 da banca)
+## 8. Lacunas e como validar
 
 O que **não** está provado: solidão medida, dor de comunicação com o CCO, e se o motorista aceitaria um agente que percebe cansaço.
 
@@ -90,7 +90,7 @@ Dá para fechar parte disso antes do pitch:
   2. Como você avisa a transportadora de um problema na estrada? O que é mais chato nisso?
   3. Quando vê um acidente, como avisa quem vem atrás?
   4. Você usaria um app que conversa com você e percebe quando você está cansado? O que faria você desligar?
-- Registrar as respostas em `docs/validacao.md` (sem nomes nem telefones, por E7). Isso vira o slide de validação e sobe o C5.
+- Registrar as respostas em `docs/validacao.md` (sem nomes nem telefones, pela LGPD). Isso vira o slide de validação.
 
 ## Fonte principal
 

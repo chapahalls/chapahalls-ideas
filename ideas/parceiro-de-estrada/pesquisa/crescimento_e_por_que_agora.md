@@ -55,7 +55,7 @@ A base física cresce devagar, cerca de 2% ao ano em veículos no RNTRC entre 20
 - Cálculo: a receita do TRC de 2022 a 2024 teve CAGR nominal de cerca de 9,8% a.a. Descontando IPCA de cerca de 4–5% a.a., fica um crescimento real de cerca de 5% a.a. Os valores em R$ são derivados de percentual × total e devem ser checados no Sidra.
 
 ### Inferences
-- O "TAM físico" (veículos e motoristas) é **grande e estável, com cerca de 2% a.a.**, não explosivo. Para a banca, é honesto dizer: "mercado enorme, maduro, sub-digitalizado".
+- O "TAM físico" (veículos e motoristas) é **grande e estável, com cerca de 2% a.a.**, não explosivo. Para o júri, é honesto dizer: "mercado enorme, maduro, sub-digitalizado".
 - A queda de vendas em 2025–26 (juros altos, Euro 6) **enfraquece um argumento de "frota nova e conectada de fábrica"** e reforça um produto **retrofit/app em celular** para uma frota velha (TAC com 24 anos de idade média), que não terá telemática OEM.
 - A escassez de motoristas (88% com dificuldade, saldo de contratações caindo) é um vetor de demanda: retenção e bem-estar viram orçamento.
 
@@ -238,7 +238,7 @@ Premissas (todas minhas, a validar):
 - Fontes da tabela: [ANTT/Câmara 2015](https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-temporarias/especiais/55a-legislatura/marco-regulatorio-transporte-rodoviario-de-cargas/documentos/audiencias-publicas/mesa-1-luis-antonio-festino-assessor-na-cnttt); [ANTT Anuário 2025](https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/anuario_trc_2025_antt.pdf); [Teletime 2021](https://teletime.com.br/19/04/2021/4g-no-brasil-avanca-mas-cobertura-total-ainda-nao-e-realidade-em-um-terco-das-cidades/); [Teletime nov/2025](https://teletime.com.br/28/11/2025/cobertura-das-estradas-federais-requer-cerca-de-4-mil-novos-sites/); [Teletime nov/2026](https://teletime.com.br/04/11/2026/anatel-roaming-rodovias/)
 - Contexto de valor: a receita do TRC passou de cerca de R$ 354 bi (2022) para cerca de R$ 427 bi (2024). O TAM acima equivale a cerca de 0,16% da receita do setor [P, derivado] — [Agência Gov](https://agenciagov.ebc.com.br/noticias/202608/em-2024-setor-de-servicos-pagou-r-r-644-2-bi-em-salarios-para-15-9-milhoes-de-pessoas)
 
-### Dados que enfraquecem o argumento de crescimento (levar à banca)
+### Dados que enfraquecem o argumento de crescimento (levar ao júri)
 - Emplacamentos de caminhões: -8,6% em 2025, -3,9% em jan–set/2026 e projeção de -7,8% no ano. Produção de 130,5 mil para 118,3 mil [S] — [AutoData](https://www.autodata.com.br/noticias/2026/10/05/vendas-de-caminhoes-reduzem-ritmo-de-queda-para-4-no-ano/136941/)
 - Autônomos (TAC) no RNTRC caem cerca de 1,8% a.a. desde 2015. A frota do TAC tem 24,4 anos de idade média [P] — [ANTT Anuário 2025](https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/anuario_trc_2025_antt.pdf)
 - Admissões de motoristas -1,18% (2025). Saldo líquido de contratações -46,5% [P] — [ANTT RAIS 2024](https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/infograficoperfilmotoristasrais2024.pdf)

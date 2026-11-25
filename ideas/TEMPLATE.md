@@ -2,50 +2,45 @@
 
 - **Autor(es):** <quem trouxe>
 - **Status:** rascunho | avaliada | escolhida | descartada
-- **Nota do judge:** _(preenchida por `/judge`)_
+- **Nota do judge:** _(preenchida por `/judge`, de 0 a 40)_
 
-> <Pitch em uma linha: quem é o usuário e o que a voz resolve para ele.>
+> <Frase de apresentação: quem é o usuário e o que o produto muda para ele.>
 
-## Problema e público (C3 · 20%)
+## Trilha e enquadramento
+
+- **Trilha:** <uma das 7; a nossa é Logística & automação>
+- **Por que o problema e o público estão dentro dela:** <citar o texto da trilha em `HACKATHON.md`. Tema citado de passagem não basta (item 5.4)>
+
+## Impacto (H3 · 10 pontos)
 
 - **Quem:** <público específico, não "todo mundo">
-- **Problema concreto:** <a dor, com um exemplo real ou um número>
-- **Benefício:** <o que muda para essa pessoa>
+- **Problema concreto:** <a dor, com um número brasileiro e a fonte>
+- **Efeito esperado:** <o que muda, em horas, R$ ou % e para quem>
+- **Como vamos mostrar o efeito:** <dado, piloto, entrevista, cálculo>
 
-## Por que voz (C4 · 15%)
+## Execução técnica (H1 · 10 pontos)
 
-<O que fica melhor por ser voz, e não um app/chat de texto. Mãos ocupadas? Acessibilidade? Velocidade? Emoção?>
-
-## A conversa (C1 · 25%)
-
-Um diálogo de exemplo de 4-8 falas, do jeito que vai aparecer na demo:
-
-```
-Usuário: ...
-Agente:  ...
-```
-
-- **Interrupção (barge-in):** <onde o usuário corta o agente e o que acontece>
-- **Falha e recuperação:** <o que acontece quando o agente não entende / a API cai>
-- **Latência alvo:** <ex.: resposta < 1,5 s>
-
-## Como a Agora entra (C2 · 25%)
-
-- **Produto Agora:** <Conversational AI Engine, RTC, RTM, avatar, ...>
-- **Fluxo:** <microfone → Agora → LLM/STT/TTS → ... → resposta em voz>
-- **O que a demo mostra da integração:** <o que a banca vê funcionando, não só o logo>
-
-## Escopo para ~24h
-
-- **Demo path (o que a banca vê, 2 min):**
+- **O que funciona de ponta a ponta na demo:**
   1. <passo>
   2. <passo>
-- **Simulado / mockado:** <hardware, dados, integrações fingidas (precisa ser declarado)>
-- **Preexistente:** <código, modelos, assets que já existiam>
+- **Demo pública (HTTPS):** <onde fica no ar e como o júri usa sem instalar nada>
+- **Falha e recuperação:** <o que acontece quando a rede ou uma API cai>
+- **Simulado / mockado:** <dados, integrações fingidas: declarar no README>
+
+## Implementação técnica (H2 · 10 pontos)
+
+- **Arquitetura:** <componentes e como conversam>
+- **Tecnologias e por quê:** <cada escolha com o motivo; nenhuma é obrigatória>
+- **Qualidade:** <testes, CI, tipagem, segurança>
+- **Terceiros e código aberto copiado:** <com a origem na mensagem do commit (item 6.2)>
+
+## Comunicação (H4 · 10 pontos)
+
+- **Roteiro do vídeo (≤ 3 min):** <problema em 1 frase → produto funcionando → resultado>
+- **Para um júri que não é de logística:** <a frase que explica a dor do zero>
+
+## Escopo até o prazo
+
 - **Maior risco técnico:** <o que pode impedir a demo>
-
-## Validação e evolução (C5 · 10%)
-
-- **Como testamos durante o hackathon:** <ex.: 5 pessoas de outras equipes, medir latência>
 - **Limitações conhecidas:** <...>
-- **Próximos passos:** <...>
+- **Próximos passos (final de 12/12):** <...>

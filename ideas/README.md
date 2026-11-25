@@ -5,9 +5,12 @@ O agente `judge` pontua cada uma com a rubrica de [`HACKATHON.md`](../HACKATHON.
 
 ## Ranking
 
-<!-- /judge atualiza esta tabela. Ordem: nota estimada, depois C1, C2, C3 (desempate oficial). -->
+<!-- /judge atualiza esta tabela. Rubrica do Hack Brasil (HACKATHON.md): H1-H4 de 0 a 10, soma 0-40, final exige 20. Ordem: soma, depois H1 e H3 (desempate oficial). -->
 
-| Ideia | Nota (1-5) | C1 Voz | C2 Agora | C3 Problema | C4 Inovação | C5 Validação | C6 Clareza | Eliminatórios | Status |
-|---|---|---|---|---|---|---|---|---|---|
-| [`rodar`](rodar.md) / [`Parceiro de Estrada`](parceiro-de-estrada/README.md) *(Unificada)* | **4,75** | 5 | 5 | 5 | 5 | 3 | 4 | OK | avaliada |
-| [`despacho-por-voz`](despacho-por-voz.md) | 3,50 | 4 | 3 | 4 | 3 | 3 | 4 | E1, E2, E5 em risco | avaliada |
+| Ideia | Nota (0-40) | H1 Execução | H2 Implementação | H3 Impacto | H4 Comunicação | Trilha | Eliminatórios | Status |
+|---|---|---|---|---|---|---|---|---|
+| [`rodar`](rodar.md) (repos `rodarglobal/rodar-*`) | _(rodar `/judge projeto`)_ | | | | | Logística & automação | | escolhida |
+| [`demora-em-docas`](demora-em-docas/descoberta.md) | _(pesquisa do problema, não pontuada)_ | | | | | Logística & automação | | base do `rodar` |
+| [`despacho-por-voz`](despacho-por-voz.md) | — | | | | | Logística & automação | | incorporada ao `rodar` |
+
+Pesquisa de apoio (mercado, custos, concorrentes, riscos): [`parceiro-de-estrada/`](parceiro-de-estrada/README.md).

@@ -1,21 +1,20 @@
 # Project
 
-<!-- /kickoff fills this section. Keep it short: the details live in PLAN.md and README.md. -->
+- **What:** RODAR — agente de IA de voz que avisa o recebedor antes da chegada do caminhão, conta a estadia na doca (Lei 11.442) e só chama a central (CCO) quando alguém precisa decidir. A voz é o diferencial de acessibilidade. O que vendemos é a integração (setup) com os sistemas da transportadora (TMS, rastreador, financeiro); o dashboard é a vitrine. O pitch fala de três dores: caminhoneiro, dono e financeiro ([ADR-0001](docs/adr/0001-integracao-setup-e-tres-dores.md)).
+- **Stack:** FastAPI + Postgres (backend), React + Vite (painel CCO), React Native/Expo (app do motorista), Agora Conversational AI (voz). Docker.
+- **Código:** [rodar-backend](https://github.com/rodarglobal/rodar-backend) · [rodar-web](https://github.com/rodarglobal/rodar-web) · [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). Este repo (`rodar-ideas`) guarda só pesquisa e decisões.
+- **Run it / Test it:** ver o README de cada repositório de código.
 
-- **What:** _(one line)_
-- **Stack:** _(languages, frameworks, hosting)_
-- **Run it:** _(the one command, or see README)_
-- **Test it:** _(the one command)_
+# Hackathon: Hack Brasil 2026 (trilha Logística & automação)
 
-# Hackathon: UNMUTE by Agora
+`HACKATHON.md` has the official rules, scoring (H1-H4, 0-10 each, equal weight), disqualifiers (X1-X10) and submission items (S1-S6). Every decision is weighed against it. **Submission deadline: 2026-11-30 23:59 (UTC-3).** Repos are **frozen** from 12-01 to the final on **2026-12-12** (São Paulo): no commits in that window.
 
-`HACKATHON.md` has the official rules, scoring rubric (C1-C6), disqualifiers (E1-E8) and deliverables (D1-D4). Every decision is weighed against it. Final deadline: **2026-11-22 12:00 (UTC-3)**.
-
-- **Score first.** C1 voice/interaction (25%) and C2 execution + Agora (25%) are half the score and the first tie-breakers. When choosing what to build next, pick what moves C1/C2 in the demo.
-- **Agora must be functional and visible** in the demo and video (E2). A feature that works without Agora in the path doesn't count for C2.
-- **Declare** pre-existing components and anything simulated/mocked in `README.md` (E5, E8).
-- **Agora plugin** (`agora@agora-skills`, from [AgoraIO/skills](https://github.com/AgoraIO/skills)) is enabled in `.claude/settings.json`: it gives the `agora` skill and the Agora docs MCP (`mcp.agora.io`). Use it for anything touching Agora (RTC, RTM, Conversational AI, tokens) instead of guessing APIs from memory.
-- Before submitting, and when asked "are we within the rules?": `/judge projeto` (runs `scripts/check-rules.sh` + the `judge` agent).
+- **Score first.** H1 execução técnica (works and is complete) and H3 impacto (effect on the logistics problem and public) are the tie-breakers, in that order. When choosing what to build next, pick what makes the product visibly work end to end in the demo and the 3-min video.
+- **The jury may not install or run anything** (item 7.4): a live HTTPS demo and the video are what they see. Keep the demo up during evaluation.
+- **Fit the track** (Logística & automação): frame the problem as trucks idle at docks and information flow between motorista, recebedor and CCO, not as driver health or safety.
+- **Tools are free choice.** Agora is our choice for voice, not a requirement; it counts under H2 like any other tech. The Agora plugin (`agora@agora-skills`, Agora docs MCP) stays enabled: use it for anything touching Agora instead of guessing APIs.
+- **Declare** pre-existing/third-party components and anything simulated in each code repo's README. No real personal data in the demo (X6).
+- Before submitting, and when asked "are we within the rules?": `/judge projeto` (runs `scripts/check-rules.sh` on the three code repos + the `judge` agent).
 
 # How we work
 

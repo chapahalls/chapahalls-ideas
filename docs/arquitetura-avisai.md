@@ -1,11 +1,13 @@
-# AvisAI — Arquitetura, design e fluxos (plano para 5 h de implementação)
+# AvisAI — Arquitetura, design e fluxos (plano inicial de implementação)
 
-22/11/2026 · Mobile (Expo / React Native) + CCO web (React + Vite) + servidor do agente (Node). Tudo mockado, **menos a voz pela Agora** (eliminatório E2).
+> **Plano inicial, substituído pela implementação.** O código real está em [rodar-backend](https://github.com/rodarglobal/rodar-backend) (FastAPI + Postgres, **não** o `agent-server` em Node descrito abaixo), [rodar-web](https://github.com/rodarglobal/rodar-web) e [rodar-mobile](https://github.com/rodarglobal/rodar-mobile). AvisAI virou o nome do agente de voz do RODAR. A referência vigente de produto e arquitetura é [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md). O posicionamento (integração, dashboard e três dores) está no [ADR-0001](adr/0001-integracao-setup-e-tres-dores.md). Este arquivo fica como histórico de design (tokens visuais, estados da voz, fluxos de tela).
+
+22/11/2026 · Mobile (Expo / React Native) + CCO web (React + Vite) + servidor do agente (Node). Tudo mockado, **menos a voz pela Agora**.
 
 ## 0. Regras do plano
 
-1. **Mock em tudo, menos na Agora.** Rota, GPS, recebedores, documentos, SSO, TMS e métricas são mock. A conversa por voz (Conversational AI Engine) é real, senão E2 desclassifica. Tudo o que é mock vai declarado no README (E8).
-2. **Chaves fora do app e do git** (E7). App ID/certificado da Agora, chave REST, chave do Google Maps e credenciais do SIP ficam em `.env` (há `.env.example` com os nomes). O app nunca chama a API REST da Agora direto: quem chama é o `agent-server`.
+1. **Mock em tudo, menos na Agora.** Rota, GPS, recebedores, documentos, SSO, TMS e métricas são mock. A conversa por voz (Conversational AI Engine) é real. Tudo o que é mock vai declarado no README (E8).
+2. **Chaves fora do app e do git** (segurança). App ID/certificado da Agora, chave REST, chave do Google Maps e credenciais do SIP ficam em `.env` (há `.env.example` com os nomes). O app nunca chama a API REST da Agora direto: quem chama é o `agent-server`.
 3. **Cortes por prioridade.** P0 entra na demo de qualquer jeito; P1 entra se P0 estiver pronto às 4h00; P2 só depois da gravação do vídeo.
 
 | Prioridade | Mobile | CCO web | Servidor |
@@ -107,7 +109,7 @@ Cor principal: azul da Agora **#099DFD** (cor oficial da marca, via Simple Icons
 
 - **Tipografia:** Inter (texto) e Space Grotesk (números grandes do dashboard e do contador). Escala: 12 / 14 / 16 / 20 / 28 / 40.
 - **Raios:** 8 (inputs), 12 (cards), 999 (botão do microfone e badges).
-- **Estados da voz** (o centro do C1): `idle` (anel cinza) → `listening` (anel `brand-500` pulsando) → `thinking` (três pontos) → `speaking` (onda) → `interrupted` (flash breve ao detectar barge-in). Sempre com legenda em texto, não só cor.
+- **Estados da voz** (o centro da experiência): `idle` (anel cinza) → `listening` (anel `brand-500` pulsando) → `thinking` (três pontos) → `speaking` (onda) → `interrupted` (flash breve ao detectar barge-in). Sempre com legenda em texto, não só cor.
 - **Rede:** banner fixo no topo — "Sem conexão · 3 eventos na fila" (`wait-500`) / "Sincronizado" (`ok-500`, some em 2 s).
 
 `packages/tokens/tailwind-preset.js` exporta `theme.extend` com esses tokens. O mobile usa via **NativeWind** (`presets: [require('@avisai/tokens')]`) e o web via `tailwind.config` com o mesmo preset.
@@ -115,7 +117,7 @@ Cor principal: azul da Agora **#099DFD** (cor oficial da marca, via Simple Icons
 ## 4. i18n
 
 - `i18next` + `react-i18next` nos dois apps; `expo-localization` no mobile para detectar o idioma.
-- Idiomas: `pt-BR` (padrão) e `en` (banca e Executive Dinner).
+- Idiomas: `pt-BR` (padrão) e `en` (júri e público internacional).
 - Um namespace por feature (`auth`, `route`, `voice`, `report`, `arrival`, `documents`, `outbox`, `tasks`, `metrics`) em `packages/i18n/locales/<lang>/<ns>.json`.
 - Texto falado pelo agente **não** passa pelo i18n do app: vem do prompt do agente (idioma do LLM/TTS).
 
@@ -154,14 +156,14 @@ documents(id TEXT PK, trip_id TEXT, kind TEXT, title TEXT, file_uri TEXT)
 chunks(id TEXT PK, document_id TEXT, text TEXT, embedding BLOB)  -- Float32Array
 ```
 
-**Banco vetorial local, versão de 5 h:** os embeddings dos PDFs mock são **pré-calculados** e vêm num JSON junto com o app; no primeiro uso vão para `chunks`. A busca é cosseno em JS sobre os chunks da viagem (dezenas de linhas, roda em milissegundos). A extensão `sqlite-vec` fica para depois: é mais rápida, mas custa tempo de build que não temos. A pergunta do motorista vira embedding pelo mesmo modelo no `agent-server` (ou, no mock, por palavra-chave) e os 3 melhores trechos vão como contexto para o agente, que responde citando o documento ou diz "não encontrei".
+**Banco vetorial local, versão do MVP:** os embeddings dos PDFs mock são **pré-calculados** e vêm num JSON junto com o app; no primeiro uso vão para `chunks`. A busca é cosseno em JS sobre os chunks da viagem (dezenas de linhas, roda em milissegundos). A extensão `sqlite-vec` fica para depois: é mais rápida, mas custa tempo de build que não temos. A pergunta do motorista vira embedding pelo mesmo modelo no `agent-server` (ou, no mock, por palavra-chave) e os 3 melhores trechos vão como contexto para o agente, que responde citando o documento ou diz "não encontrei".
 
 ### 5.4 Offline-first (fila de mensagens)
 
 - **Toda escrita** (reporte, ocorrência, check-in, descarga) vira linha no `outbox` com `idempotency_key` (UUID) e aparece na tela na hora, a partir de `events`.
 - **Rede boa / fraca / sem rede:** `NetInfo` dá conectado ou não; "fraca" = ping ao `agent-server` acima de 1,5 s ou 2 falhas seguidas. Com rede fraca, a fila só manda eventos críticos (chegada, ocorrência) e adia o resto.
 - **Envio:** em ordem de criação, um por vez, com retry exponencial (2 s, 4 s, 8 s… até 60 s). O servidor ignora `idempotency_key` repetida, então reenviar não duplica.
-- **Voz sem rede:** a Agora precisa de internet. Sem rede, o app troca para modo texto e grava o pedido na fila ("vou avisar o CCO assim que voltar o sinal"). Isso é a recuperação de falha do C1.
+- **Voz sem rede:** a Agora precisa de internet. Sem rede, o app troca para modo texto e grava o pedido na fila ("vou avisar o CCO assim que voltar o sinal"). Isso é a recuperação de falha.
 
 ```mermaid
 stateDiagram-v2
@@ -237,7 +239,7 @@ Bibliotecas: `react-router`, `@tanstack/react-query`, `zustand`, `recharts`, `i1
 | Tasks escaladas (3 tentativas) | contagem | onde o CCO falha |
 | % de reportes completos na 1ª resposta | reportes sem pergunta de complemento | qualidade da voz |
 | Ligações CCO ↔ motorista evitadas | contatos resolvidos pelo agente | ganho de capacidade do CCO |
-| Latência da voz (p50/p95) | fim da fala → início da resposta | C1 da banca |
+| Latência da voz (p50/p95) | fim da fala → início da resposta | experiência de voz |
 
 ### 6.3 Fluxo de operação no CCO
 
@@ -294,7 +296,7 @@ interface DomainEvent<T = unknown> {
 
 **Primeiro teste da noite:** português no ASR. A página de exemplo da Agora mostra `en-US`; confirmar o código de idioma `pt-BR` no fornecedor de ASR escolhido antes de qualquer tela.
 
-## 9. Plano de 5 h para 3 pessoas
+## 9. Plano de implementação do MVP (histórico)
 
 | Hora | Pessoa A (voz + servidor) | Pessoa B (mobile) | Pessoa C (CCO web + design) |
 |---|---|---|---|
@@ -321,8 +323,8 @@ GOOGLE_MAPS_API_KEY_WEB=
 API_BASE_URL=http://localhost:8787
 ```
 
-## 11. Declarações para o README (E5/E8)
+## 11. Declarações para o README (preexistente e simulado)
 
 - **Simulado:** GPS e rastreador (trajeto gravado em tempo acelerado), rota, recebedores, documentos (PDFs fictícios), SSO, TMS, eventos do CCO e métricas (gerados), recebedor (pessoa do time ao telefone ou 2º cliente RTC).
 - **Real:** conversa por voz pela Agora Conversational AI Engine (e a chamada SIP, se funcionar).
-- **Preexistente:** bibliotecas listadas nas dependências; nenhum código anterior ao hackathon.
+- **Preexistente:** bibliotecas listadas nas dependências; nenhum código anterior ao projeto.
