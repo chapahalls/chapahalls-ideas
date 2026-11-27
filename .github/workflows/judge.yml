@@ -13,7 +13,9 @@ name: Judge
 #
 # Configuração (Settings → Secrets and variables → Actions):
 #   Secrets: AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY (sem eles o judge é pulado).
-#   Variables: AWS_REGION (obrigatória), JUDGE_MODEL (opcional: ID do modelo no Bedrock).
+#   Variables: AWS_REGION (obrigatória); JUDGE_MODEL e JUDGE_FAST_MODEL (opcionais: IDs no
+#   formato do Mantle, "anthropic.claude-...", sem prefixo "us." e sem sufixo de versão).
+#   Permissões do usuário IAM: bedrock-mantle:CreateInference e bedrock-mantle:CountTokens.
 # Nos repos de código: secret IDEAS_DISPATCH_TOKEN (dispara este workflow).
 
 on:
@@ -64,6 +66,15 @@ jobs:
     needs: credencial
     if: needs.credencial.outputs.ok == 'true'
     runs-on: ubuntu-latest
+    env:
+      # Bedrock pelo endpoint Mantle (Messages API), só na região de AWS_REGION.
+      # O caminho Invoke usa perfis de inferência "us.", que mandam parte das chamadas
+      # para us-west-2, região bloqueada pela SCP da organização.
+      CLAUDE_CODE_USE_MANTLE: '1'
+      JUDGE_MODEL: ${{ vars.JUDGE_MODEL || 'anthropic.claude-opus-5-5' }}
+      ANTHROPIC_DEFAULT_OPUS_MODEL: ${{ vars.JUDGE_MODEL || 'anthropic.claude-opus-5-5' }}
+      ANTHROPIC_DEFAULT_SONNET_MODEL: ${{ vars.JUDGE_MODEL || 'anthropic.claude-opus-5-5' }}
+      ANTHROPIC_DEFAULT_HAIKU_MODEL: ${{ vars.JUDGE_FAST_MODEL || 'anthropic.claude-haiku-4-5' }}
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
@@ -97,9 +108,7 @@ jobs:
       - name: Judge do repo (/judge <repo>)
         if: contains(fromJSON('["rodar-backend","rodar-web","rodar-mobile"]'), env.SCOPED_REPO)
         env:
-          CLAUDE_CODE_USE_BEDROCK: '1'
           AWS_REGION: ${{ vars.AWS_REGION }}
-          JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
           model=""; [ -n "$JUDGE_MODEL" ] && model="--model $JUDGE_MODEL"
           sha=$(git -C "../$SCOPED_REPO" rev-parse --short HEAD)
@@ -121,9 +130,7 @@ jobs:
 
       - name: Judge (Claude Code, /judge projeto)
         env:
-          CLAUDE_CODE_USE_BEDROCK: '1'
           AWS_REGION: ${{ vars.AWS_REGION }}
-          JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
           dirs=""; for r in $CODE_REPOS; do dirs="$dirs --add-dir ../$r"; done
           model=""; [ -n "$JUDGE_MODEL" ] && model="--model $JUDGE_MODEL"
