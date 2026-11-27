@@ -11,10 +11,10 @@ name: Judge
 #     na mão e commitou (só o passo 2). O commit da própria CI usa o GITHUB_TOKEN e não redispara;
 #   - workflow_dispatch: na mão pela aba Actions, com o repo opcional.
 #
-# O Claude roda pelo Amazon Bedrock, com a chave de um usuário IAM que só pode invocar o modelo.
-# Secrets: AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY (sem eles o judge é pulado).
-# Variables: AWS_REGION (obrigatória), JUDGE_MODEL (opcional: ID do modelo no Bedrock).
-# Passo a passo no README, seção "Judge na CI".
+# Configuração (Settings → Secrets and variables → Actions):
+#   Secrets: AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY (sem eles o judge é pulado).
+#   Variables: AWS_REGION (obrigatória), JUDGE_MODEL (opcional: ID do modelo no Bedrock).
+# Nos repos de código: secret IDEAS_DISPATCH_TOKEN (dispara este workflow).
 
 on:
   repository_dispatch:

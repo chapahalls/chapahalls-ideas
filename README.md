@@ -18,33 +18,14 @@ Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **
 
 Fluxo: a ideia escolhida é o [`rodar`](ideas/rodar.md) → `/judge projeto` checa os repositórios de código antes de 30/11 → decisões novas via `/adr`.
 
-## Judge na CI: Claude pelo Amazon Bedrock
+## Judge na CI
 
-**Decisão (27/11/2026):** na CI, o judge usa o Claude pelo **Amazon Bedrock**, com a chave de um usuário IAM do time, e não chave da API da Anthropic nem token de assinatura. Escolhemos chave fixa em vez de OIDC por falta de tempo antes do prazo. O risco fica contido porque esse usuário só pode invocar o modelo. Depois da final (12/12), apague a chave ou troque por OIDC.
+A `main` sempre tem a nota do projeto inteiro. A cada push na `main` de um repositório de código, o [`judge.yml`](.github/workflows/judge.yml) roda dois judges em sequência:
 
-Como funciona: um push na `main` de um repo de código dispara o [`judge.yml`](.github/workflows/judge.yml) daqui (fluxo em [`repos/README.md`](repos/README.md)). Ele faz login na AWS e roda o Claude Code com `CLAUDE_CODE_USE_BEDROCK=1`. Sem o secret `AWS_ACCESS_KEY_ID`, o judge é pulado, sem erro.
+1. **`/judge <repo>`**: avalia só o repositório que mudou e grava em `repos/<repo>/score.md`.
+2. **`/judge projeto`**: avalia os repositórios juntos, publica o relatório em [`docs/report/`](docs/report/README.md) e atualiza o [`STATUS.md`](STATUS.md).
 
-**Configurar uma vez:**
-
-1. **Na AWS:**
-   - Habilite o acesso ao modelo Claude no console do Bedrock, na região escolhida.
-   - Crie um usuário IAM só para o judge, sem acesso ao console, e gere uma chave de acesso.
-   - Política do usuário: só `bedrock:InvokeModel` e `bedrock:InvokeModelWithResponseStream`, de preferência limitadas ao ARN do modelo. Se usar um perfil de inferência entre regiões, acrescente `bedrock:ListInferenceProfiles` e `bedrock:GetInferenceProfile`.
-   - Crie um alarme de custo no AWS Budgets.
-2. **Neste repo**, em Settings → Secrets and variables → Actions:
-
-   | Nome | Onde | Obrigatório | Valor |
-   |---|---|---|---|
-   | `AWS_ACCESS_KEY_ID` | Secrets | sim | ID da chave do usuário IAM |
-   | `AWS_SECRET_ACCESS_KEY` | Secrets | sim | chave secreta do usuário IAM |
-   | `AWS_REGION` | Variables | sim | a região onde o modelo foi habilitado |
-   | `JUDGE_MODEL` | Variables | não | o ID do modelo **no Bedrock** (o do console, com prefixo `anthropic.` ou de perfil de inferência). Vazio = padrão do Claude Code |
-
-   A chave nunca vai para `.env` versionado nem para o chat.
-3. **Em `rodar-backend`, `rodar-web` e `rodar-mobile`**, crie o secret `IDEAS_DISPATCH_TOKEN`: um token fine-grained com acesso só a este repo e permissão *Contents: Read and write*. É ele que dispara o judge daqui.
-4. **Teste:** aba *Actions* → *Judge* → *Run workflow*.
-
-**Custo:** cada push na `main` de um repo de código roda dois judges (o do repo e o do projeto). A conta vem na fatura da AWS, não da Anthropic.
+Para rodar na mão: aba *Actions* → *Judge* → *Run workflow*. O fluxo completo está em [`repos/README.md`](repos/README.md).
 
 ---
 
