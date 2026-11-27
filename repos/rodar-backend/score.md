@@ -1,28 +1,40 @@
-# Judge: rodar-backend, 2026-11-27 15:22
+# Judge: rodar-backend, 2026-11-27 15:59
 
-Gatilho: push na main de rodar-backend f4a1bbd por HenryFacens. Commit avaliado: f4a1bbd.
+Gatilho: push na main de rodar-backend 7fe3475 por HenryFacens. Commit avaliado: 7fe3475.
 
 **Nota do repo: 14 / 20** (H1+H2) · Eliminatórios: 0 FALHAS, 3 RISCOS · Prazo: faltam 3d8h para 30/11 23h59
 
 ## Alertas
 
-- **RISCO (S5):** o README não tem o link do vídeo de até 3 min. A linha 40 ainda é um comentário: `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`.
-- **RISCO (S4/H1):** o backend não tem deploy fixo. Ele roda via `docker compose` mais um quick tunnel do cloudflared, cuja URL "muda se o túnel reiniciar" (README, linha 102). Os links "Demo no ar" apontam para o GitHub Pages do web e do mobile. Este repo não publica nenhuma URL própria estável, e o `CORS_ORIGENS` padrão só tem localhost. Se a máquina do túnel desligar durante a avaliação, tudo o que depende do backend cai (voz ao vivo, fluxo real). **Precisa de humano** para confirmar se a demo do Pages chama este backend e se ele fica no ar até 12/12.
-- **RISCO (X1/X2, leitura do júri):** o README diz que o projeto "começou como AvisAI no hackathon UNMUTE by Agora (21–22/11/2026)" e mantém as tags `v1.0-entrega` a `v1.3-entrega` dessa entrega. Os três primeiros commits têm o mesmo horário (`2026-11-22 02:42:12 -0300`), o que parece histórico montado de uma vez. As datas estão depois de 04/11 21h, então a regra 6.1 é cumprida. Mesmo assim, um jurado pode ler "histórico importado". Basta uma frase no README dizendo que nenhum código anterior a 04/11 entrou e que o trabalho de 21/11 foi commitado a partir de 22/11.
-- **STATUS desatualizado:** `repos/rodar-backend/STATUS.md` (25/11, `b353d12`) marca como **Ok** "Conversa por voz... Agora ConvoAI (ASR ARES, TTS MiniMax)" e cita como adaptadores reais `agora_rest.py` e `tokens.py`. Esses arquivos não existem mais: a voz agora é LiveKit Agents com Gemini Live (`app/voice_agent.py`, `integracoes/livekit.py`, commit `774e5c2`). Ele também está desatualizado no sentido favorável, em quatro pontos:
-  - auth agora é `auth_obrigatoria = True` por padrão;
-  - os números de impacto já estão no README ("Por que importa");
-  - o link da demo já está no README;
-  - os testes passaram de 299 para 332.
-- **Evidência velha:** `evidence/validacao.md` (33/33, 22/11) é anterior à troca para LiveKit e foi feita "LLM upstream: não (contingência)". O próprio README a chama de "histórica". Não há prova ponta a ponta do caminho de voz atual.
+- **RISCO alto (S4/H1): a "API em produção" está quebrada.** O README novo anuncia [rodar-backend-five.vercel.app](https://rodar-backend-five.vercel.app/docs) como produção, mas o deploy da Vercel não tem banco. Testei em 27/11, às 15h59:
+  - `/docs`, `/openapi.json`, `/health` e `/livekit/config` respondem 200.
+  - Todas as rotas que tocam o banco devolvem **500**: `GET /rotas`, `/rotas/1`, `/tasks`, `/motoristas`, `/usuarios`, `/cco/estado`, `/api/metrics`, `/api/route` e `POST /auth/sso`.
+  - A mensagem de erro é `psycopg.OperationalError: failed to resolve host 'db'`. Ou seja, `DATABASE_URL` não foi configurada na Vercel e vale o padrão do docker compose (`settings.py:79`).
+  - Sem `/auth/sso` ninguém faz login, então nenhum fluxo funciona por essa URL.
+
+  Um jurado que clicar em "Try it out" no Swagger vê 500 com detalhe interno do banco. Isso é pior do que não ter link.
+- **RISCO (arquitetura do deploy):** mesmo com banco, a Vercel é serverless. As tarefas de fundo (`container.py:37`, `asyncio.create_task`: escalonamento, estadia, ligações) morrem quando a resposta termina. O WebSocket não roda lá, e o SSE (`/cco/stream`) tem limite de duração. O fluxo de "só chama a central quando precisa" depende dessas tarefas. Não há `vercel.json` no repo: a config está só no painel da Vercel, sem rastro no código. Para a demo, uma VM ou um container (Fly, Render, Railway) com Postgres gerenciado é o caminho mais seguro.
+- **RISCO (S5):** o README ainda não tem o link do vídeo de até 3 min. A linha 44 continua sendo um comentário: `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`.
+- **RISCO (X1/X2, leitura do júri), mantido da rodada anterior:** a origem no UNMUTE by Agora (21–22/11) e os três primeiros commits no mesmo segundo podem ser lidos como "histórico importado". A regra 6.1 é cumprida (22/11, depois de 04/11 21h). Falta uma frase no README dizendo que nenhum código anterior a 04/11 entrou.
+- **`/health` mente:** ele responde `"ok": true` com o banco fora. Por isso o deploy parece saudável e ninguém do time percebeu.
+- **STATUS desatualizado** (`repos/rodar-backend/STATUS.md`, de 25/11, `b353d12`):
+  - Marca como **Ok** "Conversa por voz… Agora ConvoAI" e cita `agora_rest.py` e `tokens.py`. Esses arquivos não existem. A voz agora é LiveKit Agents com Gemini Live.
+  - Diz que a demo "depende de um túnel". Agora existe deploy na Vercel, mas ele está quebrado (ver acima).
+  - Nos pontos abaixo, ele está desatualizado a favor do time:
+    - **OCOREN** aparece como "Promessa" e agora existe (`conectores/edi/`, `335c827`).
+    - O **3º canal do escalonamento** aparecia como "só um rótulo" e agora liga para a central (`c3085e3`).
+    - Auth agora é obrigatória por padrão.
+    - Os números de impacto já estão no README.
+  - Ele cita 299 testes e o README cita 332. **Rodei 377.**
+- **Evidência velha:** `evidence/validacao.md` (33/33, 22/11) é da era Agora, em contingência, e o README a chama de "histórica". O caminho de voz atual (LiveKit) não tem prova ponta a ponta.
 
 ## Pontuação
 
 | # | Critério | Nota (0-10) | Justificativa |
 |---|---|---|---|
-| H1 | Execução técnica | 6 | O fluxo inteiro está implementado e coberto. Rota publicada → retirada por voz → aproximação → aviso ao recebedor → chegada com dupla prova de GPS → Task → escalonamento → estadia → descarga, com contingência sem LLM. **Rodei: 332 testes passaram (36,8 s, Postgres 16) e o `ruff check` passou limpo.** Não chega a 7-8 por três motivos. Primeiro, o backend não tem demo pública estável (só túnel). Segundo, a única validação ponta a ponta é da era Agora e em contingência. Terceiro, o recebedor atende por página web (`RECEBEDOR_MODO=rtc`), não por telefone. |
-| H2 | Implementação técnica | 8 | Camadas limpas: `dominio/` com regras puras, `servicos/`, `portas.py` (Protocols) e `integracoes/`, com fakes nos testes. Há migrações Alembic, outbox idempotente (`POST /events`, 409 na repetição), SSE e WS, JWT com papel `cco` e dono da rota, e limite de ligações. A CI roda ruff + pytest contra Postgres real. A estadia por "hora ou fração" cita o §5º. Não chega a 9 por estes pontos: o worker de voz (`voice_agent.py`) não tem teste; as leituras (`GET`, SSE, WS) e o gateway `/v1/voice/*` estão abertos sem segredo (o README admite isso); o rate limit fica em memória; e há restos (`.idea/` versionado, nomes `avisai`). |
-| H3 | Impacto | avaliado no projeto | Não pontuado aqui. O README já traz 11h40/5h09 (IER 2025) e 91% sem estadia (CNTA 2025), com fonte, e o cálculo de R$ 525 por entrega. |
+| H1 | Execução técnica | 6 | O escopo aumentou desde a última rodada (`f4a1bbd`, 14/20). Entrou o conector **OCOREN 5.0/3.1**, com geração e validação de arquivo e perfil por parceiro. É o primeiro conector de mercado, e o ADR-0001 vendia exatamente isso. O 3º canal do escalonamento agora faz uma ligação de verdade, com teste. **Rodei: 377 testes passaram (40 s, Postgres 16) e o `ruff check` passou limpo.** Isso puxaria para 7. Mas a única URL pública do backend devolve 500 em todo endpoint com banco, inclusive o login. Para um júri que não instala nada (7.4), o backend "no ar" hoje não funciona. Também continuam sem prova ponta a ponta da voz atual, e o recebedor atende por página web (`RECEBEDOR_MODO=rtc`), não por telefone. |
+| H2 | Implementação técnica | 8 | O motor de EDI é bom design. Uma única peça de largura fixa lê o layout como dado (`motor.py`), e `validar_layout` impede buraco ou sobreposição de campos. O que varia por parceiro fica no perfil (`ParceiroEdi`), não no código. Ele não trunca valores: levanta erro. Há migração Alembic, papel `cco` em todas as rotas EDI e testes de layout, motor, geração e API. A base continua sólida: `dominio/`, `servicos/` e `portas.py` com fakes, mais outbox idempotente, JWT e CI com ruff, pytest e Postgres real. Não chega a 9 por cinco motivos: (1) o `voice_agent.py` segue sem teste; (2) o `/health` não checa o banco; (3) os erros 500 expõem o detalhe do SQLAlchemy ao cliente; (4) a Vercel é uma escolha inadequada para um app com SSE, WS e tarefas de fundo, e a config não está versionada; (5) a sequência do OCOREN fica em memória (`_SEQUENCIA`) e reinicia a cada cold start. Sobram ainda restos de outras versões: `.idea/` e os nomes `avisai`. |
+| H3 | Impacto | avaliado no projeto | Não pontuado aqui. O README traz 11h40/5h09 (IER 2025) e 91% sem estadia (CNTA 2025). O OCOREN dá base concreta para o discurso de "integração". |
 | H4 | Comunicação | avaliado no projeto | Não pontuado aqui. Falta o link do vídeo no README. |
 | | **Total** | **14/20** | |
 
@@ -30,32 +42,33 @@ Gatilho: push na main de rodar-backend f4a1bbd por HenryFacens. Commit avaliado:
 
 | # | Regra | Status | Nota |
 |---|---|---|---|
-| X1 | Repo público, criado depois de 04/11 21h, sem fork | OK (RISCO de leitura) | Primeiro commit em 22/11 02:42 (UTC−3). Ver o alerta sobre UNMUTE e os horários idênticos |
-| X2 | Sem código anterior não público | OK, precisa de humano | Origem declarada como 21–22/11, depois da abertura. Não há como verificar código anterior a 04/11 |
+| X1 | Público, criado depois de 04/11 21h, sem fork | OK (RISCO de leitura) | Primeiro commit em 22/11/2026. Ver o alerta sobre o UNMUTE |
+| X2 | Sem código anterior não público | OK, precisa de humano | `hfoletto/edi-proceda` (MIT) foi declarado como referência de posição de campo, não copiado. Não há como verificar código anterior a 04/11 |
 | X3 | Licença | OK | MIT |
 | X4 | Público até 15/12 | OK | Público hoje. Manter até 15/12 |
-| X6 | Sem dado pessoal real | OK | Seed fictício e declarado: e-mails `.test`, telefones `+55119000000xx` e `+5519900000002`, placa `ABC1D23`. As ocorrências do check-rules são esses números de mentira |
-| Segredo no git | — | OK | Nenhum `.env` versionado. As chaves estão só documentadas por nome |
-| Mocks e terceiros | Declarados no README | OK | Seção "Simulado / pré-existente": GPS, rastreador, SSO, documentos, RTC × SIP, LiveKit, OpenAI, Nominatim, Twilio, cloudflared |
-| Link da demo | README | OK, com ressalva | Aponta para o Pages do web e do mobile, não para uma URL do backend |
+| X6 | Sem dado pessoal real | OK | Os telefones apontados pelo check-rules (`+55119000000xx`, `+5519900000002`) são placeholders. Os e-mails são `.test`. Os CNPJs e as chaves de NF-e do seed são declarados como fictícios (o DV é válido, mas o número não existe) |
+| Segredo no git | — | OK | Nenhum `.env` versionado. A URL do LiveKit Cloud aparece em `/livekit/config`, que é pública por design, não é segredo |
+| Mocks e terceiros | Declarados no README | OK | Seção "Simulado / pré-existente", agora com o EDI OCOREN (sem parceiro real e sem SFTP), a Vercel e o restante |
+| Link da demo | README | **RISCO** | O link do Pages (web e mobile) existe. O link novo da "API em produção" leva a 500 |
 | Link do vídeo | README | RISCO | Ausente |
 
 Saída resumida do `scripts/check-rules.sh ../rodar-backend`:
 - 0 FALHAS e 2 RISCOS.
-- X1, X3, X4, X6 (credenciais), X7/X8 e o prazo deram OK.
+- X1, X3, X4, X6 (credenciais), X7/X8 e o prazo (3d8h) deram OK. S4/S5 passaram, exceto o vídeo.
 - RISCO 1: o README não tem link do vídeo.
-- RISCO 2: há telefones no seed, no settings, no teste e no `.env.example`. Conferi: são fictícios.
+- RISCO 2: há telefones em `.env.example:42`, `settings.py:36`, `seed.py:36/105` e `test_auth.py:12`. Conferi: são fictícios.
+
+Checagens humanas pendentes: X9, X10, S1, S3, S4, S5, S6 e X2.
 
 ## Maior retorno
 
-1. **Deploy fixo do backend com HTTPS** (Fly, Render, Railway ou VM com domínio e túnel nomeado), com `PUBLIC_URL` e `CORS_ORIGENS` apontando para o Pages, no ar até 12/12, e a URL no "Para o júri": H1 6→7 = **+1** (e protege S4 no projeto).
-2. **Nova validação ponta a ponta no stack LiveKit atual**, com o LLM real: rodar `scripts/validar_fluxos.py` e substituir `evidence/validacao.md`, citando data e commit. É a prova de que o caminho de voz que o vídeo mostra funciona hoje: H1 +1 se somada ao item 1 (6→7 vira 7→8).
-3. **Teste mínimo do `voice_agent.py`** (mapeamento de ferramentas e `_metadata`/`_instrucoes` com fakes) e **segredo compartilhado de volta no `/v1/voice/*`**: H2 8→9 = **+1**. Junto, pôr a linha do vídeo no README, que vale no projeto (S5/H4) e não aqui.
+1. **Ligar o banco ao deploy ou trocar de host.** O mínimo é configurar na Vercel uma `DATABASE_URL` de Postgres gerenciado (Neon, Supabase), rodar `alembic upgrade head` e o seed, e fazer o `/health` checar o banco. O certo é um container em Fly, Render ou Railway, porque as tarefas de fundo, o WS e o SSE não sobrevivem no serverless. Por fim, `CORS_ORIGENS` e `PUBLIC_URL` devem apontar para o Pages, e o deploy deve ficar no ar até 12/12. **H1 6→7 = +1.** Também protege S4 no projeto, e enquanto isso não acontece o link atual tira pontos.
+2. **Nova validação ponta a ponta no stack LiveKit atual**, com o LLM real e contra a URL pública: rodar `scripts/validar_fluxos.py`, substituir `evidence/validacao.md` com data e commit, e incluir um passo do OCOREN. **H1 7→8 = +1**, somado ao item 1.
+3. **Teste mínimo do `voice_agent.py`** com fakes, mais erros 500 genéricos (sem expor o SQLAlchemy) e a config do deploy versionada. **H2 8→9 = +1.** Junto, pôr a linha do vídeo no README, que vale no projeto (S5/H4) e não aqui.
 
 ## Observações
 
-- O júri não é de logística. O README já tem glossário (CCO, doca, estadia, franquia) e "Em uma frase", o que é bom. Mas ele tem cerca de 460 linhas e a parte "Para o júri" fica soterrada pelo contrato de API. Vale considerar mover o contrato para `backend/docs/`.
-- O README do backend diz "568 testes: 332 no backend, 127 no web, 109 no mobile". Confirmei só os 332.
-- O README chama a integração com TMS, rastreador e ERP de fora do escopo ("Integração real com Sascar, Omnilink etc. fica fora"). Está coerente com o que existe. O pitch não deve dizer "integramos".
-- A entrega no UNMUTE by Agora reaproveitada no Hack Brasil não aparece no `HACKATHON.md` e não afeta a nota. Se houver dúvida sobre submissão dupla, a pergunta vai para oi@hackbrasil.com.
-- Faltam 3d8h. Depois de 30/11 23h59, nenhum commit neste repo até 12/12 (X8).
+- O README fala em "568 testes: 332 no backend…", mas o backend hoje tem **377**. Vale corrigir o número para cima.
+- O OCOREN só sai por download manual (sem SFTP nem fila) e sem homologação com parceiro, e o README e o `docs/edi/ocoren-integracao.md` declaram isso com honestidade. No pitch, cabe "geramos OCOREN no padrão de mercado". Não cabe "integramos com TOTVS ou Intelipost".
+- O README segue longo (cerca de 490 linhas). A parte "Para o júri" está boa, mas o contrato de API poderia ir para `backend/docs/`.
+- A entrega anterior no UNMUTE by Agora não aparece no `HACKATHON.md` e não afeta a nota. Se houver dúvida sobre submissão dupla, a pergunta vai para oi@hackbrasil.com.
