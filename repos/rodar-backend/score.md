@@ -1,37 +1,43 @@
-# Judge: rodar-backend, 2026-11-27 20:15
+# Judge: rodar-backend, 2026-11-27 20:47
 
-Gatilho: push na main de rodar-backend 2b0eb7e por HenryFacens. Commit avaliado: 2b0eb7e.
+Gatilho: push na main de rodar-backend e3a8879 por HenryFacens. Commit avaliado: e3a8879.
 
-**Nota do repo: 15 / 20** (H1+H2) · Eliminatórios: 0 FALHAS, 2 RISCOS · Prazo: faltam 3d3h para 30/11 23h59
+**Nota do repo: 15 / 20** (H1+H2) · Eliminatórios: 0 FALHAS, 2 RISCOS · Prazo: faltam 3d3h para 30/11 23h59 · Variação: 0 (era 15/20 em `2b0eb7e`)
 
-Desde a rodada anterior (`f45b6cc`) entraram 7 commits, todos de infra e README: `3b00ddd`, `5345b5a`, `5f0a4a9`, `d945a7f` e `813d71f`, mais os merges `a0070be` e `2b0eb7e`. São cerca de 1.270 linhas de OpenTofu em `infra/`: ECS Fargate, RDS, ALB, CloudFront, Secrets Manager e ECR. **Nenhuma linha de `backend/` nem de `.github/` mudou.** Por isso a suíte de testes e a CI são as mesmas da rodada anterior, e não rodei os testes de novo. A mudança que conta é o deploy: o maior bloqueio da rodada anterior (URL pública sem banco) caiu.
+Desde a rodada anterior (`2b0eb7e`) entraram 2 commits: `bbafb23` e o merge `e3a8879`. São 2 arquivos e 10 linhas:
+- `infra/envs/dev/variables.tf`: o default de `cors_origins` trocou `https://rodarglobal.github.io` por `https://rodar-web-beta.vercel.app`.
+- `README.md`, linha 36 ("Demo no ar"): o painel agora fica só na Vercel. O link do app do motorista no Pages saiu, e o README diz que o app "é nativo, sem demo web própria" e manda para o tour em vídeo.
 
-**O link HTTPS existe e funciona.** README, linha 37 ("Para o júri") e seção "Já em produção: AWS": `https://d3fy4m7zwukr3x.cloudfront.net`. Testei com `curl` em 27/11, por volta das 20h15:
-- `/health` dá 200 e `{"ok":true,"banco_ok":true,"livekit_configurada":true,"twilio_configurado":false,"llm_upstream":true,"recebedor_modo":"rtc","auth_obrigatoria":true}`.
-- `/docs`, `/rotas`, `/cco/estado`, `/api/metrics` e `/livekit/config` dão 200, com dados do seed.
-- `POST /auth/sso` devolve JWT. **O login funciona pela URL pública**, e na rodada anterior ele dava 500.
-- `/cco/stream` (SSE) entrega o `event: snapshot` através do CloudFront.
-- O CORS responde `access-control-allow-origin: https://rodarglobal.github.io`.
+**Nenhuma linha de `backend/` nem de `.github/` mudou.** A suíte (379 testes) e a CI são as mesmas, e não rodei os testes de novo.
+
+**A mudança já está aplicada na AWS.** Testei com `curl` em 27/11, por volta das 20h47:
+- `/health` dá 200 e `banco_ok: true`, `llm_upstream: true`, `livekit_configurada: true`, `twilio_configurado: false`, `recebedor_modo: rtc`, `auth_obrigatoria: true`.
+- Preflight `OPTIONS /auth/sso` com `Origin: https://rodar-web-beta.vercel.app` dá 200 com `access-control-allow-origin` igual à origem. O mesmo vale para `GET /rotas`.
+- Com `Origin: https://rodarglobal.github.io`, o preflight dá **400** e o GET vem sem o cabeçalho CORS. O Pages foi cortado de propósito.
+- `POST /auth/sso` dá 200. `https://rodar-web-beta.vercel.app/login` dá 200. `https://rodarglobal.github.io/rodar-mobile/` dá **404**.
+
+O commit é coerente: ele acompanha a saída do painel do Pages e mantém o CORS restrito. Não muda nada na rubrica deste repo. Os bloqueios da rodada anterior continuam todos abertos.
 
 ## Alertas
 
 - **RISCO (S5):** o README continua sem link do vídeo. A linha 44 ainda é `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`. Faltam 3 dias.
-- **RISCO (demo durante a avaliação, S4/item 7.3):** a API roda na **conta AWS dev de uma empresa** (a conta está identificada no README e em `infra/README.md`). Ela precisa ficar no ar até 12/12, e de preferência até 15/12. O código está congelado, mas a infra pode ser mexida. Se alguém da conta desligar o serviço ou mudar o SG compartilhado do VPC endpoint (a "pegadinha de rede" do `infra/README.md`), a demo cai e o júri avalia só pelo vídeo. Isso precisa de um humano: garantir por escrito que ninguém vai mexer nessa conta até lá.
-- **Leitura confusa para o júri:** o topo do README, nas linhas 3-6 (badge "deploy vercel" e o primeiro parágrafo), ainda manda para `rodar-backend-five.vercel.app`, que **não tem banco**. A URL boa (CloudFront) só aparece na linha 37. Um jurado com pressa clica no primeiro link e vê o login falhar.
-- **Ainda aberto da rodada anterior:** `api/deps.py:32` (`HTTPException(500, str(e))`) continua devolvendo o texto interno do erro. Com o banco no ar o risco é menor, mas ainda existe.
-- **Evidência de voz velha:** `evidence/validacao.md` (33/33) é da era Agora e foi feita com o LLM em contingência. O caminho atual (LiveKit com Gemini Live) continua sem prova ponta a ponta, embora o `/health` ao vivo agora mostre `llm_upstream: true` e `livekit_configurada: true`. Não testei a voz: **precisa de humano**.
+- **RISCO (demo durante a avaliação, S4/item 7.3):** a API roda na conta AWS dev de uma empresa e precisa ficar no ar até 12/12, de preferência até 15/12. Isso precisa de humano: garantir por escrito que ninguém vai desligar o serviço nem mexer no SG do VPC endpoint até lá.
+- **Novo: o app do motorista perdeu a demo pública.** O README tirou o link do Pages, que dá 404, e o CORS não aceita mais `rodarglobal.github.io`. Se o `rodar-mobile` voltar a publicar uma versão web, ela não vai conseguir chamar esta API sem um novo `tofu apply` que inclua a origem. O júri só verá o motorista pelo vídeo de 1 min, e isso é justamente o lado da voz, o diferencial do produto. Fica para o projeto (H1), mas a dependência de CORS está neste repo.
+- **Leitura confusa para o júri (sem mudança):** as linhas 3-6 (badge "deploy vercel" e primeiro parágrafo) ainda mandam para `rodar-backend-five.vercel.app`, que **não tem banco**. A URL boa (CloudFront) só aparece na linha 37.
+- **Ainda aberto:** `api/deps.py:32` (`HTTPException(500, str(e))`) continua devolvendo o texto interno do erro.
+- **Evidência de voz velha:** `evidence/validacao.md` (33/33) é da era Agora e foi feita com o LLM em contingência. O caminho LiveKit com Gemini Live continua sem prova ponta a ponta. **Precisa de humano.**
 - **STATUS desatualizado** (`repos/rodar-backend/STATUS.md`, sobre `7fe3475`):
-  - O Resumo, item 1, e a seção 1 dizem "branch `infra/setup-opentofu-aws` sem PR aberto" e "só HTTP". Isso não vale mais: a infra está na main desde `2b0eb7e`, e o HTTPS via CloudFront (`813d71f`) funciona.
-  - Ele também cita o PR #12 como aberto, mas o PR já está mergeado.
-  - Os itens que ele marca como Ok batem com o código.
+  - Ele ainda diz que a infra está numa "branch sem PR" e "só HTTP". A infra está na main com HTTPS via CloudFront desde `2b0eb7e`.
+  - Ele cita o PR #12 como aberto, mas o PR já está mergeado.
+  - Ele lista `rodarglobal.github.io/rodar-web` e `rodar-mobile` como demos publicadas. Agora o painel está só na Vercel e o Pages do app dá 404.
 
 ## Pontuação
 
 | # | Critério | Nota (0-10) | Justificativa |
 |---|---|---|---|
-| H1 | Execução técnica | 7 | Agora existe uma **demo pública HTTPS com banco**, e ela responde: login, rotas, estado do CCO, métricas e SSE funcionam na URL do CloudFront, com `banco_ok: true`. Isso tira o H1 do "só local" e o leva ao degrau 7-8 ("demo pública no ar"). O escopo já estava completo para o caminho feliz (rota, voz, aproximação, chegada, estadia pela Lei 11.442, escalonamento com ligação no 3º canal, OCOREN 5.0/3.1), com 379 testes na rodada anterior e o código igual. Não chega a 8 por três motivos: (1) o caminho de voz atual não tem prova ponta a ponta publicada; (2) a telefonia está desligada (`twilio_configurado: false`) e o recebedor atende por página web (`recebedor_modo: rtc`); (3) não dá para ver se o painel e o app no Pages já apontam para essa URL, porque isso é dos outros repos e fica para o projeto. |
-| H2 | Implementação técnica | 8 | O que já existia: `dominio/`, `servicos/`, `portas.py` com fakes, motor EDI que trata o layout como dado, outbox idempotente, JWT com papel `cco`, Alembic e CI com Postgres real. O que entrou agora soma: infra 100% em IaC (OpenTofu), state remoto com lock, segredos no Secrets Manager com `ignore_changes` e nenhum valor versionado, RDS privado com `deletion_protection` e snapshot final, health check de container, e CloudFront sem cache repassando `Authorization`. A justificativa está documentada em `infra/README.md`. Não sobe para 9 porque nada do que estava aberto foi resolvido: (1) `voice_agent.py` sem teste; (2) o 500 com `str(e)` em `deps.py:32`; (3) a `_SEQUENCIA` do OCOREN em memória (`servicos/edi.py:51`); (4) `alembic upgrade && seed` no `CMD` de cada task, o que é frágil com mais de uma réplica; (5) o pipeline de deploy da AWS é manual (push no ECR e `force-new-deployment`), enquanto a CI ainda publica na Vercel sem banco. |
-| H3 | Impacto | avaliado no projeto | Não pontuado aqui. O README traz 11h40 e 5h09 (IER 2025), 91% sem estadia (CNTA 2025) e R$ 525 por entrega, com fonte. |
+| H1 | Execução técnica | 7 | Sem mudança. A demo pública HTTPS tem banco e responde: `/health` com `banco_ok: true`, login (`/auth/sso` 200) e CORS liberado para o painel na Vercel. O escopo do caminho feliz está completo: rota, voz, aproximação, chegada, estadia pela Lei 11.442, escalonamento com ligação no 3º canal e OCOREN 5.0/3.1. Não chega a 8 porque (1) a voz atual não tem prova ponta a ponta publicada, (2) a telefonia está desligada (`twilio_configurado: false`) e o recebedor atende pela web, e (3) a demo do motorista saiu do ar. |
+| H2 | Implementação técnica | 8 | Sem mudança. Camadas `dominio/`, `servicos/` e `portas.py` com fakes, motor EDI que trata o layout como dado, outbox idempotente, JWT com papel `cco`, Alembic, CI com Postgres real e infra 100% em OpenTofu (Secrets Manager, RDS privado, CloudFront). O CORS agora vem da IaC e foi aplicado, o que está certo. Não sobe para 9 porque continuam abertos: `voice_agent.py` sem teste, o `str(e)` em `deps.py:32`, a `_SEQUENCIA` do OCOREN em memória (`servicos/edi.py:51`), a migração no `CMD` de cada task, e o deploy da AWS manual enquanto a CI publica na Vercel sem banco. |
+| H3 | Impacto | avaliado no projeto | Não pontuado aqui. |
 | H4 | Comunicação | avaliado no projeto | Não pontuado aqui. O link do vídeo ainda falta no README. |
 | | **Total** | **15/20** | |
 
@@ -39,33 +45,32 @@ Desde a rodada anterior (`f45b6cc`) entraram 7 commits, todos de infra e README:
 
 | # | Regra | Status | Nota |
 |---|---|---|---|
-| X1 | Público, criado depois de 04/11 21h, sem fork | OK | Primeiro commit em 22/11/2026, não é fork. O README explica a origem no UNMUTE |
-| X2 | Sem código anterior não público | OK, precisa de humano | A declaração está no README. O `infra/README.md` cita uma stack anterior (`contigency_analisys_backend/infra`) que foi **decomissionada**, não copiada. O Tofu é novo (`3b00ddd`, "scaffold"). Um humano pode confirmar que nada desse código antigo entrou |
+| X1 | Público, criado depois de 04/11 21h, sem fork | OK | Primeiro commit em 22/11/2026, não é fork. A origem no UNMUTE está explicada no README |
+| X2 | Sem código anterior não público | OK, precisa de humano | Declarado no README. A stack antiga citada em `infra/README.md` foi decomissionada, não copiada |
 | X3 | Licença | OK | MIT |
 | X4 | Público até 15/12 | OK | Público hoje. Manter até 15/12 |
-| X6 | Sem dado pessoal real | OK | `+5519900000002` e `+55119000000xx` são placeholders sequenciais, os e-mails são `.test`, e o seed está declarado como fictício. Aparecem ao vivo em `/rotas` sem login (leituras abertas, já declarado no README) |
-| Segredo no git | — | OK | Nenhum `.env`, `tfstate` ou `terraform.tfvars` versionado. Só o `.tfvars.example`, e os secrets do Tofu são placeholders. O ID da conta AWS está no README: não é segredo, mas não precisava estar lá |
-| Mocks e terceiros | Declarados no README | OK | A seção "Simulado / pré-existente" está completa. A AWS dev, o Twilio placeholder e a Vercel sem banco estão declarados |
-| Link da demo | README | OK | O HTTPS do CloudFront funciona com banco e login (ver acima). Os links do painel (Pages e `rodar-web-beta.vercel.app`, que dá 200) e do app também estão lá |
+| X6 | Sem dado pessoal real | OK | `+5519900000002`, `+5511900000001` e os do `test_auth.py` são placeholders sequenciais. Os e-mails são `.test` e o seed está declarado como fictício |
+| Segredo no git | — | OK | Nenhum `.env`, `tfstate` ou `tfvars` real versionado. O ID da conta AWS no README não é segredo, mas não precisava estar lá |
+| Mocks e terceiros | Declarados no README | OK | A seção "Simulado / pré-existente" está completa |
+| Link da demo | README | OK | O CloudFront (API) e a Vercel (painel) respondem. O app do motorista ficou sem demo web, só com o tour em vídeo |
 | Link do vídeo | README | RISCO | Ausente (linha 44) |
 
 Saída resumida do `sh scripts/check-rules.sh ../rodar-backend`:
 - 0 FALHAS e 2 RISCOS.
-- X1, X3, X4, X6 (credenciais), X7/X8 e prazo (3d3h) deram OK. S4/S5 passaram, inclusive o link HTTPS da demo, exceto o vídeo.
+- X1, X3, X4, X6 (credenciais), X7/X8 e prazo (3d3h) deram OK. S4/S5 passaram, inclusive o link HTTPS da demo e a declaração de simulados e terceiros.
 - RISCO 1: o README não tem link do vídeo de até 3 min.
-- RISCO 2: há telefones em `.env.example`, `settings.py:36`, `seed.py:36` e `test_auth.py`. Conferi: são fictícios.
+- RISCO 2: há telefones em `.env.example`, `settings.py`, `seed.py` e `test_auth.py`. Conferi: são fictícios.
 
-Checagens humanas pendentes: X2, X9, X10, S1, S3, S4 (se o painel e o app no Pages usam a URL do CloudFront e se a demo fica no ar até 12/12), S5 e S6.
+Checagens humanas pendentes: X2, X9, X10, S1, S3, S4 (demo no ar até 12/12 na conta AWS de terceiros) e S5/S6.
 
 ## Maior retorno
 
-1. **Validação ponta a ponta no stack atual, contra a URL do CloudFront.** Rodar `scripts/validar_fluxos.py` com LiveKit e Gemini Live reais (o `/health` já mostra `llm_upstream: true`). Substituir `evidence/validacao.md` com data, commit e URL, e incluir um passo do OCOREN. Isso vira a prova de "nada quebra na mão do júri". **H1 7→8 = +1.**
-2. **Trocar o topo do README para a URL que funciona.** Pôr o badge e o primeiro parágrafo no CloudFront, rebaixar ou remover a Vercel sem banco, e incluir a linha do vídeo na linha 44. Junto, fazer o deploy na AWS a partir da CI (push no ECR e `update-service`), para que a main e a demo não se descolem até 30/11. Protege o H1 7 e o S4/S5 do projeto. **H2 8→8,5** pela CI de deploy, e no projeto H4/S5 deixa de ser RISCO.
-3. **Fechar as dívidas do H2:** um teste mínimo do `voice_agent.py` com fakes, 500 genérico em `deps.py:32` (logar `str(e)` e devolver "erro interno"), a sequência do OCOREN persistida e a migração fora do `CMD` (task one-off ou lock do Alembic). **H2 8→9 = +1.**
+1. **Validação ponta a ponta no stack atual, contra o CloudFront.** Rodar `scripts/validar_fluxos.py` com LiveKit e Gemini Live reais e substituir `evidence/validacao.md`, com data, commit, URL e um passo do OCOREN. Com a demo do motorista fora do ar, essa evidência é a única prova escrita da voz. **H1 7→8 = +1.**
+2. **Topo do README e vídeo.** Trocar o badge e o primeiro parágrafo (linhas 3-6) para o CloudFront e rebaixar a Vercel sem banco. Pôr o link do vídeo na linha 44. Mover o deploy da AWS para a CI (push no ECR e `update-service`), para a main e a demo não se descolarem até 30/11. Protege o H1 7 e tira o RISCO S5. **H2 8→8,5** pela CI de deploy.
+3. **Fechar as dívidas do H2:** teste mínimo do `voice_agent.py` com fakes, 500 genérico em `deps.py:32` (logar o erro e devolver "erro interno"), sequência do OCOREN persistida e migração fora do `CMD`. **H2 8→9 = +1.**
 
 ## Observações
 
-- Não há congelamento antes de 30/11, então commits ainda são permitidos. Depois de 01/12, a infra pode ser mantida no ar, mas sem commits no repositório.
-- Na rodada anterior, o README chamava o host de "intencional pelo custo". Isso deixou de ser problema, porque agora há um host com banco. A seção da Vercel ainda ocupa muito espaço para algo que o júri não deveria usar.
-- O README continua com mais de 500 linhas. "Para o júri" está bem posicionado, mas o contrato de API poderia ir para `backend/docs/`.
-- A dependência de uma conta corporativa de terceiros não está nas regras e não afeta a nota. É um risco operacional da demo, e convém ter um plano B: o vídeo cobre o caso de a demo cair (item 7.3).
+- Commits ainda são permitidos até 30/11. Entre 01/12 e 12/12, a infra pode ser mantida no ar, mas sem commits no repositório.
+- Se o time decidir publicar o app do motorista na web (Expo web) antes de 30/11, a origem precisa entrar em `cors_origins` e passar por um `tofu apply`. Se não, o roteiro do vídeo tem que mostrar a voz do motorista, porque o júri não vai conseguir testá-la.
+- A dependência de uma conta corporativa de terceiros não afeta a nota. É um risco operacional, coberto pelo vídeo se a demo cair (item 7.3).
