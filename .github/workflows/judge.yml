@@ -8,7 +8,7 @@ name: Judge
 #     rodar-backend, rodar-web, rodar-mobile e rodar-keycloak;
 #   - workflow_dispatch: rodar na mão pela aba Actions.
 #
-# Precisa do secret ANTHROPIC_API_KEY neste repo. Modelo opcional: variável JUDGE_MODEL.
+# Precisa do secret ANTHROPIC_API_KEY ou CLAUDE_CODE_OAUTH_TOKEN neste repo. Modelo opcional: variável JUDGE_MODEL.
 
 on:
   repository_dispatch:
@@ -55,7 +55,9 @@ jobs:
 
       - name: Judge (Claude Code, /judge projeto)
         env:
+          # Um dos dois: chave da API ou token da assinatura Claude Pro/Max (`claude setup-token`).
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
           npm install -g @anthropic-ai/claude-code
