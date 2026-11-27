@@ -7,7 +7,7 @@ Cada execução roda primeiro `/judge <repo>` no repo que disparou (nota em [`re
 sobre o estado atual dos quatro repositórios, não só do que disparou.
 
 - **Último relatório:** [`LATEST.md`](LATEST.md) · resumo por repo: [`STATUS.md`](../../STATUS.md)
-- **Rodar na mão:** aba *Actions* → *Judge* → *Run workflow*.
+- **Rodar na mão:** aba *Actions* → *Judge* → *Run workflow*. Credencial: Claude pelo Amazon Bedrock ([README, seção "Judge na CI"](../../README.md#judge-na-ci-claude-pelo-amazon-bedrock)).
 - A nota é uma estimativa de LLM: varia ±2 entre execuções sobre o mesmo código. Olhe a tendência, não um ponto.
 
 ## Histórico

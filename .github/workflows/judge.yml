@@ -11,7 +11,10 @@ name: Judge
 #     na mão e commitou (só o passo 2). O commit da própria CI usa o GITHUB_TOKEN e não redispara;
 #   - workflow_dispatch: na mão pela aba Actions, com o repo opcional.
 #
-# Precisa do secret ANTHROPIC_API_KEY ou CLAUDE_CODE_OAUTH_TOKEN neste repo. Modelo opcional: variável JUDGE_MODEL.
+# O Claude roda pelo Amazon Bedrock, com login na AWS por OIDC (sem chave guardada no GitHub).
+# Variáveis do repo (Settings → Secrets and variables → Actions → Variables):
+#   AWS_ROLE_ARN (obrigatória; sem ela o job é pulado), AWS_REGION (obrigatória),
+#   JUDGE_MODEL (opcional: ID do modelo no Bedrock). Passo a passo no README, seção "Judge na CI".
 
 on:
   repository_dispatch:
@@ -29,6 +32,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write # OIDC para assumir o papel na AWS
 
 # Um judge por vez. Pushes em sequência não cancelam o que está rodando:
 # o GitHub guarda só o último pendente, que avalia o estado mais novo de todos os repos.
@@ -45,12 +49,20 @@ env:
 
 jobs:
   judge:
+    if: vars.AWS_ROLE_ARN != ''
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false # o Claude roda sem o token de escrita
+
+      - name: Login na AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-duration-seconds: 3600
 
       - uses: actions/setup-node@v4
         with:
@@ -72,8 +84,8 @@ jobs:
       - name: Judge do repo (/judge <repo>)
         if: contains(fromJSON('["rodar-backend","rodar-web","rodar-mobile"]'), env.SCOPED_REPO)
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_CODE_USE_BEDROCK: '1'
+          AWS_REGION: ${{ vars.AWS_REGION }}
           JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
           model=""; [ -n "$JUDGE_MODEL" ] && model="--model $JUDGE_MODEL"
@@ -96,9 +108,8 @@ jobs:
 
       - name: Judge (Claude Code, /judge projeto)
         env:
-          # Um dos dois: chave da API ou token da assinatura Claude Pro/Max (`claude setup-token`).
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_CODE_USE_BEDROCK: '1'
+          AWS_REGION: ${{ vars.AWS_REGION }}
           JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
           dirs=""; for r in $CODE_REPOS; do dirs="$dirs --add-dir ../$r"; done
