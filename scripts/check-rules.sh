@@ -3,7 +3,7 @@
 # Cobre só o que dá para checar do terminal; a pontuação (H1-H4) e o resto ficam com o agente `judge`.
 #
 # Uso: sh scripts/check-rules.sh <repo> [<repo> ...]   (caminhos de clones locais dos repositórios entregues)
-#      sh scripts/check-rules.sh                          (sem argumento: procura ../rodar-backend, ../rodar-web, ../rodar-mobile
+#      sh scripts/check-rules.sh                          (sem argumento: procura ../rodar-backend, ../rodar-web, ../rodar-mobile, ../rodar-keycloak
 #                                                          e ../rodarglobal/<repo>; senão, checa o repositório atual)
 # Sai com 1 se houver FALHA. Usa git, grep e (opcional) curl para a API pública do GitHub.
 
@@ -19,7 +19,7 @@ fail() { printf '  FALHA  %s\n' "$*"; fails=$((fails + 1)); }
 
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 if [ "$#" -eq 0 ]; then
-  for r in rodar-backend rodar-web rodar-mobile; do
+  for r in rodar-backend rodar-web rodar-mobile rodar-keycloak; do
     for base in "$root/.." "$root/../rodarglobal"; do
       [ -d "$base/$r/.git" ] && { set -- "$@" "$base/$r"; break; }
     done

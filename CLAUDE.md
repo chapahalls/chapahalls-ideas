@@ -32,7 +32,7 @@ The main Claude session in each teammate's terminal is the hub. Subagents (like 
 4. **Never squash, never rewrite pushed history.** The roadmap is built from commit trailers: a squash merge or a force-push erases them. Merge with a merge commit or rebase-and-merge.
 5. **Decisions and pivots** that change the plan go through `/adr` (record + `PLAN.md` update + trailers).
 6. **Phases close only through `/phase`.** Never create or move `phase/*` tags by hand.
-7. **Verifier and judge are read-only.** The verifier proves the acceptance criteria and writes only to `evidence/`; the judge scores and writes only to `ideas/scores/` and `evidence/`. Fixes go back to whoever owns the code.
+7. **Verifier and judge are read-only.** The verifier proves the acceptance criteria and writes only to `evidence/`; the judge scores and writes only to `ideas/scores/` and `docs/report/` (CI runs it on every push to a code repo's main). Fixes go back to whoever owns the code.
 8. **Demo first.** Prefer the working, slightly ugly version now over the polished one later. Hard-code before you abstract.
 9. **No secrets in git.** Keys go in `.env` (ignored); document the variable names in `README.md`.
 

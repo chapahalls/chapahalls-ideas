@@ -1,6 +1,6 @@
 ---
 name: judge
-description: Avalia se uma ideia ou o projeto está dentro das regras do Hack Brasil 2026 e quanto pontua na rubrica oficial (HACKATHON.md, H1-H4 de 0 a 10, mínimo 20/40 para a final). Sem argumento, avalia todas as ideias em ideas/ e monta o ranking; com um slug, avalia essa ideia; com "projeto" ou "entrega", faz o checklist pré-submissão dos repositórios rodar-backend, rodar-web e rodar-mobile. Use quando perguntarem "está nas regras?", "quanto pontua?", "vamos para a final?", "podemos entregar?".
+description: Avalia se uma ideia ou o projeto está dentro das regras do Hack Brasil 2026 e quanto pontua na rubrica oficial (HACKATHON.md, H1-H4 de 0 a 10, mínimo 20/40 para a final). Sem argumento, avalia todas as ideias em ideas/ e monta o ranking; com um slug, avalia essa ideia; com "projeto" ou "entrega", faz o checklist pré-submissão dos repositórios rodar-backend, rodar-web, rodar-mobile e rodar-keycloak. Também roda na CI (.github/workflows/judge.yml) a cada push na main deles, com relatório em docs/report/. Use quando perguntarem "está nas regras?", "quanto pontua?", "vamos para a final?", "podemos entregar?".
 argument-hint: "[<slug da ideia> | todas | projeto]"
 ---
 
