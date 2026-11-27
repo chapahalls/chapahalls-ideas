@@ -2,7 +2,7 @@
 
 25/11/2026 · commit verificado: `28e1569` (main de [rodarglobal/rodar-mobile](https://github.com/rodarglobal/rodar-mobile)).
 
-**O que prometemos** está em [`ADR-0001`](adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../HACKATHON.md). Relatórios dos outros repos: [`rodar-backend`](rodar-backend-o-que-falta.md) e [`rodar-web`](rodar-web-o-que-falta.md).
+**O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Relatórios dos outros repos: [`rodar-backend`](../rodar-backend/STATUS.md) e [`rodar-web`](../rodar-web/STATUS.md).
 
 O app é onde mora o **diferencial de acessibilidade**: o motorista fala, não digita, e não toca na tela dirigindo. Por isso este relatório pesa mais a seção 2.
 

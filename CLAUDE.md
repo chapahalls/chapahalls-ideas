@@ -18,7 +18,7 @@
 
 # How we work
 
-`PLAN.md` is the source of truth for what we are building and in which phase we are. `ROADMAP.md` and the Pages site are **generated** from git (`scripts/roadmap.mjs`): never edit them by hand.
+`PLAN.md` is the source of truth for what we are building and in which phase we are. `STATUS.md` is the project-wide scoreboard (what exists, what is missing, score); `repos/<repo>/` holds each code repo's status, decisions and score ([`repos/README.md`](repos/README.md)). Everything lives on `main`: no long-lived per-repo branches. `ROADMAP.md` and the Pages site are **generated** from git (`scripts/roadmap.mjs`): never edit them by hand.
 
 ## You are the orchestrator
 
@@ -32,9 +32,10 @@ The main Claude session in each teammate's terminal is the hub. Subagents (like 
 4. **Never squash, never rewrite pushed history.** The roadmap is built from commit trailers: a squash merge or a force-push erases them. Merge with a merge commit or rebase-and-merge.
 5. **Decisions and pivots** that change the plan go through `/adr` (record + `PLAN.md` update + trailers).
 6. **Phases close only through `/phase`.** Never create or move `phase/*` tags by hand.
-7. **Verifier and judge are read-only.** The verifier proves the acceptance criteria and writes only to `evidence/`; the judge scores and writes only to `ideas/scores/` and `docs/report/` (CI runs it on every push to a code repo's main). Fixes go back to whoever owns the code.
+7. **Verifier and judge are read-only.** The verifier proves the acceptance criteria and writes only to `evidence/`; the judge scores and writes only to `ideas/scores/`, `repos/*/score.md`, `docs/report/` and `STATUS.md` (CI runs `/judge <repo>` then `/judge projeto` on every push to a code repo's main, so `STATUS.md` always holds the whole-project score). Fixes go back to whoever owns the code.
 8. **Demo first.** Prefer the working, slightly ugly version now over the polished one later. Hard-code before you abstract.
-9. **No secrets in git.** Keys go in `.env` (ignored); document the variable names in `README.md`.
+9. **Never forget what changed.** After delivering, cutting or deciding something in a code repo, run `/registrar <repo>` before ending the session: it updates `repos/<repo>/STATUS.md` and `decisoes.md`.
+10. **No secrets in git.** Keys go in `.env` (ignored); document the variable names in `README.md`.
 
 ## Skills
 
@@ -45,5 +46,6 @@ The main Claude session in each teammate's terminal is the hub. Subagents (like 
 | `/adr` | A decision worth remembering, a pivot, or cutting scope |
 | `/phase` | The open phase's acceptance criteria look met: verify, tag, update roadmap |
 | `/idea` | Capture a project idea in `ideas/` and score it |
-| `/judge` | Score ideas or the project against the rubric and check the rules (`/judge`, `/judge <slug>`, `/judge projeto`) |
+| `/judge` | Score ideas, one code repo or the project against the rubric and check the rules (`/judge`, `/judge <slug>`, `/judge rodar-backend`, `/judge projeto`) |
+| `/registrar` | After any change in a code repo: update `repos/<repo>/STATUS.md` and `decisoes.md` |
 | `/progress` | "Where are we?": open phase, what's done since the last tag, time spent |

@@ -7,7 +7,9 @@ Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **
 | Regras, rubrica, eliminatórios, entregáveis | [`HACKATHON.md`](HACKATHON.md) |
 | Ideias (uma por arquivo) + ranking | [`ideas/`](ideas/README.md) |
 | Nova ideia | `/idea <descrição>` no Claude Code, ou copie `ideas/TEMPLATE.md` |
-| Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge projeto` (pré-entrega) |
+| **Status do projeto** (nota, o que tem, o que falta) | [`STATUS.md`](STATUS.md), gerado pelo judge |
+| Status, decisões e nota de cada repo de código | [`repos/`](repos/README.md) · `/registrar <repo>` depois de mudar um repo |
+| Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge rodar-backend` (só o repo), `/judge projeto` (pré-entrega) |
 | Checagem mecânica das regras | `sh scripts/check-rules.sh` (procura os três repos de código ao lado deste) |
 | Propósito e contexto do produto | [`RODAR-CONTEXT.md`](RODAR-CONTEXT.md) · [`ideas/rodar.md`](ideas/rodar.md) |
 | Pesquisa do problema (demora em docas), com fontes | [`ideas/demora-em-docas/descoberta.md`](ideas/demora-em-docas/descoberta.md) |

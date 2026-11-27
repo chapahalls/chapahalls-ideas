@@ -2,7 +2,7 @@
 
 25/11/2026 · commit verificado: `b353d12` (main de [rodarglobal/rodar-backend](https://github.com/rodarglobal/rodar-backend)).
 
-**O que prometemos** está em [`ADR-0001`](adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../HACKATHON.md).
+**O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md).
 
 **Como conferi:**
 - Li o código em `backend/app`.
