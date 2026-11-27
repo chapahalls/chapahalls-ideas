@@ -1,6 +1,6 @@
 # rodar-web: o que falta, contra o que prometemos
 
-27/11/2026 · commit verificado: `b62e17c` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)).
+27/11/2026 · commit verificado: `e6b1683` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `b62e17c` e `e6b1683`: só housekeeping de branches (mescladas e apagadas `feat/dashboard-components` e `claude/youthful-pasteur-c2xht9`, só `develop`/`main` restaram) e um recurso de UX sem relação com as lacunas desta tabela (seletor de velocidade 0.5x/1x/2x da simulação). Nenhum item abaixo muda de estado por causa disso.
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
