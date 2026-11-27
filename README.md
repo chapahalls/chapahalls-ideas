@@ -20,25 +20,27 @@ Fluxo: a ideia escolhida é o [`rodar`](ideas/rodar.md) → `/judge projeto` che
 
 ## Judge na CI: Claude pelo Amazon Bedrock
 
-**Decisão (27/11/2026):** na CI, o judge usa o Claude pelo **Amazon Bedrock**, com credencial da AWS do time, e não por chave da API da Anthropic nem pelo token de assinatura. O login é por **OIDC**: o GitHub ganha uma credencial temporária a cada execução, e nenhuma chave da AWS fica guardada no GitHub.
+**Decisão (27/11/2026):** na CI, o judge usa o Claude pelo **Amazon Bedrock**, com a chave de um usuário IAM do time, e não chave da API da Anthropic nem token de assinatura. Escolhemos chave fixa em vez de OIDC por falta de tempo antes do prazo. O risco fica contido porque esse usuário só pode invocar o modelo. Depois da final (12/12), apague a chave ou troque por OIDC.
 
-Como funciona: um push na `main` de um repo de código dispara o [`judge.yml`](.github/workflows/judge.yml) daqui (fluxo em [`repos/README.md`](repos/README.md)). Ele assume o papel na AWS e roda o Claude Code com `CLAUDE_CODE_USE_BEDROCK=1`. Sem `AWS_ROLE_ARN` configurada, o job é pulado, sem erro.
+Como funciona: um push na `main` de um repo de código dispara o [`judge.yml`](.github/workflows/judge.yml) daqui (fluxo em [`repos/README.md`](repos/README.md)). Ele faz login na AWS e roda o Claude Code com `CLAUDE_CODE_USE_BEDROCK=1`. Sem o secret `AWS_ACCESS_KEY_ID`, o judge é pulado, sem erro.
 
 **Configurar uma vez:**
 
 1. **Na AWS:**
    - Habilite o acesso ao modelo Claude no console do Bedrock, na região escolhida.
-   - Crie o provedor OIDC `token.actions.githubusercontent.com` (audience `sts.amazonaws.com`).
-   - Crie um papel IAM que confie nesse provedor, com a condição `token.actions.githubusercontent.com:sub` = `repo:rodarglobal/rodar-ideas:ref:refs/heads/main`. O judge roda sempre na `main`.
-   - Permissões do papel: só `bedrock:InvokeModel` e `bedrock:InvokeModelWithResponseStream`. Se usar um perfil de inferência entre regiões, acrescente `bedrock:ListInferenceProfiles` e `bedrock:GetInferenceProfile`.
-2. **Neste repo**, em Settings → Secrets and variables → Actions → **Variables** (não são segredos):
+   - Crie um usuário IAM só para o judge, sem acesso ao console, e gere uma chave de acesso.
+   - Política do usuário: só `bedrock:InvokeModel` e `bedrock:InvokeModelWithResponseStream`, de preferência limitadas ao ARN do modelo. Se usar um perfil de inferência entre regiões, acrescente `bedrock:ListInferenceProfiles` e `bedrock:GetInferenceProfile`.
+   - Crie um alarme de custo no AWS Budgets.
+2. **Neste repo**, em Settings → Secrets and variables → Actions:
 
-   | Variável | Obrigatória | Exemplo |
-   |---|---|---|
-   | `AWS_ROLE_ARN` | sim | `arn:aws:iam::<conta>:role/rodar-judge` |
-   | `AWS_REGION` | sim | a região onde o modelo foi habilitado |
-   | `JUDGE_MODEL` | não | o ID do modelo **no Bedrock** (o do console, com prefixo `anthropic.` ou de perfil de inferência). Vazio = padrão do Claude Code |
+   | Nome | Onde | Obrigatório | Valor |
+   |---|---|---|---|
+   | `AWS_ACCESS_KEY_ID` | Secrets | sim | ID da chave do usuário IAM |
+   | `AWS_SECRET_ACCESS_KEY` | Secrets | sim | chave secreta do usuário IAM |
+   | `AWS_REGION` | Variables | sim | a região onde o modelo foi habilitado |
+   | `JUDGE_MODEL` | Variables | não | o ID do modelo **no Bedrock** (o do console, com prefixo `anthropic.` ou de perfil de inferência). Vazio = padrão do Claude Code |
 
+   A chave nunca vai para `.env` versionado nem para o chat.
 3. **Em `rodar-backend`, `rodar-web` e `rodar-mobile`**, crie o secret `IDEAS_DISPATCH_TOKEN`: um token fine-grained com acesso só a este repo e permissão *Contents: Read and write*. É ele que dispara o judge daqui.
 4. **Teste:** aba *Actions* → *Judge* → *Run workflow*.
 

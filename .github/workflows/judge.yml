@@ -11,10 +11,10 @@ name: Judge
 #     na mão e commitou (só o passo 2). O commit da própria CI usa o GITHUB_TOKEN e não redispara;
 #   - workflow_dispatch: na mão pela aba Actions, com o repo opcional.
 #
-# O Claude roda pelo Amazon Bedrock, com login na AWS por OIDC (sem chave guardada no GitHub).
-# Variáveis do repo (Settings → Secrets and variables → Actions → Variables):
-#   AWS_ROLE_ARN (obrigatória; sem ela o job é pulado), AWS_REGION (obrigatória),
-#   JUDGE_MODEL (opcional: ID do modelo no Bedrock). Passo a passo no README, seção "Judge na CI".
+# O Claude roda pelo Amazon Bedrock, com a chave de um usuário IAM que só pode invocar o modelo.
+# Secrets: AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY (sem eles o judge é pulado).
+# Variables: AWS_REGION (obrigatória), JUDGE_MODEL (opcional: ID do modelo no Bedrock).
+# Passo a passo no README, seção "Judge na CI".
 
 on:
   repository_dispatch:
@@ -32,7 +32,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write # OIDC para assumir o papel na AWS
 
 # Um judge por vez. Pushes em sequência não cancelam o que está rodando:
 # o GitHub guarda só o último pendente, que avalia o estado mais novo de todos os repos.
@@ -48,8 +47,22 @@ env:
   TRIGGER_ACTOR: ${{ github.event.client_payload.actor || github.actor }}
 
 jobs:
+  # Secret não entra no `if` de um job: este job só diz se a chave da AWS existe.
+  credencial:
+    runs-on: ubuntu-latest
+    outputs:
+      ok: ${{ steps.check.outputs.ok }}
+    steps:
+      - id: check
+        env:
+          KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        run: |
+          if [ -n "$KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"
+          else echo "::warning::sem o secret AWS_ACCESS_KEY_ID: judge pulado"; echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
   judge:
-    if: vars.AWS_ROLE_ARN != ''
+    needs: credencial
+    if: needs.credencial.outputs.ok == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -57,12 +70,12 @@ jobs:
         with:
           persist-credentials: false # o Claude roda sem o token de escrita
 
-      - name: Login na AWS (OIDC)
+      - name: Login na AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
-          role-duration-seconds: 3600
 
       - uses: actions/setup-node@v4
         with:
