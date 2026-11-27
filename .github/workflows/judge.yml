@@ -90,7 +90,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22 # o Claude Code 2.1.280+ exige Node >= 22
 
       - name: Clonar os repositórios de código ao lado deste
         # Histórico completo: o check-rules confere a data do primeiro commit (X1).
@@ -103,7 +103,16 @@ jobs:
           cat "$RUNNER_TEMP/shas.txt"
 
       - name: Instalar o Claude Code
-        run: npm install -g @anthropic-ai/claude-code
+        # Com Node antigo o npm instala em silêncio a última versão compatível, velha
+        # demais para o modelo. A checagem falha aqui em vez de no meio do judge.
+        run: |
+          npm install -g @anthropic-ai/claude-code@latest
+          v=$(claude --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          echo "Claude Code $v ($(command -v claude))"
+          min=2.1.280
+          if [ "$(printf '%s\n' "$min" "$v" | sort -V | head -1)" != "$min" ]; then
+            echo "::error::Claude Code $v instalado; o modelo exige $min ou mais nova"; exit 1
+          fi
 
       - name: Judge do repo (/judge <repo>)
         if: contains(fromJSON('["rodar-backend","rodar-web","rodar-mobile"]'), env.SCOPED_REPO)
