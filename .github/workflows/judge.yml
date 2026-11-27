@@ -1,22 +1,38 @@
 name: Judge
 
-# Roda o /judge projeto (skill + agente judge deste repo) sempre que algum
-# repositório de código recebe push na main, e publica o relatório em docs/report/.
+# Dois judges em sequência, para a main sempre ter a nota do projeto inteiro:
+#   1. /judge <repo>   → repos/<repo>/score.md (só o repo que mudou: H1+H2, /20)
+#   2. /judge projeto  → docs/report/judge-*.md + STATUS.md (os quatro repos, /40)
 #
 # Gatilhos:
 #   - repository_dispatch "judge": enviado pelo .github/workflows/judge.yml de
-#     rodar-backend, rodar-web, rodar-mobile e rodar-keycloak;
-#   - workflow_dispatch: rodar na mão pela aba Actions.
+#     rodar-backend, rodar-web e rodar-mobile a cada push na main deles (passos 1 e 2);
+#   - push na main deste repo mudando repos/*/score.md, ou seja, alguém rodou /judge <repo>
+#     na mão e commitou (só o passo 2). O commit da própria CI usa o GITHUB_TOKEN e não redispara;
+#   - workflow_dispatch: na mão pela aba Actions, com o repo opcional.
 #
-# Precisa do secret ANTHROPIC_API_KEY ou CLAUDE_CODE_OAUTH_TOKEN neste repo. Modelo opcional: variável JUDGE_MODEL.
+# O Claude roda pelo Amazon Bedrock, com login na AWS por OIDC (sem chave guardada no GitHub).
+# Variáveis do repo (Settings → Secrets and variables → Actions → Variables):
+#   AWS_ROLE_ARN (obrigatória; sem ela o job é pulado), AWS_REGION (obrigatória),
+#   JUDGE_MODEL (opcional: ID do modelo no Bedrock). Passo a passo no README, seção "Judge na CI".
 
 on:
   repository_dispatch:
     types: [judge]
+  push:
+    branches: [main]
+    paths: ['repos/*/score.md']
   workflow_dispatch:
+    inputs:
+      repo:
+        description: "Repo para o judge do repo antes do projeto (vazio = só o projeto)"
+        type: choice
+        options: ['', rodar-backend, rodar-web, rodar-mobile]
+        default: ''
 
 permissions:
   contents: write
+  id-token: write # OIDC para assumir o papel na AWS
 
 # Um judge por vez. Pushes em sequência não cancelam o que está rodando:
 # o GitHub guarda só o último pendente, que avalia o estado mais novo de todos os repos.
@@ -26,18 +42,27 @@ concurrency:
 
 env:
   CODE_REPOS: rodar-backend rodar-web rodar-mobile rodar-keycloak
-  TRIGGER_REPO: ${{ github.event.client_payload.repo || 'manual' }}
-  TRIGGER_SHA: ${{ github.event.client_payload.sha || '' }}
+  SCOPED_REPO: ${{ github.event.client_payload.repo || inputs.repo || '' }}
+  TRIGGER_REPO: ${{ github.event.client_payload.repo || inputs.repo || (github.event_name == 'push' && 'rodar-ideas') || 'manual' }}
+  TRIGGER_SHA: ${{ github.event.client_payload.sha || (github.event_name == 'push' && github.sha) || '' }}
   TRIGGER_ACTOR: ${{ github.event.client_payload.actor || github.actor }}
 
 jobs:
   judge:
+    if: vars.AWS_ROLE_ARN != ''
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false # o Claude roda sem o token de escrita
+
+      - name: Login na AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-duration-seconds: 3600
 
       - uses: actions/setup-node@v4
         with:
@@ -53,14 +78,40 @@ jobs:
           done
           cat "$RUNNER_TEMP/shas.txt"
 
-      - name: Judge (Claude Code, /judge projeto)
+      - name: Instalar o Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Judge do repo (/judge <repo>)
+        if: contains(fromJSON('["rodar-backend","rodar-web","rodar-mobile"]'), env.SCOPED_REPO)
         env:
-          # Um dos dois: chave da API ou token da assinatura Claude Pro/Max (`claude setup-token`).
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_CODE_USE_BEDROCK: '1'
+          AWS_REGION: ${{ vars.AWS_REGION }}
           JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
         run: |
-          npm install -g @anthropic-ai/claude-code
+          model=""; [ -n "$JUDGE_MODEL" ] && model="--model $JUDGE_MODEL"
+          sha=$(git -C "../$SCOPED_REPO" rev-parse --short HEAD)
+          when=$(TZ=America/Sao_Paulo date '+%Y-%m-%d %H:%M')
+          claude -p $model --add-dir "../$SCOPED_REPO" \
+            --permission-mode acceptEdits \
+            --allowedTools "Bash Read Write Edit Glob Grep Agent Task Skill" \
+            --max-turns 60 \
+            "/judge $SCOPED_REPO
+
+          Execução automática na CI (sem humano para responder: não pergunte nada).
+          Data/hora: $when (America/Sao_Paulo).
+          Gatilho: push na main de $SCOPED_REPO ${TRIGGER_SHA:0:7} por $TRIGGER_ACTOR. Commit avaliado: $sha.
+          Inclua essa linha de gatilho logo abaixo do título.
+          Salve em repos/$SCOPED_REPO/score.md e não escreva em nenhum outro lugar."
+          if git diff --quiet -- "repos/$SCOPED_REPO/score.md"; then
+            echo "::error::o judge do repo não atualizou repos/$SCOPED_REPO/score.md"; exit 1
+          fi
+
+      - name: Judge (Claude Code, /judge projeto)
+        env:
+          CLAUDE_CODE_USE_BEDROCK: '1'
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
+        run: |
           dirs=""; for r in $CODE_REPOS; do dirs="$dirs --add-dir ../$r"; done
           model=""; [ -n "$JUDGE_MODEL" ] && model="--model $JUDGE_MODEL"
           shas=$(tr '\n' ',' < "$RUNNER_TEMP/shas.txt" | sed 's/,$//; s/,/, /g')
@@ -76,7 +127,8 @@ jobs:
           Gatilho: push na main de $TRIGGER_REPO ${TRIGGER_SHA:0:7} por $TRIGGER_ACTOR.
           Repositórios avaliados (clonados em ../): $shas.
           Inclua essa linha de gatilho e os SHAs logo abaixo do título do relatório.
-          Salve o relatório em docs/report/judge-<YYYYMMDD-HHMM>.md e não escreva em nenhum outro lugar."
+          Comece pelos repos/*/score.md (o de $TRIGGER_REPO acabou de ser refeito, se for um repo de código).
+          Salve o relatório em docs/report/judge-<YYYYMMDD-HHMM>.md, reescreva o STATUS.md da raiz e não escreva em nenhum outro lugar."
 
       - name: Publicar em docs/report/
         id: report
@@ -99,7 +151,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/report/
+          git add docs/report/ STATUS.md repos/*/score.md
           git commit -q -m "docs(report): judge após ${{ steps.report.outputs.trigger }} (${{ steps.report.outputs.score }}/40)"
           remote="https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}"
           for i in 1 2 3 4; do

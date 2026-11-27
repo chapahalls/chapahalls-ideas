@@ -7,7 +7,9 @@ Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **
 | Regras, rubrica, eliminatórios, entregáveis | [`HACKATHON.md`](HACKATHON.md) |
 | Ideias (uma por arquivo) + ranking | [`ideas/`](ideas/README.md) |
 | Nova ideia | `/idea <descrição>` no Claude Code, ou copie `ideas/TEMPLATE.md` |
-| Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge projeto` (pré-entrega) |
+| **Status do projeto** (nota, o que tem, o que falta) | [`STATUS.md`](STATUS.md), gerado pelo judge |
+| Status, decisões e nota de cada repo de código | [`repos/`](repos/README.md) · `/registrar <repo>` depois de mudar um repo |
+| Pontuar ideias / checar regras | `/judge` (todas), `/judge <slug>`, `/judge rodar-backend` (só o repo), `/judge projeto` (pré-entrega) |
 | Checagem mecânica das regras | `sh scripts/check-rules.sh` (procura os três repos de código ao lado deste) |
 | Propósito e contexto do produto | [`RODAR-CONTEXT.md`](RODAR-CONTEXT.md) · [`ideas/rodar.md`](ideas/rodar.md) |
 | Pesquisa do problema (demora em docas), com fontes | [`ideas/demora-em-docas/descoberta.md`](ideas/demora-em-docas/descoberta.md) |
@@ -15,6 +17,32 @@ Repositório do time com a **pesquisa, as ideias e as decisões** do RODAR no **
 | Skill + docs MCP da Agora | já configurado em `.claude/settings.json`: ao abrir o Claude Code no repo, aceite instalar o plugin `agora`. Manual: `/plugin marketplace add AgoraIO/skills` e `/plugin install agora@agora-skills` |
 
 Fluxo: a ideia escolhida é o [`rodar`](ideas/rodar.md) → `/judge projeto` checa os repositórios de código antes de 30/11 → decisões novas via `/adr`.
+
+## Judge na CI: Claude pelo Amazon Bedrock
+
+**Decisão (27/11/2026):** na CI, o judge usa o Claude pelo **Amazon Bedrock**, com credencial da AWS do time, e não por chave da API da Anthropic nem pelo token de assinatura. O login é por **OIDC**: o GitHub ganha uma credencial temporária a cada execução, e nenhuma chave da AWS fica guardada no GitHub.
+
+Como funciona: um push na `main` de um repo de código dispara o [`judge.yml`](.github/workflows/judge.yml) daqui (fluxo em [`repos/README.md`](repos/README.md)). Ele assume o papel na AWS e roda o Claude Code com `CLAUDE_CODE_USE_BEDROCK=1`. Sem `AWS_ROLE_ARN` configurada, o job é pulado, sem erro.
+
+**Configurar uma vez:**
+
+1. **Na AWS:**
+   - Habilite o acesso ao modelo Claude no console do Bedrock, na região escolhida.
+   - Crie o provedor OIDC `token.actions.githubusercontent.com` (audience `sts.amazonaws.com`).
+   - Crie um papel IAM que confie nesse provedor, com a condição `token.actions.githubusercontent.com:sub` = `repo:rodarglobal/rodar-ideas:ref:refs/heads/main`. O judge roda sempre na `main`.
+   - Permissões do papel: só `bedrock:InvokeModel` e `bedrock:InvokeModelWithResponseStream`. Se usar um perfil de inferência entre regiões, acrescente `bedrock:ListInferenceProfiles` e `bedrock:GetInferenceProfile`.
+2. **Neste repo**, em Settings → Secrets and variables → Actions → **Variables** (não são segredos):
+
+   | Variável | Obrigatória | Exemplo |
+   |---|---|---|
+   | `AWS_ROLE_ARN` | sim | `arn:aws:iam::<conta>:role/rodar-judge` |
+   | `AWS_REGION` | sim | a região onde o modelo foi habilitado |
+   | `JUDGE_MODEL` | não | o ID do modelo **no Bedrock** (o do console, com prefixo `anthropic.` ou de perfil de inferência). Vazio = padrão do Claude Code |
+
+3. **Em `rodar-backend`, `rodar-web` e `rodar-mobile`**, crie o secret `IDEAS_DISPATCH_TOKEN`: um token fine-grained com acesso só a este repo e permissão *Contents: Read and write*. É ele que dispara o judge daqui.
+4. **Teste:** aba *Actions* → *Judge* → *Run workflow*.
+
+**Custo:** cada push na `main` de um repo de código roda dois judges (o do repo e o do projeto). A conta vem na fatura da AWS, não da Anthropic.
 
 ---
 

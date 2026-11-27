@@ -2,7 +2,7 @@
 
 25/11/2026 · commit verificado: `dd68e2d` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)).
 
-**O que prometemos** está em [`ADR-0001`](adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](rodar-backend-o-que-falta.md).
+**O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
 **Como conferi:**
 - Li o código e a documentação do repositório (`docs/INTEGRACAO-BACKEND.md`, `docs/REGRAS-DE-NEGOCIO.md`, `docs/DESIGN.md`).
