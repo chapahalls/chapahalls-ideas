@@ -1,41 +1,43 @@
-# Judge: rodar-backend, 2026-11-27 23:35
+# Judge: rodar-backend, 2026-11-27 23:55
 
-Gatilho: push na main de rodar-backend c9c040c por HenryFacens. Commit avaliado: c9c040c.
+Gatilho: push na main de rodar-backend eec39ea por HenryFacens. Commit avaliado: eec39ea.
 
-**Nota do repo: 16 / 20** (H1+H2) · Eliminatórios: 0 FALHAS, 2 RISCOS · Prazo: faltam 3d0h para 30/11 23h59 · Variação: 0 (era 16/20 em `f630043`)
+**Nota do repo: 17 / 20** (H1+H2) · Eliminatórios: 0 FALHAS, 2 RISCOS · Prazo: faltam 3d0h para 30/11 23h59 · Variação: +1 (era 16/20 em `c9c040c`)
 
-Desde a rodada anterior (`f630043`) entraram 2 commits. Os dois respondem aos dois alertas de H1 da rodada passada:
-- `38c765a`: nova função `corrigir_tipo_por_estado` (`dominio/ocorrencias.py:131`), chamada em `servicos/tasks.py:252`. Com a rota `em_transito`, uma ocorrência classificada como `fila` passa a ser `atraso`. Entraram 3 testes de domínio e um teste de API (`test_llm_classifica_atraso_como_fila_mas_estado_da_rota_corrige`) em que o LLM fake erra de propósito e o aviso ao recebedor sai mesmo assim. Isso fecha a falha da etapa 3d. **Não** fecha a 5e2, que é o erro inverso: a fila detalhada na doca não vira ocorrência detalhada.
-- `c9c040c`: `ecs.tf:28` passa para `"true"`, o `/health` expõe `ligar_recebedor_na_aproximacao` (com teste) e o README ganhou a linha 93 dizendo que a flag está ativa no ambiente da AWS. A mensagem do commit diz que o `tofu apply` foi feito.
+Desde a rodada anterior (`c9c040c`) entrou 1 commit, `eec39ea`, que só muda documentação: `README.md` (1 linha) e `evidence/validacao.md` (+108 linhas). Ele atende o item 1 do *Maior retorno* da rodada passada:
+- É a **primeira validação publicada contra o ambiente público** (`https://d3fy4m7zwukr3x.cloudfront.net`), não contra `localhost`. Foi feita sobre o `sha` `c9c040c`, com LLM e LiveKit reais e 4 rodadas na mesma sessão.
+- **3d (atraso na estrada) passou 4 de 4** depois da regra determinística `corrigir_tipo_por_estado`.
+- **4c falhou em 3 de 4 rodadas, 5e2 em 4 de 4 e 5e em 2 de 4.** As causas estão diagnosticadas com evidência do banco de produção: na 4c, os campos de `registrar_resposta_recebedor` saem `None` ou com o prefixo `"doca 4"`; na 5e2, `detalhar_ocorrencia` é chamada tarde e com texto genérico.
 
 **Conferido nesta rodada:**
-- `docker compose run --rm test`: **397 passed** em 42 s (eram 392).
-- `curl` às 23h33 e às 23h35 (-03) em `https://d3fy4m7zwukr3x.cloudfront.net/health`: 200, `banco_ok: true`, mas ainda **`sha: "f630043"`**, sem a chave `ligar_recebedor_na_aproximacao`. O push foi às 23h32, então a imagem de `c9c040c` ainda não estava no ar. **Não consegui confirmar pela API que a flag está ligada em produção.** Continuam `twilio_configurado: false` e `recebedor_modo: rtc`.
+- `curl` às 23h55 (-03) em `https://d3fy4m7zwukr3x.cloudfront.net/health`: `ok: true`, `banco_ok: true`, **`sha: "c9c040c"`** e **`ligar_recebedor_na_aproximacao: true`**. Fecha o RISCO de H1 da rodada passada: a demo pública liga mesmo para o recebedor na aproximação. Continuam `twilio_configurado: false` e `recebedor_modo: rtc`, o que está declarado.
+- `infra/envs/dev/ecs.tf:28` (`"true"`), README linha 93 e tabela da linha 460 (`true`) concordam.
+- Testes: o commit não muda código, então não rodei a suíte de novo. Vale o resultado da rodada anterior: 397 passed.
+- O `/health` mostra `c9c040c`, não `eec39ea`. Isso é esperado, porque `eec39ea` só mexe em docs. Se a CI publicar `eec39ea`, o `sha` muda sem mudar o comportamento.
 
 ## Alertas
 
-- **RISCO (H1): a correção da demo pública ainda não tem prova no ar.** O `/health` continua em `f630043`. Quando o deploy de `c9c040c` terminar, ele deve mostrar `sha: "c9c040c"` e `ligar_recebedor_na_aproximacao: true`. Se a chave aparecer `false`, a task definition não foi aplicada, e o README (linha 93) estará prometendo algo que a demo não faz. **Precisa de humano:** conferir com `curl` depois da run de `deploy`.
-- **RISCO (H1): a 5e2 continua dependendo só do LLM.** A regra nova cobre `fila`→`atraso` na estrada, mas não o caso inverso, que é a fila na doca, com o caminhão `no_destino`, classificada de outro jeito ou sem o aprofundamento. A validação publicada (`evidence/validacao.md`, 32/34 em `bdc14e5`) é anterior às duas correções, e o README (linha 38) ainda diz que "as 2 falhas são a classificação `atraso`×`fila`". Rodar `validar_fluxos.py` de novo é o que mostra quanto subiu.
-- **RISCO (S5), sem mudança:** o README ainda não tem o link do vídeo. A linha 44 continua `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`.
-- **Precisa de humano (fresh clone):** a validação diz que o `.env.example` vem com `LIGAR_RECEBEDOR_NA_APROXIMACAO=false` ("padrão do `.env.example`"), mas a tabela do README (linha 460) diz que o padrão é `true`. Não li o `.env.example` nesta rodada. Se for `false`, quem seguir o README localmente não vê a abertura do pitch.
-- **O smoke ainda tem efeito colateral, sem mudança:** cada deploy chama `GET /rotas/1/ocoren` (`ci.yml`), e isso incrementa `Empresa.ultima_sequencia_ocoren` em produção.
-- **STATUS desatualizado** (`repos/rodar-backend/STATUS.md` continua sobre `7fe3475`, 12 commits atrás):
-  - Ele diz que a infra está numa "branch sem PR", só em HTTP. Ela está na main, com HTTPS via CloudFront e deploy pela CI provado.
-  - Ele cita 377 testes. Hoje são 397.
-  - Ele diz que a voz atual "não tem validação publicada". Tem: 32/34.
-  - Ele lista `rodarglobal.github.io/rodar-web` como demo. O README diz que o painel está só na Vercel.
-  - A linha do OpenTofu em `decisoes.md` ("ALB em HTTP", "não chegou ao main") está superada.
+- **RISCO (H1): a demo pública tem 2 etapas que quebram na maior parte das execuções.** São elas a 4c (a resposta do recebedor não vira doca e previsão estruturadas) e a 5e2 (o aprofundamento da fila não vira ocorrência detalhada). A 5e, que registra a ocorrência de fila, também falhou em 2 de 4 rodadas. O júri vê o resultado disso no painel: uma Task sem doca ou uma ocorrência com "não sei". Agora o problema está medido e documentado, o que é bom, mas continua aberto.
+- **RISCO (S5), sem mudança:** o README não tem o link do vídeo. A linha 44 continua `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`.
+- **Novo (H2, leitura do júri): o README e o código citam o júri simulado.** O README (linha 93) diz "alerta do júri, score.md 2026-11-27". Há o mesmo tipo de comentário em `main.py:90`, `main.py:95`, `ocorrencias.py:128`, `rotas.py:28` e `settings.py:86`, e `evidence/validacao.md` fala em "risco do júri de hoje". Um jurado real que ler isso vai concluir que o código foi escrito para a banca. Troque pela razão de domínio antes de 30/11.
+- **Inconsistência no README:** a linha 40 diz "389 no backend" e "625 testes", mas a suíte tem 397.
+- **O smoke ainda tem efeito colateral, sem mudança:** a cada deploy, `GET /rotas/1/ocoren` incrementa `Empresa.ultima_sequencia_ocoren` em produção.
+- **STATUS desatualizado** (`repos/rodar-backend/STATUS.md` ainda é sobre `7fe3475`, 14 commits atrás):
+  - Ele diz que a infra está numa "branch sem PR". Ela está na main, com HTTPS via CloudFront e deploy pela CI.
+  - Ele cita 377 testes. São 397.
+  - Ele diz que a voz não tem validação publicada. Tem, contra a AWS e com 4 rodadas.
+  - A linha do OpenTofu em `decisoes.md` ("não chegou ao main") está superada.
   - Rodar `/registrar rodar-backend`.
 
 ## Pontuação
 
 | # | Critério | Nota (0-10) | Justificativa |
 |---|---|---|---|
-| H1 | Execução técnica | 7 | Mantém. No código, os dois motivos que seguravam a nota foram tratados. O ambiente público liga para o recebedor na aproximação (`ecs.tf:28`). O atraso na estrada não depende mais só do LLM, com teste em que o modelo erra e o fluxo segue. Para subir a 8 falta **prova**: o `/health` público ainda roda `f630043` e não mostra a flag, a validação de 32/34 é anterior às correções e foi feita local, não contra o CloudFront, e a 5e2 continua aberta. A telefonia real segue desligada (`twilio_configurado: false`), declarada. |
-| H2 | Implementação técnica | 9 | Mantém. A divergência entre a IaC e o padrão documentado foi corrigida, e a flag ficou observável no `/health`, com teste. A correção da classificação é determinística, fica no domínio e tem testes para os casos positivo e negativo e para os tipos que não mudam. São 397 testes com Postgres real, sobre camadas `dominio/`, `servicos/`, `portas.py`, o motor EDI por layout, a outbox idempotente, IaC em OpenTofu e deploy pela CI provado. O que impede o 10: o GET com efeito colateral no smoke, a imagem `:latest` mutável e a classificação de ocorrências sem conjunto de avaliação versionado. A regra nova cobre só um sentido do erro. |
+| H1 | Execução técnica | 8 | Sobe de 7. Agora há **prova** de que o fluxo roda no ar: o `/health` público mostra `c9c040c` com `ligar_recebedor_na_aproximacao: true`, e a validação de 34 etapas foi feita contra o CloudFront, com LLM e LiveKit reais, em 4 execuções. Deu 31 ou 32/34 em todas, com a ligação ao recebedor, a estadia, a escalada ao CCO e o OCOREN estáveis. A falha que mais pesava (3d) passou 4/4. Fica longe do 9 porque o critério é "nada quebra na mão do júri", e a 4c e a 5e2 quebram na maioria das execuções no próprio ambiente público. A telefonia real segue desligada, o que está declarado. |
+| H2 | Implementação técnica | 9 | Mantém, porque não houve mudança de código. A medição em várias rodadas com causa confirmada no banco é o tipo de rigor que um júri de dados e ML valoriza. Continuam impedindo o 10: o GET com efeito colateral no smoke, a imagem `:latest` mutável, a extração de argumentos das ferramentas sem validação determinística (normalizar `"doca 4"`→`"4"` é trivial e não foi feito) e nenhum conjunto de avaliação versionado na CI. Os comentários que citam o "júri" também pesam contra. |
 | H3 | Impacto | avaliado no projeto | Não pontuado aqui. |
 | H4 | Comunicação | avaliado no projeto | Não pontuado aqui. O link do vídeo ainda falta no README. |
-| | **Total** | **16/20** | |
+| | **Total** | **17/20** | |
 
 ## Eliminatórios
 
@@ -44,28 +46,36 @@ Desde a rodada anterior (`f630043`) entraram 2 commits. Os dois respondem aos do
 | X1 | Público, criado depois de 04/11 21h, sem fork | OK | Primeiro commit em 22/11/2026 |
 | X2 | Sem código anterior não público | OK, precisa de humano | Declarado no README |
 | X3 | Licença | OK | MIT |
-| X4 | Público até 15/12 | OK | Público e não é fork. Há compromisso por escrito de manter a infra até 15/12 |
-| X6 | Sem dado pessoal real | OK | `+5519900000002`, `+5511900000001` e os números de `test_auth.py` seguem o padrão sequencial `9000000xx`. Os e-mails são `.test`, e o seed e a NF-e estão declarados como fictícios |
-| Segredo no git | — | OK | Nenhum `.env`, `tfstate` ou `tfvars` real versionado. As credenciais da CI ficam só nos secrets do Actions |
-| Mocks e terceiros | Declarados no README | OK | A seção "Simulado / pré-existente" está completa. A ressalva da rodada passada (flag desligada sem aviso) foi resolvida no código e no README. Falta a confirmação no ar |
-| Link da demo | README | OK | Painel na Vercel. A API no CloudFront responde 200 com banco |
+| X4 | Público até 15/12 | OK | Público e não é fork. A disponibilidade da infra até 15/12 está assumida por escrito |
+| X6 | Sem dado pessoal real | OK | `+5519900000002`, `+5511900000001` e os números de `test_auth.py` seguem o padrão sequencial `9000000xx` e são fictícios. Os e-mails são `.test` e o seed está declarado como fictício. A validação nova traz só IDs e um CNPJ da NF-e de demo |
+| Segredo no git | — | OK | Nenhum `.env`, `tfstate` ou `tfvars` real versionado. O ID da conta AWS aparece em `decisoes.md`, mas não é segredo |
+| Mocks e terceiros | Declarados no README | OK | A seção "Simulado / pré-existente" está completa. `recebedor_modo: rtc` e `twilio_configurado: false` estão declarados |
+| Link da demo | README | OK | Painel na Vercel. A API no CloudFront responde 200 com banco e a flag ligada |
 | Link do vídeo | README | RISCO | Ausente (linha 44) |
 
 Saída resumida do `sh scripts/check-rules.sh ../rodar-backend`:
 - 0 FALHAS e 2 RISCOS. Deram OK: X1 (primeiro commit em 22/11), X4 (público, não fork), X3 (LICENSE), X7/X8 (main em dia) e prazo (3d0h). Em S4/S5, deram OK as instruções, as dependências, o link HTTPS da demo e a declaração do que é simulado e de terceiros. Em X6, sem `.env` e sem credenciais.
 - RISCO S5: o README não tem o link do vídeo de até 3 min.
-- RISCO X6: há telefones versionados em `.env.example`, `settings.py`, `seed.py` e `test_auth.py`. Conferi: são fictícios.
+- RISCO X6: há telefones versionados em `.env.example`, `settings.py`, `seed.py` e `test_auth.py`. São fictícios, então não é falha.
 
-Checagens humanas pendentes: X2, X9, X10, S1, S3, S5, S6, o `/health` depois do deploy de `c9c040c` e o valor da flag no `.env.example`.
+Checagens humanas pendentes: X2, X9, X10, S1, S3, S5 e S6.
 
 ## Maior retorno
 
-1. **Validar de novo, agora contra a demo pública.** Depois que o `/health` mostrar `sha: "c9c040c"` e `ligar_recebedor_na_aproximacao: true`, rodar `scripts/validar_fluxos.py` contra `https://d3fy4m7zwukr3x.cloudfront.net` e publicar o resultado em `evidence/validacao.md` com o `sha`. Atualizar também a frase da linha 38 do README sobre "as 2 falhas". É a prova que falta para "demo pública no ar, falhas tratadas". **H1 7→8 = +1.**
-2. **Fechar a 5e2 do mesmo jeito que a 3d.** Com a rota `no_destino` ou `aproximando` e uma fala de fila ou portaria, forçar `fila` e o roteiro de aprofundamento, com um teste em que o LLM fake erra. Junto, um pequeno conjunto versionado de falas ambíguas que rode na CI. **Protege o 8 de H1 e conta para H2 9→10.**
-3. **Link do vídeo no README (linha 44), trocar o smoke do OCOREN por uma checagem sem efeito colateral e fixar a imagem por `:<sha>`.** Tira o RISCO S5, que pesa no H4 do projeto, e remove os dois últimos defeitos de H2. Rodar também `/registrar rodar-backend`, porque o STATUS está 12 commits atrás. **S5 RISCO→OK; H2 9→10 = +1, junto com o item 2.**
+1. **Tornar a 4c e a 5e2 determinísticas na borda das ferramentas, sem mexer no prompt.**
+   - Na 4c, normalizar `doca` (tirar o prefixo "doca", ficar só com o número) e, quando o LLM mandar `None`, extrair doca e previsão da própria transcrição da ligação com uma regex simples.
+   - Na 5e2, quando houver uma ocorrência aberta com aprofundamento pendente e a fala seguinte do motorista não for de outra ferramenta, anexar essa fala como detalhe da ocorrência, sem esperar o LLM chamar `detalhar_ocorrencia`.
+   - Fazer um teste com LLM fake que erra em cada caso e rodar `validar_fluxos.py` de novo contra a AWS.
+   - É o que separa "falhas documentadas" de "nada quebra na mão do júri". **H1 8→9 = +1.**
+2. **Tirar as menções ao júri simulado do README (linha 93), dos comentários (`main.py`, `ocorrencias.py`, `rotas.py`, `settings.py`) e de `evidence/validacao.md`.** Escreva a razão de domínio ("a demo pública precisa mostrar se a ligação na aproximação está ativa"). No mesmo commit, corrigir a contagem de testes na linha 40 (389→397). Um jurado real que ler "score.md" no código desconta qualidade. **Protege o H2 9.**
+3. **Link do vídeo no README (linha 44), smoke sem efeito colateral (trocar o `GET /ocoren` por uma leitura pura ou usar uma rota de teste) e imagem fixada por `:<sha>`.**
+   - Tira o RISCO S5, que pesa no H4 do projeto e é entregável obrigatório.
+   - Remove os dois últimos defeitos de infra em H2.
+   - Depois, `/registrar rodar-backend`.
+   - **S5 RISCO→OK; H2 9→10 = +1.**
 
 ## Observações
 
-- Faltam 3 dias para o prazo, então commits ainda são permitidos até 30/11 23h59. Depois, nada até 12/12: a imagem que estiver no ar em 30/11 é a que o júri vê.
-- Este time responde aos alertas em poucos minutos e com teste, o que é bom sinal para a final, em que o projeto é terminado no local. Cuidado só com comentários no código que citam "score.md" e "risco do júri" (`ocorrencias.py:125`, `main.py:88`, `test_health.py:35`). Para um jurado que lê o código, isso parece código escrito para a banca, não para o produto. Vale reescrever esses comentários com a razão de domínio antes de 30/11.
-- A honestidade do `evidence/validacao.md` (mostrar 32/34 e explicar as falhas) continua sendo um ponto forte para um júri de dados e ML. Mantenha esse tom quando publicar a nova rodada.
+- Faltam 3 dias, então commits ainda são permitidos até 30/11 23h59. De 01/12 a 12/12 não pode haver commit, e a imagem que estiver no ar em 30/11 é a que o júri vê. Não deixe o item 1 para o dia 30: uma regressão de última hora na voz custa mais H1 do que a 5e2 aberta.
+- A seção "3d está determinístico agora; 4c e 5e2 são duas ambiguidades diferentes" é o melhor texto técnico do repo para um júri de dados e ML. Ela tem tabela de rodadas, causa confirmada no banco e a decisão explícita de não mexer no prompt sem medir. Use esse trecho no pitch como prova de rigor.
+- A validação ainda é por texto, sem ASR, latência nem barge-in, e o próprio arquivo diz isso. O teste com pessoas falando é o que o vídeo precisa mostrar.
