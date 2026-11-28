@@ -23,3 +23,4 @@ sobre o estado atual dos quatro repositórios, não só do que disparou.
 | 2026-11-27 17:01 | rodar-web@e6b1683 | 22/40 | [judge-20261127-1659.md](judge-20261127-1659.md) |
 | 2026-11-27 20:18 | rodar-backend@2b0eb7e | 23/40 | [judge-20261127-2016.md](judge-20261127-2016.md) |
 | 2026-11-27 20:50 | rodar-backend@e3a8879 | 23/40 | [judge-20261127-2048.md](judge-20261127-2048.md) |
+| 2026-11-27 21:32 | rodar-backend@7c60ad2 | 23/40 | [judge-20261127-2130.md](judge-20261127-2130.md) |
