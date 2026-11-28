@@ -1,22 +1,23 @@
 # rodar-web: o que falta, contra o que prometemos
 
-28/11/2026 · commit verificado: `adea4d5` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `bac015f` e `adea4d5`, 2 commits novos:
+28/11/2026 · commit verificado: `042e3d1` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `bac015f` e `042e3d1`, 3 commits novos:
 - `05d559e`: o cursor falso do tutorial guiado desmontava e remontava a cada passo, perdendo a transição CSS (teleportava em vez de deslizar); agora fica sempre montado e só esconde depois de 900ms. Reaplicou de passagem o `aria-hidden` no SVG do sino de `TaskPushNotifications` (tinha sido perdido no revert `3a085b4`).
 - `adea4d5`: o backend local passou a registrar ligações ao recebedor com `motivo: "atraso"` (aviso de atraso, recurso já existente em `backend/app/servicos/ligacoes.py`); o painel só aceitava `aproximacao`/`cco_sem_resposta` nesse campo e rejeitava a resposta inteira (`ApiError('invalid_response')` → `api_invalid_response`), caindo a conexão com o modo API mesmo com o backend respondendo normalmente. Corrigido ponta a ponta (tipo, guard de resposta, `CallLog.moment` ganhou `'delay'` em vez de cair, errado, no rótulo de escalonamento, traduções próprias pt-BR/en). Junto, duas melhorias de UX pedidas ao observar o painel: os toasts de alerta (`LiveAlerts`) agora limitam a 3 visíveis com contador de excedente, não acumulam mais de um por veículo e nunca bloqueiam clique nos painéis abaixo; o aviso para ativar notificação do navegador (`TaskPushNotifications`) lembra o descarte em `localStorage` (antes voltava a cada troca de tela do Dashboard) e ganhou uma frase explicando que cobre a aba em segundo plano, diferente dos toasts que já aparecem com a aba em foco.
+- `042e3d1`: os toasts de alerta (`LiveAlerts`) usavam fundo com alfa (`bg-wait-500/15` etc.) sobre o próprio cabeçalho/badges do painel, deixando o toast visivelmente transparente (print do usuário mostrava "Operador CCO" e o badge "3" do sino atravessando a notificação). Troquei para `color-mix(..., var(--color-ink-900))` (mesmo padrão opaco já usado em `cco.css`/`monitoring.css`), mantendo a borda colorida por prioridade; fundo agora é sólido.
 
 **Incidente antigo, já corrigido (sem mudança nesta rodada):** um subagente de avaliação comitou e deu push sem autorização numa restilização do aviso de notificações (`830d6a4`), que quebrou o lint (SVG sem `aria-hidden`); revertido em `3a085b4`. Ver `decisoes.md` para o detalhe — não mude o código com base nisso, já está revertido.
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
-**Como conferi:** rodei a suíte completa depois de `05d559e`, diagnostiquei a queda de conexão do modo API comparando o guard de resposta do painel com a resposta real do backend local (`curl http://127.0.0.1:8000/cco/estado`), corrigi, e conferi ao vivo no navegador contra o backend local (login em modo API, banner "Conectado" sem erro, ligações de atraso exibidas como "Agente → recebedor (atraso)") depois de `adea4d5`:
+**Como conferi:** rodei a suíte completa depois de `05d559e`, diagnostiquei a queda de conexão do modo API comparando o guard de resposta do painel com a resposta real do backend local (`curl http://127.0.0.1:8000/cco/estado`), corrigi, e conferi ao vivo no navegador contra o backend local (login em modo API, banner "Conectado" sem erro, ligações de atraso exibidas como "Agente → recebedor (atraso)") depois de `adea4d5`. Depois de `042e3d1` (fundo opaco do toast), rodei `npm run typecheck`, `npm run lint` e `npm test` de novo (não refiz `build`/e2e, mudança é só CSS/classe num componente já cobrto pelos testes existentes):
 
 | Check | Resultado |
 |---|---|
-| `npm test` | **145 passaram**, 0 falharam (mesma contagem de `bac015f`) |
-| `npm run typecheck` | Sem erros |
-| `npm run lint` | **Sem erros, 0 avisos** |
-| `npm run build` | Ok. `OperatorPage` e outros chunks passam de 500 kB, mas são carregados sob demanda (mesmo aviso de sempre) |
-| `npm run test:e2e` (Playwright) | **1 passou**, 0 falharam — login na Demo → painel → troca de idioma → logout |
+| `npm test` | **145 passaram**, 0 falharam (mesma contagem de `bac015f`, reconferido em `042e3d1`) |
+| `npm run typecheck` | Sem erros (reconferido em `042e3d1`) |
+| `npm run lint` | **Sem erros, 0 avisos** (reconferido em `042e3d1`) |
+| `npm run build` | Ok em `adea4d5`. `OperatorPage` e outros chunks passam de 500 kB, mas são carregados sob demanda (mesmo aviso de sempre) — não reconferido em `042e3d1` |
+| `npm run test:e2e` (Playwright) | **1 passou**, 0 falharam em `adea4d5` — login na Demo → painel → troca de idioma → logout — não reconferido em `042e3d1` |
 
 Não reconferi a fundo as entregas de produto anteriores a `e6b1683` (itens 4 e 5 do resumo abaixo, exportação por entrega e tela de integrações): seguem como no relatório de 27/11.
 
