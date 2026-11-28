@@ -1,6 +1,6 @@
 # rodar-mobile: o que falta, contra o que prometemos
 
-28/11/2026 · commit verificado: `bafa041` (local, não enviado ainda para o remoto de [rodarglobal/rodar-mobile](https://github.com/rodarglobal/rodar-mobile); base `abe0ce7`).
+28/11/2026 · commit verificado: `441bb91` (local, não enviado ainda para o remoto de [rodarglobal/rodar-mobile](https://github.com/rodarglobal/rodar-mobile); base `abe0ce7`).
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Relatórios dos outros repos: [`rodar-backend`](../rodar-backend/STATUS.md) e [`rodar-web`](../rodar-web/STATUS.md).
 
@@ -14,7 +14,7 @@ O app é onde mora o **diferencial de acessibilidade**: o motorista fala, não d
 
 | Check | Resultado |
 |---|---|
-| `npm test` (Vitest) | **133 passaram** em 19 arquivos |
+| `npm test` (Vitest) | **136 passaram** em 19 arquivos |
 | `npm run typecheck` | Sem erros |
 | `npm run lint` | Sem erros, **0 avisos** |
 
@@ -102,6 +102,7 @@ Os itens "`agent-server`"/"GPT-Live" já foram corrigidos em commits anteriores 
 - Voz real migrada de Agora para **LiveKit** (`@livekit/react-native` + `livekit-client`), com barge-in (tratado pelo agente), Mudo e Encerrar; wake word; comandos por voz que abrem telas, documentos, Waze e recados; avisos falados com a conversa fechada.
 - Leitura só com o caminhão parado; leitura de documentos em voz alta; selo e política de só transcrição (`lk.transcription` é recebido e descartado, nunca mostrado).
 - GPS do aparelho em segundo plano; simulador para a demo; mapa Google ou SVG; modo direção com esfera do AvisAI arrastável. Com "GPS Real do Celular" ligado, o mapa agora segue a posição de verdade (câmera no Google Maps; limites do SVG incluem a posição fora do trecho mock) em vez de só alimentar a detecção de velocidade.
+- A rota desenhada no mapa (demo e a vinda do backend) deixou de ser uma linha reta entre origem e destino: a rota demo padrão (Jundiaí → Mercadão Campinas) agora contorna cidades reais do corredor (Louveira, Vinhedo, Valinhos); as rotas fictícias de Marina/João e qualquer rota do backend que só traga origem+destino (sem forma da estrada) ganham uma curva sintética (`bendRoute`) em vez de ficar reta sobre o mapa de verdade (`src/utils/geo.ts`, `demoRoute.ts`, `mockApi.ts`, `useTrip.syncRouteFromBackend`, commit `441bb91`).
 - A esfera flutuante, ao ser arrastada e solta, encosta na lateral mais próxima da tela (esquerda ou direita) em vez de ficar solta no meio, com uma animação suave até lá (commit `bafa041`).
 - Novo comando de voz "sair do modo direção" (e "exit driving mode" em inglês): libera a tela do modo direção na hora, sem esperar o caminhão parar de verdade, e ignora a velocidade por 2 min para não travar de novo no segundo seguinte (`useDrivingMode.exitDrivingModeManually`, `voiceCommands.ts`, commit `bafa041`).
 - Login via SSO mock ou Keycloak real (OIDC + PKCE, `EXPO_PUBLIC_AUTH_MODE=keycloak`), com Organizations.
@@ -109,7 +110,7 @@ Os itens "`agent-server`"/"GPT-Live" já foram corrigidos em commits anteriores 
 - Contrato de rota cancelada; demo pública no GitHub Pages; CI do judge (`rodar-ideas`) disparado a cada push na `main`.
 - Documentos com resposta só a partir dos campos (NF-e/CT-e MOCK declarados).
 - Todas as branches/PRs do repositório revisadas; `main` e `dev` sincronizados; branches obsoletas apagadas do remoto.
-- 133 testes, typecheck e lint (0 avisos) — todos verdes após a migração para LiveKit e as mudanças de GPS/esfera/modo direção desta sessão (3 testes novos: `snapToEdge`, saída manual do modo direção, comando de voz "sair do modo direção").
+- 136 testes, typecheck e lint (0 avisos) — todos verdes após a migração para LiveKit e as mudanças de GPS/esfera/modo direção/rota desta sessão (6 testes novos: `snapToEdge`, saída manual do modo direção, comando de voz "sair do modo direção", desvio da rota demo em relação à linha reta, `threadWaypoints`, `bendRoute`).
 - Em voz real (LiveKit), falar com o AvisAI (esfera, cabeçalho, botões "falar com o AvisAI", wake word, aviso que pede resposta) não abre mais o Painel de frases prontas (Modal cheio) — só liga o microfone; a resposta aparece no balão ao lado da esfera (`useVoice.isDirectVoice`, hook `useTalkToAvisai`, commit `abe0ce7`). No modo Mock o Painel com as frases prontas continua abrindo do mesmo jeito, por não haver microfone real ouvindo.
 
 ## Correções no nosso discurso (deck e documentos)
