@@ -1,26 +1,22 @@
 # rodar-web: o que falta, contra o que prometemos
 
-27/11/2026 · commit verificado: `bac015f` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `e6b1683` e `bac015f`: execução direta das 3 recomendações de "Maior retorno" do `score.md` de 16h58 que dependiam só do front, mais uma correção adicional de uma observação do mesmo relatório, mais a correção de uma regressão encontrada pelo `/judge` na rodada seguinte — ver `decisoes.md` para o detalhe de cada uma:
-- Link morto do README (`rodarglobal.github.io/rodar-mobile/`, 404) trocado por `/mobile-web` na Vercel; contagem de testes e caminhos absolutos corrigidos; justificativa para Agora RTC + LiveKit adicionada.
-- 53 avisos de lint zerados.
-- Vocabulário do canal do evento (`panel`/`call` vs `painel`/`ligacao`) unificado para português, igual ao contrato do backend.
-- Notificação push: parava de pedir permissão sozinha ao carregar a página (ignorado/bloqueado por navegadores modernos); agora só pede após um clique do CCO num aviso discreto.
-- Smoke e2e com Playwright (login na Demo → painel → idioma → logout) rodando na CI.
-- `payload.channel` devolvido no adaptador do modo API (regressão da unificação de vocabulário acima), com teste de regressão novo.
+28/11/2026 · commit verificado: `adea4d5` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `bac015f` e `adea4d5`, 2 commits novos:
+- `05d559e`: o cursor falso do tutorial guiado desmontava e remontava a cada passo, perdendo a transição CSS (teleportava em vez de deslizar); agora fica sempre montado e só esconde depois de 900ms. Reaplicou de passagem o `aria-hidden` no SVG do sino de `TaskPushNotifications` (tinha sido perdido no revert `3a085b4`).
+- `adea4d5`: o backend local passou a registrar ligações ao recebedor com `motivo: "atraso"` (aviso de atraso, recurso já existente em `backend/app/servicos/ligacoes.py`); o painel só aceitava `aproximacao`/`cco_sem_resposta` nesse campo e rejeitava a resposta inteira (`ApiError('invalid_response')` → `api_invalid_response`), caindo a conexão com o modo API mesmo com o backend respondendo normalmente. Corrigido ponta a ponta (tipo, guard de resposta, `CallLog.moment` ganhou `'delay'` em vez de cair, errado, no rótulo de escalonamento, traduções próprias pt-BR/en). Junto, duas melhorias de UX pedidas ao observar o painel: os toasts de alerta (`LiveAlerts`) agora limitam a 3 visíveis com contador de excedente, não acumulam mais de um por veículo e nunca bloqueiam clique nos painéis abaixo; o aviso para ativar notificação do navegador (`TaskPushNotifications`) lembra o descarte em `localStorage` (antes voltava a cada troca de tela do Dashboard) e ganhou uma frase explicando que cobre a aba em segundo plano, diferente dos toasts que já aparecem com a aba em foco.
 
-**Incidente, já corrigido:** entre essas mudanças e esta, um subagente de avaliação comitou e deu push sem autorização numa restilização do aviso de notificações (`830d6a4`), que quebrou o lint (SVG sem `aria-hidden`); revertido em `3a085b4`. Ver `decisoes.md` para o detalhe — não mude o código com base nisso, já está revertido.
+**Incidente antigo, já corrigido (sem mudança nesta rodada):** um subagente de avaliação comitou e deu push sem autorização numa restilização do aviso de notificações (`830d6a4`), que quebrou o lint (SVG sem `aria-hidden`); revertido em `3a085b4`. Ver `decisoes.md` para o detalhe — não mude o código com base nisso, já está revertido.
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
-**Como conferi:** parti do relatório de 27/11 (commit-base `e6b1683`) e conferi os 5 commits novos lendo o diff de cada um e rodando a suíte completa depois do último (`2368b3c`); o `/judge` rodou de novo em seguida (score 15/20), achou a regressão do `payload.channel` (linha "Incidente" acima), e a suíte foi rodada outra vez depois da correção (`bac015f`), com os mesmos resultados:
+**Como conferi:** rodei a suíte completa depois de `05d559e`, diagnostiquei a queda de conexão do modo API comparando o guard de resposta do painel com a resposta real do backend local (`curl http://127.0.0.1:8000/cco/estado`), corrigi, e conferi ao vivo no navegador contra o backend local (login em modo API, banner "Conectado" sem erro, ligações de atraso exibidas como "Agente → recebedor (atraso)") depois de `adea4d5`:
 
 | Check | Resultado |
 |---|---|
-| `npm test` | **145 passaram**, 0 falharam (era 144; novo teste cobre `setSpeed`) |
+| `npm test` | **145 passaram**, 0 falharam (mesma contagem de `bac015f`) |
 | `npm run typecheck` | Sem erros |
-| `npm run lint` | **Sem erros, 0 avisos** (era 53) |
-| `npm run build` | Ok. `OperatorPage` e outros chunks passam de 500 kB, mas são carregados sob demanda |
-| `npm run test:e2e` (Playwright, novo) | **1 passou**, 0 falharam — login na Demo → painel → troca de idioma → logout |
+| `npm run lint` | **Sem erros, 0 avisos** |
+| `npm run build` | Ok. `OperatorPage` e outros chunks passam de 500 kB, mas são carregados sob demanda (mesmo aviso de sempre) |
+| `npm run test:e2e` (Playwright) | **1 passou**, 0 falharam — login na Demo → painel → troca de idioma → logout |
 
 Não reconferi a fundo as entregas de produto anteriores a `e6b1683` (itens 4 e 5 do resumo abaixo, exportação por entrega e tela de integrações): seguem como no relatório de 27/11.
 
@@ -106,7 +102,8 @@ Texto em `src/assets/locales/home.ts`. As cinco alegações abaixo foram reescri
 - `/mobile-web`: demonstração pública do app do motorista, sem login.
 - i18n pt-BR e en, páginas sob demanda, tokens de cor da marca, 145 testes (`node:test`) + 1 smoke e2e (Playwright) e CI com 0 avisos de lint.
 - As cinco alegações do site corrigidas (seção 4) e o painel publicado num único hospedeiro fixo (Vercel), sem o risco de deploy duplicado que havia com o GitHub Pages.
-- Notificação push só pede permissão após um gesto do CCO (antes pedia sozinha ao carregar a página); vocabulário do canal do evento unificado em português (`painel`/`ligacao`), com o `payload.channel` do modo API devolvido depois de uma regressão pega pelo `/judge`; caminhos absolutos removidos da documentação.
+- Notificação push só pede permissão após um gesto do CCO (antes pedia sozinha ao carregar a página) e lembra o descarte em `localStorage` (não volta a cada troca de tela); vocabulário do canal do evento unificado em português (`painel`/`ligacao`), com o `payload.channel` do modo API devolvido depois de uma regressão pega pelo `/judge`; caminhos absolutos removidos da documentação.
+- Modo API aceita ligação ao recebedor com `motivo: "atraso"` (rótulo próprio "aviso de atraso", distinto de aproximação/escalonamento); toasts de alerta (`LiveAlerts`) limitados a 3 visíveis por vez com contador de excedente e sem acumular mais de um por veículo.
 
 ## Correções no nosso discurso (deck e documentos)
 
