@@ -1,6 +1,6 @@
 # rodar-mobile: o que falta, contra o que prometemos
 
-28/11/2026 · commit verificado: `91ad99e` (main de [rodarglobal/rodar-mobile](https://github.com/rodarglobal/rodar-mobile)).
+28/11/2026 · commit verificado: `abe0ce7` (main de [rodarglobal/rodar-mobile](https://github.com/rodarglobal/rodar-mobile)).
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Relatórios dos outros repos: [`rodar-backend`](../rodar-backend/STATUS.md) e [`rodar-web`](../rodar-web/STATUS.md).
 
@@ -108,6 +108,7 @@ Os itens "`agent-server`"/"GPT-Live" já foram corrigidos em commits anteriores 
 - Documentos com resposta só a partir dos campos (NF-e/CT-e MOCK declarados).
 - Todas as branches/PRs do repositório revisadas; `main` e `dev` sincronizados; branches obsoletas apagadas do remoto.
 - 130 testes, typecheck e lint (0 avisos) — todos verdes após a migração para LiveKit.
+- Em voz real (LiveKit), falar com o AvisAI (esfera, cabeçalho, botões "falar com o AvisAI", wake word, aviso que pede resposta) não abre mais o Painel de frases prontas (Modal cheio) — só liga o microfone; a resposta aparece no balão ao lado da esfera (`useVoice.isDirectVoice`, hook `useTalkToAvisai`, commit `abe0ce7`). No modo Mock o Painel com as frases prontas continua abrindo do mesmo jeito, por não haver microfone real ouvindo.
 
 ## Correções no nosso discurso (deck e documentos)
 
