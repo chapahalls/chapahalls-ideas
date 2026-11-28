@@ -93,6 +93,7 @@ Texto em `src/assets/locales/home.ts`. As cinco alegações abaixo foram reescri
 | NF-e e CT-e | **Parcial (declarado)** | Metadados MOCK do backend (`mock:true`) | Upload real de documentos ficou fora por decisão |
 | Acessibilidade do painel | **Ok, sem auditoria** | 235 atributos `aria-*`, `prefers-reduced-motion` no login, contraste documentado em `docs/DESIGN.md` | Nenhuma auditoria automatizada (axe, Lighthouse) foi rodada |
 | Documentação desatualizada | **Resolvido** | Os caminhos absolutos `/home/henry/Documents/...` em `docs/ARQUITETURA.md`, `docs/INTEGRACAO-BACKEND.md` e `CLAUDE.md` foram trocados por referência portátil ao repositório `rodarglobal/rodar-backend` (pasta `backend/`), commit `795a62a` | — |
+| Painel não mostra nem abre o link da ligação ao recebedor (`pagina_recebedor`) | **Promessa, achado nesta rodada (diagnóstico, sem commit)** | `grep` em `src/` por `pagina_recebedor`/`ligar-recebedor`/`/ligacoes/atual/recebedor`: nenhuma referência. A ligação ao operador (CCO) tem o caminho completo (`/operador`, botão "Abrir operador" no toast crítico de `LiveAlerts.tsx`); a ligação ao recebedor não tem equivalente | Sem essa tela, toda ligação ao recebedor em `RECEBEDOR_MODO=rtc` (ver [`rodar-backend/STATUS.md`](../rodar-backend/STATUS.md), seção 4) termina `nao_atendida` — ninguém no painel consegue entrar na sala |
 
 ---
 
