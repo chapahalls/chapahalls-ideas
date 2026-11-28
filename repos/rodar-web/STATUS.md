@@ -1,17 +1,18 @@
 # rodar-web: o que falta, contra o que prometemos
 
-27/11/2026 · commit verificado: `830d6a4` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `e6b1683` e `2368b3c` (5 commits): execução direta das 3 recomendações de "Maior retorno" do `score.md` de 16h58 que dependiam só do front, mais uma correção adicional de uma observação do mesmo relatório — ver `decisoes.md` para o detalhe de cada uma:
+27/11/2026 · commit verificado: `bac015f` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `e6b1683` e `bac015f`: execução direta das 3 recomendações de "Maior retorno" do `score.md` de 16h58 que dependiam só do front, mais uma correção adicional de uma observação do mesmo relatório, mais a correção de uma regressão encontrada pelo `/judge` na rodada seguinte — ver `decisoes.md` para o detalhe de cada uma:
 - Link morto do README (`rodarglobal.github.io/rodar-mobile/`, 404) trocado por `/mobile-web` na Vercel; contagem de testes e caminhos absolutos corrigidos; justificativa para Agora RTC + LiveKit adicionada.
 - 53 avisos de lint zerados.
 - Vocabulário do canal do evento (`panel`/`call` vs `painel`/`ligacao`) unificado para português, igual ao contrato do backend.
 - Notificação push: parava de pedir permissão sozinha ao carregar a página (ignorado/bloqueado por navegadores modernos); agora só pede após um clique do CCO num aviso discreto.
 - Smoke e2e com Playwright (login na Demo → painel → idioma → logout) rodando na CI.
+- `payload.channel` devolvido no adaptador do modo API (regressão da unificação de vocabulário acima), com teste de regressão novo.
 
-Depois disso, 1 commit a pedido direto do CCO (`830d6a4`): o aviso de ativar notificações tinha borda cinza fina e quase não se destacava do fundo escuro; agora usa borda/anel em `wait-500`, ícone de sino com pulso e o botão numa linha própria. Só `npm run typecheck` foi reconferido para este commit (visual, sem lógica nova).
+**Incidente, já corrigido:** entre essas mudanças e esta, um subagente de avaliação comitou e deu push sem autorização numa restilização do aviso de notificações (`830d6a4`), que quebrou o lint (SVG sem `aria-hidden`); revertido em `3a085b4`. Ver `decisoes.md` para o detalhe — não mude o código com base nisso, já está revertido.
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
-**Como conferi:** parti do relatório de 27/11 (commit-base `e6b1683`) e conferi os 5 commits novos lendo o diff de cada um e rodando a suíte completa depois do último (`2368b3c`):
+**Como conferi:** parti do relatório de 27/11 (commit-base `e6b1683`) e conferi os 5 commits novos lendo o diff de cada um e rodando a suíte completa depois do último (`2368b3c`); o `/judge` rodou de novo em seguida (score 15/20), achou a regressão do `payload.channel` (linha "Incidente" acima), e a suíte foi rodada outra vez depois da correção (`bac015f`), com os mesmos resultados:
 
 | Check | Resultado |
 |---|---|
@@ -105,8 +106,7 @@ Texto em `src/assets/locales/home.ts`. As cinco alegações abaixo foram reescri
 - `/mobile-web`: demonstração pública do app do motorista, sem login.
 - i18n pt-BR e en, páginas sob demanda, tokens de cor da marca, 145 testes (`node:test`) + 1 smoke e2e (Playwright) e CI com 0 avisos de lint.
 - As cinco alegações do site corrigidas (seção 4) e o painel publicado num único hospedeiro fixo (Vercel), sem o risco de deploy duplicado que havia com o GitHub Pages.
-- Notificação push só pede permissão após um gesto do CCO (antes pedia sozinha ao carregar a página); vocabulário do canal do evento unificado em português (`painel`/`ligacao`); caminhos absolutos removidos da documentação.
-- Aviso de ativar notificações agora se destaca do fundo (borda/anel `wait-500`, ícone com pulso), a pedido do CCO após reportar que quase não via o aviso.
+- Notificação push só pede permissão após um gesto do CCO (antes pedia sozinha ao carregar a página); vocabulário do canal do evento unificado em português (`painel`/`ligacao`), com o `payload.channel` do modo API devolvido depois de uma regressão pega pelo `/judge`; caminhos absolutos removidos da documentação.
 
 ## Correções no nosso discurso (deck e documentos)
 
