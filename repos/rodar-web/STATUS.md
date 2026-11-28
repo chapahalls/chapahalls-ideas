@@ -1,22 +1,25 @@
 # rodar-web: o que falta, contra o que prometemos
 
-27/11/2026 · commit verificado: `e6b1683` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `b62e17c` e `e6b1683`: só housekeeping de branches (mescladas e apagadas `feat/dashboard-components` e `claude/youthful-pasteur-c2xht9`, só `develop`/`main` restaram) e um recurso de UX sem relação com as lacunas desta tabela (seletor de velocidade 0.5x/1x/2x da simulação). Nenhum item abaixo muda de estado por causa disso.
+27/11/2026 · commit verificado: `2368b3c` (main de [rodarglobal/rodar-web](https://github.com/rodarglobal/rodar-web)). Entre `e6b1683` e `2368b3c` (5 commits): execução direta das 3 recomendações de "Maior retorno" do `score.md` de 16h58 que dependiam só do front, mais uma correção adicional de uma observação do mesmo relatório — ver `decisoes.md` para o detalhe de cada uma:
+- Link morto do README (`rodarglobal.github.io/rodar-mobile/`, 404) trocado por `/mobile-web` na Vercel; contagem de testes e caminhos absolutos corrigidos; justificativa para Agora RTC + LiveKit adicionada.
+- 53 avisos de lint zerados.
+- Vocabulário do canal do evento (`panel`/`call` vs `painel`/`ligacao`) unificado para português, igual ao contrato do backend.
+- Notificação push: parava de pedir permissão sozinha ao carregar a página (ignorado/bloqueado por navegadores modernos); agora só pede após um clique do CCO num aviso discreto.
+- Smoke e2e com Playwright (login na Demo → painel → idioma → logout) rodando na CI.
 
 **O que prometemos** está em [`ADR-0001`](../../docs/adr/0001-integracao-setup-e-tres-dores.md), [`ideas/rodar.md`](../../ideas/rodar.md), [`ideas/demora-em-docas/descoberta.md`](../../ideas/demora-em-docas/descoberta.md), [`RODAR-CONTEXT.md`](../../RODAR-CONTEXT.md), no deck e nas regras de [`HACKATHON.md`](../../HACKATHON.md). Para o backend, ver [`rodar-backend-o-que-falta.md`](../rodar-backend/STATUS.md).
 
-**Como conferi:** este repositório já tinha uma reavaliação própria em `docs/rodar-web-o-que-falta.md` (commit-base `1f52c23`, 25/11), que usei como ponto de partida; a partir daí conferi o que mudou até `b62e17c` (`git log --oneline dd68e2d..b62e17c`, 28 commits):
-- Deploy e CI: li `vite.config.ts`, `vercel.json`, `.github/workflows/ci.yml` e o histórico de execuções (`gh run list`); testei as duas URLs por `curl`.
-- Textos públicos: reconferi `src/assets/locales/home.ts` (pt-BR e en) contra as cinco alegações da seção 4 — nenhuma segue com a redação antiga.
-- README: conferi os links da demo, do vídeo e os números de impacto com suas fontes.
-- Não reconferi a fundo as entregas de produto dos commits `a72aed8` (app do motorista com voz LiveKit) e `4e4f1e6` (viagem cancelada, busca de endereço, plano de conectores TMS) nem a exportação por entrega (item 4) ou a tela de integrações (item 5): seguem como no relatório de 25/11.
-- Rodei os checks do CI localmente, hoje:
+**Como conferi:** parti do relatório de 27/11 (commit-base `e6b1683`) e conferi os 5 commits novos lendo o diff de cada um e rodando a suíte completa depois do último (`2368b3c`):
 
 | Check | Resultado |
 |---|---|
-| `npm test` | **144 passaram**, 0 falharam |
+| `npm test` | **145 passaram**, 0 falharam (era 144; novo teste cobre `setSpeed`) |
 | `npm run typecheck` | Sem erros |
-| `npm run lint` | Sem erros, 53 avisos |
+| `npm run lint` | **Sem erros, 0 avisos** (era 53) |
 | `npm run build` | Ok. `OperatorPage` e outros chunks passam de 500 kB, mas são carregados sob demanda |
+| `npm run test:e2e` (Playwright, novo) | **1 passou**, 0 falharam — login na Demo → painel → troca de idioma → logout |
+
+Não reconferi a fundo as entregas de produto anteriores a `e6b1683` (itens 4 e 5 do resumo abaixo, exportação por entrega e tela de integrações): seguem como no relatório de 27/11.
 
 Legenda:
 - **Bloqueia:** ameaça a submissão ou o primeiro desempate (H1).
@@ -31,7 +34,7 @@ Legenda:
 |---|---|---|---|
 | 1 | **Publicar o painel** (site + painel + `/mobile-web`) numa URL fixa | **Ok** — ao ar em [rodar-web-beta.vercel.app/home](https://rodar-web-beta.vercel.app/home) (deploy contínuo na Vercel a cada push na `main`, `curl` confirma 200); o GitHub Pages foi removido (workflow, config do repo e `vite.config.ts`) por divergir da config da Vercel (risco de deploy duplicado) e por já estar respondendo 404 | Baixo |
 | 2 | **Corrigir o texto do site** que promete o que não existe (seção 4) | **Ok** — as cinco alegações foram reescritas em pt-BR e en (`src/assets/locales/home.ts`, commit `1f52c23`); reconferido hoje, nenhuma frase antiga restou | Baixo |
-| 3 | **Links da demo e do vídeo + números de impacto com fonte** no README e na home | **Parcial** — a URL pública agora existe e os números de impacto no README têm fonte (IER 2025, CNTA 2025, ANTT); falta o vídeo de 3 min do Hack Brasil (o comentário-lembrete ainda está no README, linha 39) e a home não cita os números de impacto, só o README | Baixo |
+| 3 | **Links da demo e do vídeo + números de impacto com fonte** no README e na home | **Parcial** — o link morto (`rodarglobal.github.io/rodar-mobile/`, 404) foi trocado por `/mobile-web` na Vercel; os números de impacto no README têm fonte (IER 2025, CNTA 2025, ANTT); falta o vídeo de 3 min do Hack Brasil (o comentário-lembrete ainda está no README, linha 39) e a home não cita os números de impacto, só o README | Baixo |
 | 4 | **Exportação da estadia por entrega** para o financeiro | **Pendente, não reconferido hoje** — no relatório de 25/11, o CSV ainda agregava por recebedor/motorista | Médio (depende do backend) |
 | 5 | **Tela de integrações** com o estado real de cada conector | **Pendente** — sem rota de integrações em `src/app/router.tsx`/`src/pages`; agora há um plano escrito (`docs/PLANO-CONECTORES-TMS.md`, `docs/PLANO-TESTES-CONECTORES.md`), mas nenhuma tela | Baixo |
 
@@ -45,10 +48,11 @@ Se só der para fazer dois, faça 3 (vídeo) e 4; os itens 1 e 2 já foram concl
 |---|---|---|---|
 | Demo HTTPS publicada (S4) | **Ok** | [rodar-web-beta.vercel.app/home](https://rodar-web-beta.vercel.app/home) responde 200; deploy a cada push na `main` via integração nativa da Vercel (`vercel.json`, `vite.config.ts: base: '/'`); CI (`.github/workflows/ci.yml`) roda lint, typecheck, testes e build a cada push/PR | — |
 | GitHub Pages (hospedeiro duplicado) | **Resolvido** | `.github/workflows/demo-pages.yml` buildava com `--base /rodar-web/`, divergindo do `base: '/'` da Vercel; a página já respondia 404. Removido o workflow, desativado `Settings → Pages` (API `DELETE /repos/.../pages`, confirmado 404 "Not Found") e atualizado o README/`vite.config.ts` (commit `69cdfab`, merge `b62e17c`) | — |
+| Link morto do app do motorista (S4) | **Resolvido** | `rodarglobal.github.io/rodar-mobile/` (404, GitHub Pages desativado) trocado por `https://rodar-web-beta.vercel.app/mobile-web` (rota real, `src/app/router.tsx`), commit `795a62a` | — |
 | Links da demo e do vídeo no README | **Parcial** | README já liga a demo pública, o tour de 1 min e a validação da API; o comentário `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->` (linha 39) mostra que o vídeo ainda não foi incluído | Vídeo de 3 min ainda não gravado/linkado |
 | Números de impacto com fonte | **Parcial** | O README cita 11h40, 5h09 e 91% com fonte (IER 2025/SETCESP, CNTA 2025, ANTT). A home (`src/assets/locales/home.ts`) não repete esses números; a calculadora usa só os valores que o visitante digita | Levar os números com fonte também para a home, se for esse o objetivo original |
 | A demo pública mostra a IA de voz real | **Parcial, não reconferido hoje** | `/mobile-web` simula a voz com a síntese do navegador. A voz real via LiveKit existe como opção ("Testar ao vivo") desde o commit `a72aed8`, não reconferida nesta rodada | Confirmar se a opção de voz ao vivo funciona na URL pública |
-| Qualidade (CI, testes, tipos) | **Ok** | Rodado hoje: 144 testes, typecheck e lint sem erros, build ok (ver topo) | — |
+| Qualidade (CI, testes, tipos) | **Ok** | Rodado hoje: 145 testes (novo: `setSpeed`), typecheck sem erros, **lint com 0 avisos** (era 53), build ok, e smoke e2e com Playwright na CI (ver topo) | — |
 
 **Atenção:** a demo publicada roda no modo Demo (dados fictícios). O vídeo do Hack Brasil precisa mostrar o modo API e a voz real, senão o júri vê só a simulação.
 
@@ -88,7 +92,7 @@ Texto em `src/assets/locales/home.ts`. As cinco alegações abaixo foram reescri
 | Login e autorização reais | **Parcial** | SSO MOCK (declarado). O JWT vai em todas as chamadas, mas o backend só exige o papel `cco` com `AUTH_OBRIGATORIA=true` | Simplificação da demo |
 | NF-e e CT-e | **Parcial (declarado)** | Metadados MOCK do backend (`mock:true`) | Upload real de documentos ficou fora por decisão |
 | Acessibilidade do painel | **Ok, sem auditoria** | 235 atributos `aria-*`, `prefers-reduced-motion` no login, contraste documentado em `docs/DESIGN.md` | Nenhuma auditoria automatizada (axe, Lighthouse) foi rodada |
-| Documentação desatualizada | **Parcial** | `docs/INTEGRACAO-BACKEND.md` aponta o backend em `/home/henry/Documents/rodar-backend/backend`, "fora deste repositório"; hoje ele está em `rodarglobal/rodar-backend` | Escrito antes da criação do repositório |
+| Documentação desatualizada | **Resolvido** | Os caminhos absolutos `/home/henry/Documents/...` em `docs/ARQUITETURA.md`, `docs/INTEGRACAO-BACKEND.md` e `CLAUDE.md` foram trocados por referência portátil ao repositório `rodarglobal/rodar-backend` (pasta `backend/`), commit `795a62a` | — |
 
 ---
 
@@ -97,11 +101,12 @@ Texto em `src/assets/locales/home.ts`. As cinco alegações abaixo foram reescri
 - Site público com história 3D, calculadora e FAQ; login; painel completo (monitoramento, dispatch, cadastro de viagem, viagem com linha do tempo e transcrição, Análises com CSV, Operador com Agora RTC).
 - Modo API (REST + SSE, com reconciliação) e modo Demo (motor local, 63 entregas fictícias), com o que é MOCK identificado na tela e no README.
 - `/mobile-web`: demonstração pública do app do motorista, sem login.
-- i18n pt-BR e en, páginas sob demanda, tokens de cor da marca, 144 testes e CI.
+- i18n pt-BR e en, páginas sob demanda, tokens de cor da marca, 145 testes (`node:test`) + 1 smoke e2e (Playwright) e CI com 0 avisos de lint.
 - As cinco alegações do site corrigidas (seção 4) e o painel publicado num único hospedeiro fixo (Vercel), sem o risco de deploy duplicado que havia com o GitHub Pages.
+- Notificação push só pede permissão após um gesto do CCO (antes pedia sozinha ao carregar a página); vocabulário do canal do evento unificado em português (`painel`/`ligacao`); caminhos absolutos removidos da documentação.
 
 ## Correções no nosso discurso (deck e documentos)
 
-- "512 testes": a soma usada no README (554) é **318 no backend + 127 no web + 109 no mobile**; hoje o web já está em **144 testes** (rodei agora), o backend/mobile não foram reconferidos nesta rodada — não repetir o número antigo sem atualizar os três.
+- "512 testes": a soma usada no README (572) é **318 no backend + 145 no web + 109 no mobile**; o web já está em **145 testes** (rodei agora), o backend/mobile não foram reconferidos nesta rodada — não repetir o número antigo sem atualizar os três.
 - O dashboard é a **vitrine**: o pitch não deve parar nele (ADR-0001).
 - A demo publicada roda no modo Demo (dados fictícios); diga isso no vídeo e no README, e mostre o modo API com voz real no vídeo de 3 min que ainda falta gravar.
