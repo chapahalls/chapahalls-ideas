@@ -1,61 +1,63 @@
-# Judge: rodar-web, 2026-11-28 10:50
+# Judge: rodar-web, 2026-11-28 11:29
 
-Gatilho: push na main de rodar-web 18f0e2a por HenryFacens. Commit avaliado: 18f0e2a.
+Gatilho: push na main de rodar-web 70a2414 por HenryFacens. Commit avaliado: 70a2414.
 
-**Nota do repo: 15 / 20** (H1+H2)
+**Nota do repo: 14 / 20** (H1+H2)
 
-Desde o score de `adea4d5` (15/20, 28/11 10:08) entraram 3 commits:
+Desde o score de `18f0e2a` (15/20, 28/11 10:50) entraram 2 commits:
 
-- `042e3d1` fix(alertas): o fundo do toast deixou de ter alfa e agora é opaco (`color-mix` com `ink-900`, em `LiveAlerts.tsx`). É só CSS.
-- `15ddd39` fix(alertas): `deriveAlerts` (`src/features/monitoring/model.ts`) deixa uma linha por viagem na fila, a do alerta mais grave. Veio com teste novo em `tests/monitoring.test.mjs`, e o teste antigo foi ajustado para usar viagens distintas.
-- `18f0e2a` fix(mapa): no modo API, `FleetMap.tsx` ajusta visualmente o traçado do backend à via pela Routes API do Google. A consulta vai de origem a destino do próprio `trajeto`, com cache por geometria. Distância, ETA, progresso e GPS continuam vindo do backend. A regra 4 do `CLAUDE.md` e o `docs/INTEGRACAO-BACKEND.md` foram atualizados junto, então a mudança de contrato ficou documentada. Não há teste.
+- `41be659` docs(mapa): o README e o `docs/ARQUITETURA.md` agora descrevem o ajuste visual à via pela Routes API. Isso atende a observação do score anterior sobre declarar a Routes API como terceiro. É só documentação.
+- `70a2414` (a mensagem não segue o formato convencional): **na Demo, o login agora leva direto a `/dashboard/mobile-demo`**, e o modo API continua indo para `/dashboard`. O commit cria a feature `src/features/receiver-call` com `ReceiverCallPhone`, um celular simulado do recebedor que mostra a ligação de escalonamento com a transcrição do `CallLog`/`buildCall`. No modo integrado, ele abre sozinho quando sai a ligação de escalonamento. No tour público, abre aos 60 min. Há também um botão "Simular ligação ao recebedor" na fila do celular. Tem traduções em pt-BR e en. Não tem teste.
 
-Rodei localmente em `18f0e2a`, depois de `npm ci`. `npm run typecheck` não deu erros. `npm run lint` checou 167 arquivos sem nenhum aviso. `npm test` passou **146/146**, um a mais que antes. `npm run build` passou, com o aviso de chunk acima de 500 kB de sempre. Não rodei o e2e, porque o runner não tem o Chromium do Playwright. Agora, `/home`, `/dashboard` e `/mobile-web` em `rodar-web-beta.vercel.app` respondem 200.
+Rodei localmente em `70a2414`, depois de `npm ci`. `npm run typecheck` não deu erros. `npm run lint` checou 169 arquivos sem nenhum aviso. `npm test` passou **146/146**, sem teste novo. `npm run build` passou, com o aviso de chunk acima de 500 kB de sempre. Não rodei o e2e, porque o runner não tem o Chromium do Playwright, e a API do GitHub não respondeu sobre os check runs. Agora, `/home`, `/login`, `/dashboard` e `/mobile-web` em `rodar-web-beta.vercel.app` respondem 200.
 
-`sh scripts/check-rules.sh ../rodar-web`: **0 FALHA, 2 RISCOS**. São o S5, sem link do vídeo, e o X6, com possíveis CPF e telefone (ver abaixo). X1, X3 e X4 estão OK, assim como X7/X8. Faltam 2d13h para 30/11 23h59.
+`sh scripts/check-rules.sh ../rodar-web`: **0 FALHA, 3 RISCOS**. São o X4, porque a API do GitHub não respondeu (limite ou rede); o S5, sem link do vídeo; e o X6, com possíveis CPF e telefone, que são placeholders (ver abaixo). X1, X3 e X7/X8 estão OK. Faltam 2d12h para 30/11 23h59.
 
 ## Alertas
 
-- **RISCO S5 (vídeo):** o README continua sem o vídeo de até 3 min. A linha 39 ainda é `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`. É o único item de submissão pendente neste repo. Se ficar de fora, pesa no projeto inteiro (S5/X7).
-- **`18f0e2a` volta a consultar a Routes API quando a consulta falha.** Em `getRoadRoute` (`src/lib/googleMaps.ts`), um erro tira a entrada do `routeCache`. O `catch` de `visualRoute` (`FleetMap.tsx`) também tira a viagem de `snapping`, e nada guarda a falha. Assim, a próxima chamada de `visualRoute` dispara outra `computeRoutes`. Essa chamada vem de `updateTrucks`, que roda a cada atualização de dados, e do laço `requestAnimationFrame` quando há progresso ou `dirty`. Se a chave do Google não tiver a Routes API habilitada, ou se a cota acabar, o painel em modo API passa a disparar requisições e `console.warn` em sequência. Isso contradiz a regra "nunca por tick" que o próprio commit escreveu no `CLAUDE.md`. O conserto tem uma linha: guardar a falha, por exemplo com `mapRes.snapped.set(trip.id, base)` no `catch`. A demo pública roda em modo Demo e não aciona esse caminho, mas o vídeo vai gravar o modo API.
-- **O modo API ainda não tem teste de contrato.** O score anterior pediu isso pela segunda vez. Nenhum teste chama `isCall` nem `projectSnapshot` com um fixture do backend que traga `motivo: "atraso"` (busquei em `tests/`). O teste novo de `15ddd39` é bom, mas cobre o modelo de alertas, não o guard de resposta.
-- **Traçado e marcador podem divergir no modo API (visual).** O caminhão é desenhado no GPS do backend (`trip.position`), mas `splitRoute` corta a linha ajustada à via usando a fração `progress` do backend. Os dois sistemas são diferentes, e o trecho percorrido pode terminar longe do ícone. Não é bug de dado. Mesmo assim, vale conferir antes de gravar o vídeo.
+- **O e2e da CI deve quebrar com `70a2414` (verificado por leitura).** `tests-e2e/smoke.spec.ts` entra na Demo e verifica `await expect(page).toHaveURL(/\/dashboard$/)` e depois o heading "Fila de alertas". O modo padrão é `demo` (`src/services/operations/index.ts:14`, `mode: 'demo'`), e o `LoginPage` não navega por conta própria. Quem redireciona é o `LoginRoute`, que agora usa `APP_ROUTES.mobileDemo` (`/dashboard/mobile-demo`) na Demo. Assim, a URL não casa com `/dashboard$`, e o passo "E2E (Playwright, Demo sem backend)" de `.github/workflows/ci.yml` fica vermelho, mesmo com `retries: 1`. Se a `main` estiver assim em 30/11 23h59, o júri avalia um commit com a CI vermelha, e isso não tem conserto depois de 01/12 (X8). O conserto é atualizar o smoke: esperar `/dashboard/mobile-demo` depois do login e então navegar para `/dashboard` antes de checar a fila. Confira o resultado do job no GitHub Actions.
+- **RISCO S5 (vídeo):** o README continua sem o vídeo de até 3 min. A linha 39 ainda é `<!-- Vídeo de 3 min do Hack Brasil: incluir a linha aqui antes de 30/11. -->`. É o único item de submissão pendente neste repo e pesa no projeto inteiro (S5/X7).
+- **RISCO X4 (checagem):** o script não conseguiu consultar a API do GitHub, mas o `/login` e o resto da demo respondem, e o score anterior confirmou que o repo é público e não é fork. Tudo indica que é falha da checagem, não do repo.
+- **O cache negativo da Routes API continua aberto.** Em `src/features/fleet/components/FleetMap.tsx:123`, o `.catch(() => { mapRes.snapping.delete(trip.id); })` não guarda a falha. A próxima atualização volta a chamar `computeRoutes`, o que contradiz a regra "nunca por tick" que agora também está no README (`41be659`). O conserto continua sendo uma linha (`mapRes.snapped.set(trip.id, base)` no `catch`). Só afeta o modo API, que é o modo do vídeo.
+- **O modo API continua sem teste de contrato (terceiro score seguido).** Nenhum teste em `tests/` passa um fixture de `/cco/estado` por `isCall` e `projectSnapshot`. `ReceiverCallPhone` e o redirecionamento por modo também entraram sem teste.
+- **A ligação ao recebedor é encenação, e o painel precisa dizer isso.** `ReceiverCallPhone` mostra uma transcrição montada no navegador (`buildCall` com `Math.random`), com a tag "Simulação" só no caso do botão. No modo integrado, a ligação "real" de escalonamento também vem do motor da Demo. O item "Ligações" de "O que é simulado" no README cobre isso de forma genérica. Isso não fecha o item do `STATUS.md` "Painel não mostra nem abre o link da ligação ao recebedor (`pagina_recebedor`)": em `RECEBEDOR_MODO=rtc`, ninguém no painel entra na sala. No vídeo, não apresente esse celular como ligação real.
 - **X6 (só registro):** `docs/RODAR-telas/.../04-trip-dispatch-cadastro/index.html:79` é um mockup com CPF zerado. `src/assets/locales/dispatch.ts:62,216,292,446` usa `+5511999999999` como exemplo de E.164. São placeholders: **OK**.
-- **STATUS desatualizado (leve):** o `STATUS.md` do time para em `042e3d1` e não fala de `15ddd39` nem de `18f0e2a`. Diz "145 testes", e agora são 146. Nada marcado **Ok** falta no código. Cabe ao time rodar `/registrar rodar-web`.
+- **STATUS desatualizado:** o `STATUS.md` do time para em `18f0e2a`. Não cita `41be659` nem `70a2414`, nem a mudança no destino do login. Também diz que o e2e "passou", o que deve deixar de valer em `70a2414`. Nada marcado **Ok** falta no código. Cabe ao time rodar `/registrar rodar-web`.
 
 ## Pontuação
 
 | # | Critério | Nota (0-10) | Justificativa |
 |---|---|---|---|
-| H1 | Execução técnica | 8 | A demo pública está no ar (3 rotas em 200), e typecheck, lint, 146 testes e build passam. A fila de alertas com uma linha por caminhão e o traçado ajustado à via deixam o painel mais legível para um jurado que nunca viu uma doca. Não sobe a 9 por quatro motivos. Falta o vídeo. A demo pública roda só em modo Demo. A voz real depende de um backend que o júri não vai configurar. E o modo API ganhou um novo ponto de falha que não degrada bem (a nova consulta a cada atualização). |
-| H2 | Implementação técnica | 7 | As camadas continuam bem separadas. O ajuste à via ficou isolado na apresentação: o dado do backend não é alterado, a biblioteca é carregada à parte só no modo API e a documentação de contrato foi atualizada junto. `15ddd39` trouxe teste de regressão. Não sobe a 8 porque o caminho API↔web segue sem teste de contrato, pedido em dois scores seguidos, e porque `18f0e2a` entrou sem teste e com um defeito de cache negativo que um teste simples teria pegado. |
-| H3 | Impacto | avaliado no projeto | Sem nota. Os números do README têm fonte (IER 2025, CNTA 2025, ANTT). |
+| H1 | Execução técnica | 8 | A demo pública está no ar (4 rotas em 200), e typecheck, lint, 146 testes e build passam. A mudança é boa para um jurado que não instala nada: na Demo, o login já abre o celular do motorista ao lado do painel. Agora também dá para **ver** o terceiro ator, o recebedor, recebendo a ligação com transcrição, em um clique. Antes, esse elo da história (motorista → recebedor → CCO) era invisível na demo. Não sobe a 9 por vários motivos. Falta o vídeo. A ligação ao recebedor é simulada no navegador. A voz real depende de um backend que o júri não vai configurar. O modo API segue com o defeito de cache da Routes API. E a `main` deve estar com a CI vermelha. |
+| H2 | Implementação técnica | 6 | As camadas continuam bem separadas. `receiver-call` é uma feature própria, reaproveita `buildCall` e `CallLog` em vez de duplicar a transcrição, limpa os timers e tem `role="dialog"`/`aria-label`. Cai de 7 para 6 porque `70a2414` mudou o destino do login sem atualizar o smoke e2e que testa exatamente isso: a CI, que era um ponto forte do repo, deve estar vermelha na HEAD. Além disso, a feature nova não tem teste, e os dois pedidos do score anterior (teste de contrato do modo API e cache negativo da Routes API) continuam abertos. Volta a 7 quando a CI estiver verde. |
+| H3 | Impacto | avaliado no projeto | Sem nota. O celular do recebedor deixa a dor da informação entre motorista, recebedor e CCO mais concreta na demo. Os números do README têm fonte (IER 2025, CNTA 2025, ANTT). |
 | H4 | Comunicação | avaliado no projeto | Sem nota. O vídeo de 3 min ainda não está no README. |
-| | **Total do repo** | **15/20** | Igual ao anterior. Há ganho de UX e um teste a mais, mas também um risco novo no modo API. |
+| | **Total do repo** | **14/20** | Cai 1 em relação ao anterior. A demo ficou mais clara, mas a CI deve ter quebrado e não há teste novo. |
 
 ## Eliminatórios
 
 | # | Regra | Status | Nota |
 |---|---|---|---|
-| X1 | Repo público, criado depois de 04/11 21h | OK | Primeiro commit em 22/11/2026 |
+| X1 | Repo público, criado depois de 04/11 21h | OK | Primeiro commit em 22/11/2026 04:22 |
 | X2 | Nenhum código privado anterior ao evento | OK | O README declara a origem no UNMUTE by Agora (21 e 22/11) |
 | X3 | Licença | OK | MIT |
-| X4 | Público até 15/12 | OK | Público, não é fork |
-| X6 | Sem dado pessoal real | OK | CPF zerado e telefones de exemplo, todos placeholders |
-| — | Segredo no git | OK | Nenhum `.env` nem credencial versionados. O log de erro do Google redige a chave |
-| — | Mocks declarados no README | OK | Seção "O que é simulado" |
-| — | Terceiros declarados | OK | Google Maps já declarado. Vale citar a Routes API, agora usada no modo API |
-| S4 | Link de demo HTTPS no README | OK | `rodar-web-beta.vercel.app` (`/home`, `/dashboard` e `/mobile-web` em 200) |
+| X4 | Público até 15/12 | RISCO (checagem) | A API do GitHub não respondeu. Público e sem fork no score anterior. A demo responde |
+| X6 | Sem dado pessoal real | OK | CPF zerado e telefones de exemplo, todos placeholders. Nomes e placa (`RST-4B21`) do celular do recebedor são fictícios |
+| — | Segredo no git | OK | Nenhum `.env` nem credencial versionados |
+| — | Mocks declarados no README | OK | Seção "O que é simulado". Vale citar à parte o celular simulado do recebedor |
+| — | Terceiros declarados | OK | Google Maps, Routes API (agora no README, `41be659`), OSRM/OSM, LiveKit, Agora |
+| S4 | Link de demo HTTPS no README | OK | `rodar-web-beta.vercel.app` (`/home`, `/login`, `/dashboard` e `/mobile-web` em 200) |
 | S5 | Link do vídeo de até 3 min no README | **RISCO** | Ausente: a linha 39 ainda é o comentário-lembrete |
 
 ## Maior retorno
 
-1. **Gravar o vídeo de até 3 min e pôr o link no README**, no lugar da linha 39. O vídeo deve mostrar o modo API com voz real, um aviso de atraso chegando e o mapa com o traçado na via. Isso fecha o único RISCO de submissão e é o que falta para o júri ver além da Demo. **H1 8→9 = +1.**
-2. **Teste de contrato do modo API mais o cache negativo da Routes API.** Em `tests/`, um fixture real de `/cco/estado` com os motivos `aproximacao`, `cco_sem_resposta` e `atraso` e com `dados.canal`, passando por `isCall` e `projectSnapshot`. No `FleetMap`, guardar a falha da consulta de rota. **H2 7→8 = +1.**
-3. **Tornar o job de CI obrigatório na `main`.** Um commit vermelho em 30/11 vira a versão que o júri avalia, sem chance de correção depois de 01/12 (X8). Isso protege H1 e H2 de perder ponto.
+1. **Pôr a CI de volta no verde agora.** Em `tests-e2e/smoke.spec.ts`, troque a espera por `/\/dashboard\/mobile-demo$/` depois do login e navegue para `/dashboard` antes de checar "Fila de alertas". De quebra, o smoke passa a cobrir o novo destino. Depois, confirme o job verde no Actions. **H2 6→7 = +1**, além de proteger H1 em 30/11.
+2. **Gravar o vídeo de até 3 min e pôr o link no README**, no lugar da linha 39. Mostre o modo API com voz real e um aviso de atraso, e use o celular do recebedor como ilustração, rotulado como simulação. Isso fecha o RISCO S5. **H1 8→9 = +1.**
+3. **Teste de contrato do modo API mais o cache negativo da Routes API.** Crie um fixture de `/cco/estado` com os motivos `aproximacao`, `cco_sem_resposta` e `atraso` e com `dados.canal`, passando por `isCall` e `projectSnapshot`. Em `FleetMap.tsx:123`, guarde a falha no `catch`. **H2 7→8 = +1** (depois do item 1).
 
 ## Observações
 
-- O ritmo de 3 commits de polimento em 40 minutos, a 2,5 dias do prazo, é bom para a demo. Cada mudança em `FleetMap`, porém, mexe na tela que mais aparece no vídeo. Vale congelar o mapa depois da gravação.
-- O README poderia citar o ajuste à via pela Routes API na seção de terceiros e explicar que o traçado é só visual. Isso não muda a nota.
+- A mensagem de `70a2414` não segue o formato convencional do `/commit` (`feat(demo): ...`). Isso não muda a nota, mas o roadmap gerado depende dos trailers.
+- Dois commits de produto a cada hora, a 2,5 dias do prazo, mexendo no login e na tela que mais vai aparecer no vídeo. Vale congelar `MobileWebDemoPage` e `FleetMap` assim que o vídeo for gravado e fazer o último push com a CI verde, com folga antes das 23h59 de 30/11.
+- Com o celular do recebedor aberto pelo `useEffect` de escalonamento, ele pode abrir assim que a página monta, se já houver uma ligação de escalonamento no estado compartilhado. Vale conferir antes de gravar.
 - Entre 01/12 e 12/12, nenhum commit neste repo (X8). Tudo o que está acima precisa entrar até 30/11 23h59.
